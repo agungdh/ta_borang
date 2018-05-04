@@ -7,7 +7,14 @@ class Welcome extends CI_Controller {
 	}
 
 	function index() {
-		$this->session->login != true ? $this->load->view("template/login") : $this->load->view('template/template',array("isi" => "template/utama"));;
+		if ($this->session->login != true) {
+			$this->load->view("template/login");
+		} else {
+			$data['nav'] = "welcome/nav";
+			$data['isi'] = "welcome/index";
+			
+			$this->load->view("template/template", $data);
+		}
 	}
 
 	function login() {
