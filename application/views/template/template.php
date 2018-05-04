@@ -186,7 +186,7 @@
 											<i class="m-nav__link-icon la la-home"></i>
 										</a>
 									</li>
-									<?php $this->load->view($nav) ?>
+									<?php isset($data) ?  $this->load->view($nav,$data) : $this->load->view($nav); ?>
 								</ul>
 							</div>
 						</div>
