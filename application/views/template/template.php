@@ -96,10 +96,10 @@
 															</div>
 															<div class="m-card-user__details">
 																<span class="m-card-user__name m--font-weight-500">
-																	Mark Andre
+																	<?php echo $this->session->nama; ?>
 																</span>
 																<a href="" class="m-card-user__email m--font-weight-300 m-link">
-																	mark.andre@gmail.com
+																	<?php echo $this->session->username; ?>
 																</a>
 															</div>
 														</div>
@@ -113,20 +113,20 @@
 																	</span>
 																</li>
 																<li class="m-nav__item">
-																	<a href="../../../header/profile.html" class="m-nav__link">
+																	<a href="<?php echo base_url('profil'); ?>" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-profile-1"></i>
 																		<span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
 																				<span class="m-nav__link-text">
-																					My Profile
+																					Profil
 																				</span>
 																			</span>
 																		</span>
 																	</a>
 																</li>
 																<li class="m-nav__item">
-																	<a href="../../../header/profile.html" class="m-nav__link">
-																		<i class="m-nav__link-icon flaticon-profile-1"></i>
+																	<a href="<?php echo base_url('logout'); ?>" class="m-nav__link">
+																		<i class="m-nav__link-icon flaticon-logout"></i>
 																		<span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
 																				<span class="m-nav__link-text">
@@ -168,7 +168,17 @@
 		>
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							
-							<?php $this->load->view("template/menu"); ?>
+							<?php
+							switch ($this->session->level) {
+								case 1:
+									$this->load->view("template/menu_admin"); 		
+									break;
+								
+								default:
+									redirect('logout');
+									break;
+							}
+							?>
 							
 						</ul>
 					</div>
