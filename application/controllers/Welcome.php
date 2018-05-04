@@ -34,8 +34,12 @@ class Welcome extends CI_Controller {
 
 			redirect(base_url());
 		} else {
+			$flashdata['header'] = "ERROR !!!";
 			$flashdata['pesan'] = "Password Salah !!!";
+			$flashdata['status'] = "error";
+
 			$flashdata['username'] = $this->input->post('username');
+			
 			$this->session->set_flashdata('data', $flashdata);
 			redirect(base_url());
 		}

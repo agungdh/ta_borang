@@ -76,10 +76,6 @@
 
 <?php
 if ($flashdata != null) {
-	?>
-	<script type="text/javascript">
-            swal("Error !!!", "<?php echo $flashdata['pesan']; ?>", "error");
-	</script>
-	<?php
+	$this->pustaka->swal3($flashdata['header'], $flashdata['pesan'], $flashdata['status']);
 }
 ?>
