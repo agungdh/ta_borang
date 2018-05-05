@@ -83,7 +83,7 @@
 function hapus(id) {
     swal({
         title: 'Apakah anda yakin?',
-        text: "File akan dihapus!",
+        text: "Data akan dihapus!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Hapus!'
