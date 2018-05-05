@@ -53,6 +53,8 @@ class Prodi extends CI_Controller {
 
 		$this->db->insert($this->table, $data);
 
+		$this->db->insert('unit', ['unit' => 2, 'prodi_id' => $this->db->insert_id()]);
+
 		redirect(base_url('admin/prodi/index/' . $data['fakultas_id']));
 	}
 
@@ -72,6 +74,7 @@ class Prodi extends CI_Controller {
 
 	function aksi_hapus($id) {
 		$data['data']['prodi'] = $this->db->get_where($this->table, ['id' => $id])->row();
+		$this->db->delete('unit', ['prodi_id' => $id]);
 		$this->db->delete($this->table, ['id' => $id]);
 
 		redirect(base_url('admin/prodi/index/' . $data['data']['prodi']->fakultas_id));
