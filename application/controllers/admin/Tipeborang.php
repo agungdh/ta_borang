@@ -71,7 +71,7 @@ class Tipeborang extends CI_Controller {
 	}
 
 	function aksi_hapus($id) {
-		$versi_id = $this->db->get_where('tipeversi', ['id' => $id])->row()->versi_id;
+		$versi_id = $this->db->get_where($this->table, ['id' => $id])->row()->versi_id;
 		$this->db->delete($this->table, ['id' => $id]);
 
 		redirect(base_url('admin/tipeborang/index/' . $versi_id));
