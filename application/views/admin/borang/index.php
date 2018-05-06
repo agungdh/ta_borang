@@ -64,7 +64,7 @@
 							<td><?php echo $item->nama; ?></td>
 							<td><?php echo $item->tahun; ?></td>
 							<td>
-								<a href="<?php echo base_url('admin/tipeborang/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Prodi">
+								<a href="<?php echo base_url('admin/tipeborang/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Tipe Borang">
 									<i class="la la-external-link"></i>
 								</a>
 								<a href="<?php echo base_url('admin/borang/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
