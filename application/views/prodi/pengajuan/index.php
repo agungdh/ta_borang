@@ -72,7 +72,7 @@
 							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
 							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
 							<td>
-								<a href="<?php echo base_url('prodi/detail_pengajuan/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Prodi">
+								<a href="<?php echo base_url('prodi/detail_pengajuan/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Detail Pengajuan">
 									<i class="la la-external-link"></i>
 								</a>
 								<a href="<?php echo base_url('prodi/pengajuan/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
