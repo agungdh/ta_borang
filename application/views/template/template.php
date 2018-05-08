@@ -174,6 +174,14 @@
 									$this->load->view("template/menu_admin"); 		
 									break;
 								
+								case 2:
+									$this->load->view("template/menu_dpm"); 		
+									break;
+								
+								case 3:
+									$this->load->view("template/menu_prodi"); 		
+									break;
+								
 								default:
 									redirect('logout');
 									break;
