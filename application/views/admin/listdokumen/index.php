@@ -111,7 +111,7 @@ var DatatableHtmlTableDemo = function() {
 
     var datatable = $('.m-datatable').mDatatable({
       data: {
-        saveState: {cookie: false},
+        saveState: false,
       },
       search: {
         input: $('#generalSearch'),
