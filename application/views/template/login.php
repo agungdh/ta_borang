@@ -59,7 +59,7 @@
 									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" required>
 								</div>
 								<div class="m-login__form-action">
-									<button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primary">
+									<button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primary" style="background-color: #282a3c">
 										Log In
 									</button>
 								</div>
