@@ -59,11 +59,6 @@
 										<span></span>
 									</a>
 									<!-- END -->
-							<!-- BEGIN: Responsive Header Menu Toggler -->
-									<a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
-										<span></span>
-									</a>
-									<!-- END -->
 			<!-- BEGIN: Topbar Toggler -->
 									<a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
 										<i class="flaticon-more"></i>
@@ -82,14 +77,11 @@
 												<span class="m-topbar__userpic">
 													<img src="<?php echo base_url('assets/gambar/avatar.png') ?>" class="m--img-rounded m--marginless m--img-centered" alt=""/>
 												</span>
-												<span class="m-topbar__username m--hide">
-													Nick
-												</span>
 											</a>
 											<div class="m-dropdown__wrapper">
 												<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
 												<div class="m-dropdown__inner">
-													<div class="m-dropdown__header m--align-center" style="background: url(<?php echo base_url('assets/assets/app/media/img/misc/user_profile_bg.jpg') ?>); background-size: cover;">
+													<div class="m-dropdown__header m--align-center" style="background-color: #282a3c; background-size: cover;">
 														<div class="m-card-user m-card-user--skin-dark">
 															<div class="m-card-user__pic">
 																<img src="<?php echo base_url('assets/gambar/avatar.png') ?>" class="m--img-rounded m--marginless" alt=""/>
@@ -104,9 +96,9 @@
 															</div>
 														</div>
 													</div>
-													<div class="m-dropdown__body">
+													<div class="m-dropdown__body" style="background-color: #282a3c">
 														<div class="m-dropdown__content">
-															<ul class="m-nav m-nav--skin-light">
+															<ul class="m-nav m-nav--skin-dark">
 																<li class="m-nav__section m--hide">
 																	<span class="m-nav__section-text">
 																		Section
