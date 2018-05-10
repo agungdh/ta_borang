@@ -30,7 +30,7 @@
 		<script src="<?php echo base_url('assets/assets/vendors/base/vendors.bundle.js') ?>" type="text/javascript"></script>
 		<script src="<?php echo base_url('assets/assets/demo/default/base/scripts.bundle.js') ?>" type="text/javascript"></script>
 		<!--end::Base Scripts -->
-		<link rel="shortcut icon" href="<?php echo base_url('assets/gambar/Logo-BL.jpg'); ?>" 
+		<link rel="shortcut icon" href="<?php echo base_url('assets/gambar/Logo-BL.ico'); ?>" 
 	</head>
 	<!-- end::Head -->
     <!-- end::Body -->
@@ -42,7 +42,7 @@
 					<div class="m-login__container">
 						<div class="m-login__logo">
 							<a href="#">
-								<img height="150" width="150" src="<?php echo base_url() ?>assets/gambar/Logo-BL.jpg">
+								<img height="150" width="150" src="<?php echo base_url() ?>assets/gambar/Logo-BL.png">
 							</a>
 						</div>
 						<div class="m-login__signin">
