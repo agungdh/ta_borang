@@ -134,5 +134,6 @@ var DatatableHtmlTableDemo = function() {
 
 jQuery(document).ready(function() {
   DatatableHtmlTableDemo.init();
+  $('.m-datatable').mDatatable('sort', 'Nomor');
 });
 </script>
