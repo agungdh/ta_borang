@@ -69,7 +69,14 @@
 								        $butir = $id_butir == $item2->butir_id ? null : $item2->nomor_butir . ' ' . $item2->nama_butir;
 
 								        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'listdokumen_id' => $item2->id])->row();
-								          ?>
+
+								        if ($berkas != null) {
+        								        if (!file_exists('uploads/' . $berkas->id)) {
+									        	$this->db->delete('berkas', ['id' => $berkas->id]);
+									        	$berkas = null;
+									        }								        	
+								        }
+								        ?>
 										<tr>
 											<td><?php echo $standar; ?></td>
 											<td><?php echo $substandar; ?></td>
@@ -81,7 +88,7 @@
 												if ($berkas != null) {
 													?>
 													<!-- <a class="btn btn-danger btn-xs" onclick="hapus('<?php echo $item->id; ?>')"><i class="la la-trash"></i> </a> -->
-													<a onclick="hapus('<?php echo $item->id; ?>')" href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Hapus" onclick="hapus('<?php echo $item->id; ?>')">
+													<a onclick="hapus('<?php echo $berkas->id; ?>')" href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Hapus" onclick="hapus('<?php echo $item->id; ?>')">
 														<i class="la la-trash"></i>
 													</a>
 													<a href="<?php echo base_url('prodi/detail_pengajuan/unduh/' . $berkas->id); ?>"><?php echo $berkas->nama; ?></a>
@@ -127,7 +134,7 @@ function hapus(id, standar) {
         confirmButtonText: 'Hapus!'
     }).then(function(result) {
         if (result.value) {
-            window.location = "<?php echo base_url('prodi/pengajuan/aksi_hapus/'); ?>" + id;
+            window.location = "<?php echo base_url('prodi/detail_pengajuan/hapus/'); ?>" + id + '/' + $('#last_tab').val();
         }
     });
 };
@@ -143,6 +150,8 @@ function hapus(id, standar) {
       $("ul.nav.nav-tabs li a").eq(var_last_tab-1).attr('class','nav-link active show');
       $("#standar_1").attr('class','tab-pane');
       $("#standar_"+var_last_tab).attr('class','tab-pane active');
+
+      pilih_tab(var_last_tab);
     }
 
   });

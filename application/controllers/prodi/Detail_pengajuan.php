@@ -26,6 +26,15 @@ class Detail_pengajuan extends CI_Controller {
 		$this->load->view("template/template", $data);
 	}
 
+	function hapus($id, $standar) {
+		$berkas = $this->db->get_where('berkas', ['id' => $id])->row();
+
+		$this->db->delete('berkas', ['id' => $id]);
+		unlink('uploads/' . $id);
+
+		redirect(base_url('prodi/detail_pengajuan/index/' . $berkas->pengajuan_id . '?tab=' . $standar));
+	}
+
 	function upload() {
 		$pengajuan = $this->db->get_where('pengajuan', ['id' => $this->input->post('pengajuan_id')])->row();
 		
