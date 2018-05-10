@@ -57,6 +57,9 @@
 						<th title="tipeborang">
 							Tipe Borang
 						</th>
+						<th title="persentase">
+							Persentase
+						</th>
 						<th title="Proses">
 							Proses
 						</th>
@@ -65,12 +68,22 @@
 				<tbody>
 					<?php
 					foreach ($data['pengajuan'] as $item) {
+						$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('tipeversi_id' => $item->tipeversi_id))->result());
+				        $jumlah_dokumen = count($this->db->get_where('berkas', array('pengajuan_id' => $item->id))->result());
+				        $persentase = number_format((float)$jumlah_dokumen != 0 ? $jumlah_dokumen / $jumlah_total_dokumen * 100 : 0, 2, '.', '');
 						?>
 						<tr>
 							<td><?php echo $this->pustaka->tanggal_indo($item->tanggal_pengajuan); ?></td>
 							<td><?php echo $item->tahun_borang; ?></td>
 							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
 							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
+							<td>
+								<div class="progress">
+									<div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $persentase; ?>%" aria-valuenow="<?php echo $persentase; ?>" aria-valuemin="0" aria-valuemax="100">
+										<?php echo $persentase; ?>%
+									</div>
+								</div>
+							</td>
 							<td>
 								<a href="<?php echo base_url('prodi/detail_pengajuan/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Detail Pengajuan">
 									<i class="la la-external-link"></i>
