@@ -28,7 +28,7 @@
 		<script src="<?php echo base_url('assets/assets/vendors/base/vendors.bundle.js') ?>" type="text/javascript"></script>
 		<script src="<?php echo base_url('assets/assets/demo/default/base/scripts.bundle.js') ?>" type="text/javascript"></script>
 		<!--end::Base Scripts -->
-		<link rel="shortcut icon" href="<?php echo base_url('assets/assets/demo/default/media/img/logo/favicon.ico'); ?>" />
+		<link rel="shortcut icon" href="<?php echo base_url('assets/gambar/Logo-BL.jpg'); ?>" />
 	</head>
 	<!-- end::Head -->
     <!-- end::Body -->
@@ -44,7 +44,7 @@
 							<div class="m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="<?php echo base_url(); ?>" class="m-brand__logo-wrapper">
-										<img alt="" src="<?php echo base_url('assets/assets/demo/default/media/img/logo/logo_default_dark.png'); ?>"/>
+										<img alt="" src="<?php echo base_url('assets/gambar/logo.png'); ?>"/>
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
