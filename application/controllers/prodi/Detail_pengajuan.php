@@ -56,6 +56,60 @@ class Detail_pengajuan extends CI_Controller {
 		$this->_push_file('uploads/' . $dokumen_id, $this->db->get_where('berkas', ['id' => $dokumen_id])->row()->nama);
 	}
 
+	function unduh_semua($pengajuan_id) {
+		$zip = new ZipArchive();
+
+		$filename = "temps/" . $this->session->id;
+
+		unlink($filename);
+
+		if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+		    exit("cannot open <$filename>\n");
+		}
+
+		$pengajuan = $this->db->get_where('pengajuan', ['id' => $pengajuan_id])->row();
+		
+		$tipeversi = $this->db->get_where('tipeversi', ['id' => $pengajuan->tipeversi_id])->row();
+
+		$versi = $this->db->get_where('versi', ['id' => $tipeversi->versi_id])->row();
+		
+		$unit = $this->db->get_where('unit', ['id' => $pengajuan->unit_id])->row();
+		// $nama_unit = $unit->unit == 1 ? "Universitas" : "Prodi";
+		if ($unit->unit == 1) {
+			$nama_unit = "Universitas";
+		} elseif ($unit->unit == 2) {
+			$nama_unit = "Prodi " . $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row()->nama;
+		} else {
+			redirect(base_url('logout'));
+		}
+
+		$berkas = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan_id])->result();
+		
+		foreach ($this->db->get_where('standar', ['tipeversi_id' => $pengajuan->tipeversi_id])->result() as $item) {
+
+			$id_standar = 0; $id_substandar = 0; $id_butir = 0;
+			foreach ($this->db->get_where('v_listdokumen', ['standar_id' => $item->id])->result() as $item2) {
+		        $standar = $id_standar == $item2->standar_id ? null : $item2->nomor_standar . ' ' . $item2->nama_standar;
+
+		        $substandar = $id_substandar == $item2->substandar_id ? null : $item2->nomor_substandar . ' ' . $item2->nama_substandar;
+
+		        $butir = $id_butir == $item2->butir_id ? null : $item2->nomor_butir . ' ' . $item2->nama_butir;
+
+		        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan->id, 'listdokumen_id' => $item2->id])->row();
+
+		        if ($berkas != null) {
+		        	$zip->addFile("uploads/" . $berkas->id, $standar . '/' . $substandar . '/' . $butir . '/' . $item2->keterangan . ' - ' . $berkas->nama);
+		        }
+		    }
+
+		}
+
+		$zip->close();
+
+		$this->_push_file($filename, "Borang " . $versi->nama . ' ' . $versi->tahun . ' ' . $tipeversi->tipe . ' ' . $nama_unit . ' ' . $pengajuan->tahun_borang . ' ' . $this->pustaka->tanggal_indo($pengajuan->tanggal_pengajuan) . '.zip');
+
+	}
+
 	private function _push_file($path, $name)
 	{
 	  // make sure it's a file before doing anything!
@@ -84,6 +138,5 @@ class Detail_pengajuan extends CI_Controller {
 	    exit();
 	  }
 	}
-
 
 }

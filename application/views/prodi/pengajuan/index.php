@@ -75,6 +75,9 @@
 								<a href="<?php echo base_url('prodi/detail_pengajuan/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Detail Pengajuan">
 									<i class="la la-external-link"></i>
 								</a>
+								<a href="<?php echo base_url('prodi/detail_pengajuan/unduh_semua/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Unduh Semua Berkas">
+									<i class="la la-download"></i>
+								</a>
 								<a href="<?php echo base_url('prodi/pengajuan/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
 									<i class="la la-edit"></i>
 								</a>
