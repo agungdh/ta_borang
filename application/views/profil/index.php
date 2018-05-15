@@ -67,7 +67,7 @@
 					if ($unit_raw != null) {
 						$unit = $this->db->get_where('unit', ['id' => $unit_raw])->row();
 
-						if ($unit == 1) {
+						if ($unit->unit == 1) {
 							$unit = "Universitas";
 						} else {
 							$unit = $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row()->nama;
@@ -76,7 +76,7 @@
 						$unit = null;
 					}
 					?>
-					<input required class="form-control m-input" type="text" value="<?php echo isset($data['user']) ? $data['user']->unit_id : null; ?>" id="unit" name="cdata[unit]" disabled>
+					<input required class="form-control m-input" type="text" value="<?php echo $unit; ?>" id="unit" name="cdata[unit]" disabled>
 				</div>
 			</div>
 			<div class="m-portlet__foot m-portlet__foot--fit">
