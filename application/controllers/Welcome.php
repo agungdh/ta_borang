@@ -10,8 +10,22 @@ class Welcome extends CI_Controller {
 		if ($this->session->login != true) {
 			$this->load->view("template/login");
 		} else {
-			$data['nav'] = "welcome/nav";
-			$data['isi'] = "welcome/index";
+			switch ($this->session->level) {
+				case 1:
+					$level = "admin";
+					break;
+				case 2:
+					$level = "dpm";
+					break;
+				case 3:
+					$level = "prodi";
+					break;
+				default:
+					redirect(base_url('logout'));
+					break;
+			}
+			$data['nav'] = $level . "/welcome/nav";
+			$data['isi'] = $level . "/welcome/index";
 			
 			$this->load->view("template/template", $data);
 		}
