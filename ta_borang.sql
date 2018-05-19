@@ -2,10 +2,10 @@
 -- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 08, 2018 at 08:16 PM
--- Server version: 10.1.29-MariaDB-6
--- PHP Version: 7.2.5-1+ubuntu18.04.1+deb.sury.org+1
+-- Host: 127.0.0.1
+-- Generation Time: May 19, 2018 at 09:47 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,6 +35,15 @@ CREATE TABLE `berkas` (
   `pengajuan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `berkas`
+--
+
+INSERT INTO `berkas` (`id`, `nama`, `listdokumen_id`, `pengajuan_id`) VALUES
+(43, 'installer_prefs.json', 8, 2),
+(44, 'pref_default_overrides', 1, 2),
+(45, 'installation_status.json', 3, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -54,7 +63,8 @@ CREATE TABLE `butir` (
 
 INSERT INTO `butir` (`id`, `nomor`, `nama`, `substandar_id`) VALUES
 (4, '1.1.4', 'satu satu satu jadi empat test', 2),
-(5, '1.1.2', 'satu satu dua', 2);
+(5, '1.1.2', 'satu satu dua', 2),
+(6, '12', '124wrsdf ', 3);
 
 -- --------------------------------------------------------
 
@@ -98,7 +108,8 @@ INSERT INTO `listdokumen` (`id`, `keterangan`, `butir_id`, `tipe_listdokumen_id`
 (3, 'file satu', 5, 4),
 (5, 'file tiga', 5, 5),
 (6, 'file dua', 5, 5),
-(7, 'test aja', 5, 4);
+(7, 'test aja', 5, 4),
+(8, 'test', 6, 4);
 
 -- --------------------------------------------------------
 
@@ -183,7 +194,8 @@ CREATE TABLE `substandar` (
 --
 
 INSERT INTO `substandar` (`id`, `nomor`, `nama`, `standar_id`) VALUES
-(2, '1.5', 'satu empat jadi lima', 4);
+(2, '1.5', 'satu empat jadi lima', 4),
+(3, '12', 'qrw rw', 2);
 
 -- --------------------------------------------------------
 
@@ -402,6 +414,7 @@ ALTER TABLE `tipe_listdokumen`
 --
 ALTER TABLE `unit`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `prodi_id_2` (`prodi_id`),
   ADD KEY `prodi_id` (`prodi_id`);
 
 --
@@ -425,13 +438,13 @@ ALTER TABLE `versi`
 -- AUTO_INCREMENT for table `berkas`
 --
 ALTER TABLE `berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `butir`
 --
 ALTER TABLE `butir`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `fakultas`
@@ -443,7 +456,7 @@ ALTER TABLE `fakultas`
 -- AUTO_INCREMENT for table `listdokumen`
 --
 ALTER TABLE `listdokumen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
@@ -467,7 +480,7 @@ ALTER TABLE `standar`
 -- AUTO_INCREMENT for table `substandar`
 --
 ALTER TABLE `substandar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tipeversi`
