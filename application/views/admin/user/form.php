@@ -52,6 +52,17 @@
 					</select>
 				</div>
 
+				<div class="form-group m-form__group">
+					<label for="unit">
+						Unit
+					</label>
+					<select class="form-control select2" id="unit" name="data[unit_id]">
+						<optgroup label="Universitas">
+							<option value="<?php echo $this->db->get_where('unit', ['unit' => 1])->row()->id; ?>">Universitas</option>
+						</optgroup>
+					</select>
+				</div>
+
 			</div>
 			<div class="m-portlet__foot m-portlet__foot--fit">
 				<div class="m-form__actions">
@@ -68,5 +79,38 @@
 </div>
 
 <script type="text/javascript">
-	$('.select2').select2();
+	$("#level").change(function(){
+		var terpilih = $("#level").val();
+
+		if (terpilih == 3) {
+			axios.get("<?php echo base_url('admin/user/ajax_unit'); ?>")
+			.then(function (response) {
+				$("#unit").prop('disabled', false);
+				$("#unit").html(response.data);
+				$("#unit").prop('selectedIndex', 0);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		} else {
+			clear_level();
+		}
+	});
+
+	function clear_level() {
+		axios.get("<?php echo base_url('admin/user/ajax_unit_universitas'); ?>")
+		.then(function (response) {
+			$("#unit").html(response.data);
+			$("#unit").prop('disabled', true);
+			$("#unit").prop('selectedIndex', -1);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	}
+
+	$(function() {
+		$('.select2').select2();
+		clear_level();
+	});
 </script>

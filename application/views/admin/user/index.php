@@ -90,11 +90,15 @@
 							</td>
 							<td>
 								<?php
-								if ($item->unit_id != null) {
-									$data_unit = $this->db->get_where('unit', ['id' => $item->unit_id])->row();
-									$unit = $this->db->get_where('prodi', ['id' => $data_unit->prodi_id])->row()->nama;
+								if ($item->level == 3) {
+									if ($item->unit_id != 1) {
+										$data_unit = $this->db->get_where('unit', ['id' => $item->unit_id])->row();
+										$unit = $this->db->get_where('prodi', ['id' => $data_unit->prodi_id])->row()->nama;
+									} else {
+										$unit = "Universitas";
+									}									
 								} else {
-									$unit = "Universitas";
+									$unit = null;
 								}
 								echo $unit;
 								?>
