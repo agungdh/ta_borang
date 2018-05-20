@@ -32,6 +32,7 @@
 		<!-- Non Template -->
 		<link rel="shortcut icon" href="<?php echo base_url('assets/gambar/Logo-BL.ico'); ?>" />
 		<script src="<?php echo base_url('assets/bower_components/chart.js/dist/Chart.bundle.min.js') ?>" type="text/javascript"></script>
+		<script src="<?php echo base_url('assets/bower_components/axios/dist/axios.min.js') ?>" type="text/javascript"></script>
 
 	</head>
 	<!-- end::Head -->
