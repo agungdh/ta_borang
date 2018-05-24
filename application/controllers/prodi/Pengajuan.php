@@ -21,7 +21,7 @@ class Pengajuan extends CI_Controller {
 	function index() {
 		$data['nav'] = "prodi/pengajuan/nav";
 		$data['isi'] = "prodi/pengajuan/index";
-		$data['data']['pengajuan'] = $this->db->get($this->table)->result();
+		$data['data']['pengajuan'] = $this->db->get_where($this->table, ['unit_id' => $this->session->unit_id])->result();
 		
 		$this->load->view("template/template", $data);
 	}
