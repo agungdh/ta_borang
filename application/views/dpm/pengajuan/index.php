@@ -78,6 +78,7 @@
 							}
 							?>
 							<td><?php echo $unit_string; ?></td>
+							<td><?php echo $item->tahun_borang; ?></td>
 							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
 							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
 							<td>
