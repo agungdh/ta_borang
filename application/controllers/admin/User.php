@@ -57,7 +57,7 @@ class User extends CI_Controller {
 
 	function tambah() {
 		$data['nav'] = "admin/user/nav";
-		$data['isi'] = "admin/user/form";
+		$data['isi'] = "admin/user/formtambah";
 		$data['aksi'] = "tambah";
 
 		$this->load->view("template/template", $data);
@@ -65,11 +65,29 @@ class User extends CI_Controller {
 
 	function ubah($id) {
 		$data['nav'] = "admin/user/nav";
-		$data['isi'] = "admin/user/form";
+		$data['isi'] = "admin/user/formubah";
 		$data['aksi'] = "ubah";
 		$data['data']['user'] = $this->db->get_where($this->table, ['id' => $id])->row();
 
 		$this->load->view("template/template", $data);
+	}
+
+	function ganti_password() {
+		foreach ($this->input->post('data') as $key => $value) {
+			if ($key == "password") {
+				$data[$key] = hash("sha512", $value);
+			} else {
+				$data[$key] = $value;
+			}
+		}
+
+		foreach ($this->input->post('where') as $key => $value) {
+			$where[$key] = $value;
+		}
+
+		$this->db->update($this->table, $data, $where);
+		
+		redirect(base_url('admin/user'));
 	}
 
 	function aksi_tambah() {
