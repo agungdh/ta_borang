@@ -37,6 +37,9 @@
 						<th title="tanggalpengajuan">
 							Tanggal Pengajuan
 						</th>
+						<th title="unit">
+							Unit
+						</th>
 						<th title="tahunborang">
 							Tahun Borang
 						</th>
@@ -63,7 +66,18 @@
 						?>
 						<tr>
 							<td><?php echo $this->pustaka->tanggal_indo($item->tanggal_pengajuan); ?></td>
-							<td><?php echo $item->tahun_borang; ?></td>
+							<?php
+							$unit = $this->db->get_where('unit', ['id' => $item->unit_id])->row();
+							$unit_level = $unit->unit;
+							if ($unit_level == 1) {
+								$unit_string = "Universitas";
+							} else {
+								$unit_prodi = $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row();
+								$unit_fakultas = $this->db->get_where('fakultas', ['id' => $unit_prodi->fakultas_id])->row();
+								$unit_string = $unit_fakultas->nama . ' - ' . $unit_prodi->nama;
+							}
+							?>
+							<td><?php echo $unit_string; ?></td>
 							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
 							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
 							<td>
