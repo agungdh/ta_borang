@@ -54,8 +54,8 @@
 						<th title="Level">
 							Level
 						</th>
-						<th title="Unit">
-							Unit
+						<th title="Prodi">
+							Prodi
 						</th>
 						<th title="Proses">
 							Proses
@@ -88,21 +88,7 @@
 								echo $level;
 								?>
 							</td>
-							<td>
-								<?php
-								if ($item->level == 3) {
-									if ($item->unit_id != 1) {
-										$data_unit = $this->db->get_where('unit', ['id' => $item->unit_id])->row();
-										$unit = $this->db->get_where('prodi', ['id' => $data_unit->prodi_id])->row()->nama;
-									} else {
-										$unit = "Universitas";
-									}									
-								} else {
-									$unit = null;
-								}
-								echo $unit;
-								?>
-							</td>
+							<td><?php echo $item->level == 3 ? $this->db->get_where('prodi', ['id' => $item->prodi_id])->row()->nama : null; ?></td>
 							<td>
 								<a href="<?php echo base_url('admin/user/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
 									<i class="la la-edit"></i>

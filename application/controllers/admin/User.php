@@ -26,27 +26,14 @@ class User extends CI_Controller {
 		$this->load->view("template/template", $data);
 	}
 
-	function ajax_unit_universitas() {
-		?>
-		<optgroup label="Universitas">
-				<option value="<?php echo $this->db->get_where('unit', ['unit' => 1])->row()->id; ?>">Universitas</option>
-		</optgroup>
-		<?php
-	}
-
 	function ajax_unit() {
-		?>
-		<optgroup label="Universitas">
-				<option value="<?php echo $this->db->get_where('unit', ['unit' => 1])->row()->id; ?>">Universitas</option>
-		</optgroup>
-		<?php
 		foreach ($this->db->get('fakultas')->result() as $item) {
 			?>
 			<optgroup label="<?php echo $item->nama; ?>">
 				<?php
-				foreach ($this->db->get_where('v_unit', ['fakultas_id' => $item->id])->result() as $item2) {
+				foreach ($this->db->get_where('prodi', ['fakultas_id' => $item->id])->result() as $item2) {
 				 	?>
-				 	<option value="<?php echo $item2->id; ?>"><?php echo $item2->nama_prodi; ?></option>
+				 	<option value="<?php echo $item2->id; ?>"><?php echo $item2->nama; ?></option>
 				 	<?php
 				 }
 				?>

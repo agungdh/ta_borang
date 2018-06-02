@@ -46,37 +46,26 @@
 				</div>
 
 				<div class="form-group m-form__group">
-					<label for="unit">
-						Unit
+					<label for="prodi">
+						Prodi
 					</label>
-					<select class="form-control select2" id="unit" name="data[unit_id]">
+					<select class="form-control select2" id="unit" name="data[prodi_id]">
 						<?php
-						if ($data['user']->level != 3) {
-							?>
-							<optgroup label="Universitas">
-								<option value="<?php echo $this->db->get_where('unit', ['unit' => 1])->row()->id; ?>">Universitas</option>
-							</optgroup>
-							<?php
-						} else {
-							?>
-							<optgroup label="Universitas">
-									<option value="<?php echo $this->db->get_where('unit', ['unit' => 1])->row()->id; ?>">Universitas</option>
-							</optgroup>
-							<?php
+						if ($data['user']->level == 3) {
 							foreach ($this->db->get('fakultas')->result() as $item) {
 								?>
 								<optgroup label="<?php echo $item->nama; ?>">
 									<?php
-									foreach ($this->db->get_where('v_unit', ['fakultas_id' => $item->id])->result() as $item2) {
-										if ($item2->id == $data['user']->unit_id) {
+									foreach ($this->db->get_where('prodi', ['fakultas_id' => $item->id])->result() as $item2) {
+									 	if ($data['user']->prodi_id == $item2->id) {
 										 	?>
-										 	<option selected value="<?php echo $item2->id; ?>"><?php echo $item2->nama_prodi; ?></option>
+										 	<option selected value="<?php echo $item2->id; ?>"><?php echo $item2->nama; ?></option>
 										 	<?php
-										} else {
-											?>
-										 	<option value="<?php echo $item2->id; ?>"><?php echo $item2->nama_prodi; ?></option>
+									 	} else {
+									 		?>
+										 	<option value="<?php echo $item2->id; ?>"><?php echo $item2->nama; ?></option>
 										 	<?php
-										}
+									 	}
 									 }
 									?>
 								</optgroup>
@@ -156,30 +145,20 @@
 		var terpilih = $("#level").val();
 
 		if (terpilih == 3) {
-			axios.get("<?php echo base_url('admin/user/ajax_unit'); ?>")
-			.then(function (response) {
+			$.get("<?php echo base_url('admin/user/ajax_unit'); ?>", function(data, status){
 				$("#unit").prop('disabled', false);
-				$("#unit").html(response.data);
-				$("#unit").prop('selectedIndex', 0);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+				$("#unit").html(data);
+				$('.select2').select2();
+            });
 		} else {
 			clear_level();
 		}
 	});
 
 	function clear_level() {
-		axios.get("<?php echo base_url('admin/user/ajax_unit_universitas'); ?>")
-		.then(function (response) {
-			$("#unit").html(response.data);
+			$("#unit").html('');
 			$("#unit").prop('disabled', true);
 			$("#unit").prop('selectedIndex', -1);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
 	}
 
 	$(function() {
