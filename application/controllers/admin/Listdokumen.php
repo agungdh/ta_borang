@@ -25,8 +25,7 @@ class Listdokumen extends CI_Controller {
 		$data['data']['butir'] = $this->db->get_where('butir', ['id' => $butir_id])->row();
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $data['data']['butir']->substandar_id])->row();
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 		
 		$this->load->view("template/template", $data);
 	}
@@ -38,8 +37,7 @@ class Listdokumen extends CI_Controller {
 		$data['data']['butir'] = $this->db->get_where('butir', ['id' => $butir_id])->row();
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $data['data']['butir']->substandar_id])->row();
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 		$data['data']['tipe_listdokumen'] = $this->db->get('tipe_listdokumen')->result();
 
 		$this->load->view("template/template", $data);
@@ -53,8 +51,7 @@ class Listdokumen extends CI_Controller {
 		$data['data']['butir'] = $this->db->get_where('butir', ['id' => $data['data']['listdokumen']->butir_id])->row();
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $data['data']['butir']->substandar_id])->row();
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 		$data['data']['tipe_listdokumen'] = $this->db->get('tipe_listdokumen')->result();
 
 		$this->load->view("template/template", $data);
