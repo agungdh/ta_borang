@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2018 at 09:47 AM
+-- Generation Time: Jun 02, 2018 at 06:53 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -83,7 +83,8 @@ CREATE TABLE `fakultas` (
 
 INSERT INTO `fakultas` (`id`, `nama`) VALUES
 (4, 'Fakultas Teknik Informatika'),
-(5, 'Fakultas Ekonomi');
+(5, 'Fakultas Ekonomi'),
+(6, 'test');
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,9 @@ CREATE TABLE `pengajuan` (
 --
 
 INSERT INTO `pengajuan` (`id`, `tanggal_pengajuan`, `tahun_borang`, `unit_id`, `tipeversi_id`) VALUES
-(2, '2018-05-08', 2011, 7, 5);
+(2, '2018-05-08', 2011, 7, 5),
+(3, '2018-05-21', 2019, 7, 5),
+(4, '2018-05-24', 2019, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -240,29 +243,6 @@ INSERT INTO `tipe_listdokumen` (`id`, `tipe`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unit`
---
-
-CREATE TABLE `unit` (
-  `id` int(11) NOT NULL,
-  `unit` int(11) NOT NULL COMMENT '1=universitas&2=prodi',
-  `prodi_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `unit`
---
-
-INSERT INTO `unit` (`id`, `unit`, `prodi_id`) VALUES
-(1, 1, NULL),
-(7, 2, 13),
-(8, 2, 14),
-(9, 2, 15),
-(10, 2, 16);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -272,16 +252,20 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `level` int(11) NOT NULL,
-  `unit_id` int(11) DEFAULT NULL
+  `prodi_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `unit_id`) VALUES
+INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `prodi_id`) VALUES
 (1, 'Administrator', 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 1, NULL),
-(2, 'Operator FTI 1', 'opfti1', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3, 7);
+(2, 'Operator FTI 1', 'opfti1', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3, 13),
+(4, 'Test Admin', 'testadmin', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 1, NULL),
+(5, 'Test DPM', 'testdpm', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 2, 16),
+(6, 'Test Fe', 'testfe', '4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a', 3, 15),
+(12, 'cobafti1', 'cobafti1', '82652b6d108ee60bbfddccd3e220e1135a6aa793c8103430f64b0c1861ff5d37de92b8980b63b7af42115edd0168702317a88da72bf308d59b6524c156703a84', 3, 13);
 
 -- --------------------------------------------------------
 
@@ -410,19 +394,11 @@ ALTER TABLE `tipe_listdokumen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `unit`
---
-ALTER TABLE `unit`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `prodi_id_2` (`prodi_id`),
-  ADD KEY `prodi_id` (`prodi_id`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `unit_id` (`unit_id`);
+  ADD KEY `prodi_id` (`prodi_id`);
 
 --
 -- Indexes for table `versi`
@@ -450,7 +426,7 @@ ALTER TABLE `butir`
 -- AUTO_INCREMENT for table `fakultas`
 --
 ALTER TABLE `fakultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `listdokumen`
@@ -462,7 +438,7 @@ ALTER TABLE `listdokumen`
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `prodi`
@@ -495,16 +471,10 @@ ALTER TABLE `tipe_listdokumen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `unit`
---
-ALTER TABLE `unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `versi`
@@ -568,16 +538,10 @@ ALTER TABLE `tipeversi`
   ADD CONSTRAINT `tipeversi_ibfk_1` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
 
 --
--- Constraints for table `unit`
---
-ALTER TABLE `unit`
-  ADD CONSTRAINT `unit_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`);
-
---
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
