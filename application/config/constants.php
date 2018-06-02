@@ -89,4 +89,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
  */
 // define('blah', 'hello mum!');
 // $myglobalvar = 'hey there';
-define("JUDUL_APLIKASI", "APLIKASI PENGUMPULAN DATA PENGAJUAN BORANG AKREDITASI");
+define("JUDUL_APLIKASI", "APLIKASI PENGUMPULAN DATA PENGAJUAN AKREDITASI");
