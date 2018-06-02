@@ -18,7 +18,7 @@
 			<div class="m-portlet__body">
 				<div>
 					<input type="hidden" name="where[id]" value="<?php echo isset($data['standar']) ? $data['standar']->id : null; ?>">
-					<input type="hidden" name="data[tipeversi_id]" value="<?php echo isset($data['tipeborang']) ? $data['tipeborang']->id : null; ?>">
+					<input type="hidden" name="data[versi_id]" value="<?php echo isset($data['versi']) ? $data['versi']->id : null; ?>">
 				</div>
 
 				<div class="form-group m-form__group">
@@ -39,7 +39,7 @@
 			<div class="m-portlet__foot m-portlet__foot--fit">
 				<div class="m-form__actions">
 					<input type="submit" class="btn btn-primary" value="Simpan">
-					<a href="<?php echo base_url('admin/standar/index/' . $data['tipeborang']->id); ?>" class="btn btn-secondary">
+					<a href="<?php echo base_url('admin/standar/index/' . $data['versi']->id); ?>" class="btn btn-secondary">
 						Kembali
 					</a>
 				</div>

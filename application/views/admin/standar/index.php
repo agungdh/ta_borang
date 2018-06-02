@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="<?php echo base_url('admin/standar/tambah/' . $data['tipeborang']->id); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+						<a href="<?php echo base_url('admin/standar/tambah/' . $data['versi']->id); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
 							<span>
 								<i class="la la-plus"></i>
 								<span>
