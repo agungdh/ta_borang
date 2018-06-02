@@ -22,9 +22,8 @@ class Substandar extends CI_Controller {
 		$data['nav'] = "admin/substandar/nav";
 		$data['isi'] = "admin/substandar/index";
 		$data['data']['substandar'] = $this->db->get_where($this->table, ['standar_id' => $standar_id])->result();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();;
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 		
 		$this->load->view("template/template", $data);
 	}
@@ -33,9 +32,8 @@ class Substandar extends CI_Controller {
 		$data['nav'] = "admin/substandar/nav";
 		$data['isi'] = "admin/substandar/form";
 		$data['aksi'] = "tambah";
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();;
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 
 		$this->load->view("template/template", $data);
 	}
@@ -45,9 +43,8 @@ class Substandar extends CI_Controller {
 		$data['isi'] = "admin/substandar/form";
 		$data['aksi'] = "ubah";
 		$data['data']['substandar'] = $this->db->get_where($this->table, ['id' => $id])->row();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
-		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
+		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();;
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 
 		$this->load->view("template/template", $data);
 	}
