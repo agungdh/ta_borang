@@ -8,36 +8,36 @@
 						<i class="la la-gear"></i>
 					</span>
 					<h3 class="m-portlet__head-text">
-						<?php echo ucwords($aksi); ?> Borang
+						<?php echo ucwords($aksi); ?> Standar Akreditasi
 					</h3>
 				</div>
 			</div>
 		</div>
 		<!--begin::Form-->
-		<form class="m-form m-form--fit m-form--label-align-right" method="post" action="<?php echo base_url('admin/borang/aksi_' . $aksi); ?>">
+		<form class="m-form m-form--fit m-form--label-align-right" method="post" action="<?php echo base_url('admin/versi/aksi_' . $aksi); ?>">
 			<div class="m-portlet__body">
 				<div>
-					<input type="hidden" name="where[id]" value="<?php echo isset($data['borang']) ? $data['borang']->id : null; ?>">
+					<input type="hidden" name="where[id]" value="<?php echo isset($data['versi']) ? $data['versi']->id : null; ?>">
 				</div>
 
 				<div class="form-group m-form__group">
-					<label for="borang">
-						Borang
+					<label for="nama">
+						Versi
 					</label>
-					<input required class="form-control m-input" type="text" value="<?php echo isset($data['borang']) ? $data['borang']->nama : null; ?>" id="borang" name="data[nama]">
+					<input required class="form-control m-input" type="text" value="<?php echo isset($data['versi']) ? $data['versi']->nama : null; ?>" id="nama" name="data[nama]">
 				</div>
 
 				<div class="form-group m-form__group">
 					<label for="tahun">
 						Tahun
 					</label>
-					<input required class="form-control m-input" type="number" min="1900" max="2900" value="<?php echo isset($data['borang']) ? $data['borang']->tahun : null; ?>" id="tahun" name="data[tahun]">
+					<input required class="form-control m-input" type="number" min="1900" max="2900" value="<?php echo isset($data['versi']) ? $data['versi']->tahun : null; ?>" id="tahun" name="data[tahun]">
 				</div>
 			</div>
 			<div class="m-portlet__foot m-portlet__foot--fit">
 				<div class="m-form__actions">
 					<input type="submit" class="btn btn-primary" value="Simpan">
-					<a href="<?php echo base_url('admin/borang'); ?>" class="btn btn-secondary">
+					<a href="<?php echo base_url('admin/versi'); ?>" class="btn btn-secondary">
 						Kembali
 					</a>
 				</div>

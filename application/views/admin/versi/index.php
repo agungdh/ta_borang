@@ -4,7 +4,7 @@
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
-						Data Standar
+						Data Standar Akreditasi
 					</h3>
 				</div>
 			</div>
@@ -28,11 +28,11 @@
 						</div>
 					</div>
 					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="<?php echo base_url('dpm/standar/tambah/' . $data['tipeborang']->id); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+						<a href="<?php echo base_url('admin/versi/tambah'); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
 							<span>
 								<i class="la la-plus"></i>
 								<span>
-									Standar
+									Standar Akreditasi
 								</span>
 							</span>
 						</a>
@@ -45,11 +45,11 @@
 			<table class="m-datatable" id="html_table" width="100%">
 				<thead>
 					<tr>
-						<th title="nomor">
-							Nomor
+						<th title="Versi">
+							Versi
 						</th>
-						<th title="standar">
-							Standar
+						<th title="tahun">
+							Tahun
 						</th>
 						<th title="Proses">
 							Proses
@@ -58,16 +58,16 @@
 				</thead>
 				<tbody>
 					<?php
-					foreach ($data['standar'] as $item) {
+					foreach ($data['versi'] as $item) {
 						?>
 						<tr>
-							<td><?php echo $item->nomor; ?></td>
 							<td><?php echo $item->nama; ?></td>
+							<td><?php echo $item->tahun; ?></td>
 							<td>
-								<a href="<?php echo base_url('dpm/substandar/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Sub Standar">
+								<a href="<?php echo base_url('admin/standar/index/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Standar">
 									<i class="la la-external-link"></i>
 								</a>
-								<a href="<?php echo base_url('dpm/standar/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
+								<a href="<?php echo base_url('admin/versi/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
 									<i class="la la-edit"></i>
 								</a>
 								<a onclick="hapus('<?php echo $item->id; ?>')" href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Hapus">
@@ -96,7 +96,7 @@ function hapus(id) {
         confirmButtonText: 'Hapus!'
     }).then(function(result) {
         if (result.value) {
-            window.location = "<?php echo base_url('dpm/standar/aksi_hapus/'); ?>" + id;
+            window.location = "<?php echo base_url('admin/versi/aksi_hapus/'); ?>" + id;
         }
     });
 };
@@ -134,6 +134,5 @@ var DatatableHtmlTableDemo = function() {
 
 jQuery(document).ready(function() {
   DatatableHtmlTableDemo.init();
-  $('.m-datatable').mDatatable('sort', 'Nomor');
 });
 </script>

@@ -22,7 +22,6 @@ class Standar extends CI_Controller {
 		$data['nav'] = "admin/standar/nav";
 		$data['isi'] = "admin/standar/index";
 		$data['data']['standar'] = $this->db->get_where($this->table, ['tipeversi_id' => $tipeversi_id])->result();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $tipeversi_id])->row();
 		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
 
 		$this->load->view("template/template", $data);
@@ -32,7 +31,6 @@ class Standar extends CI_Controller {
 		$data['nav'] = "admin/standar/nav";
 		$data['isi'] = "admin/standar/form";
 		$data['aksi'] = "tambah";
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $tipeversi_id])->row();
 		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
 
 
@@ -43,8 +41,7 @@ class Standar extends CI_Controller {
 		$data['nav'] = "admin/standar/nav";
 		$data['isi'] = "admin/standar/form";
 		$data['aksi'] = "ubah";
-		$data['data']['standar'] = $this->db->get_where($this->table, ['id' => $id])->row();
-		$data['data']['tipeborang'] = $this->db->get_where('tipeversi', ['id' => $data['data']['standar']->tipeversi_id])->row();
+		$data['data']['standar'] = $this->db->get_where($this->table, ['id' => $id])->row();;
 		$data['data']['borang'] = $this->db->get_where('versi', ['id' => $data['data']['tipeborang']->versi_id])->row();
 
 		$this->load->view("template/template", $data);
@@ -57,7 +54,7 @@ class Standar extends CI_Controller {
 
 		$this->db->insert($this->table, $data);
 
-		redirect(base_url('admin/standar/index/' . $data['tipeversi_id']));
+		redirect(base_url('admin/standar/index/' . $data['standar_akreditasi']));
 	}
 
 	function aksi_ubah() {
@@ -71,14 +68,14 @@ class Standar extends CI_Controller {
 
 		$this->db->update($this->table, $data, $where);
 
-		redirect(base_url('admin/standar/index/' . $data['tipeversi_id']));
+		redirect(base_url('admin/standar/index/' . $data['standar_akreditasi']));
 	}
 
 	function aksi_hapus($id) {
-		$tipeversi_id = $this->db->get_where($this->table, ['id' => $id])->row()->tipeversi_id;
+		$standar_akreditasi = $this->db->get_where($this->table, ['id' => $id])->row()->versi_id;
 		$this->db->delete($this->table, ['id' => $id]);
 
-		redirect(base_url('admin/standar/index/' . $tipeversi_id));
+		redirect(base_url('admin/standar/index/' . $standar_akreditasi));
 	}
 
 }

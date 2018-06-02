@@ -12,12 +12,12 @@
 </li>
 
 <li class="m-menu__item " aria-haspopup="true" >
-	<a  href="<?php echo base_url('admin/borang'); ?>" class="m-menu__link ">
+	<a  href="<?php echo base_url('admin/versi'); ?>" class="m-menu__link ">
 		<i class="m-menu__link-icon flaticon-line-graph"></i>
 		<span class="m-menu__link-title">
 			<span class="m-menu__link-wrap">
 				<span class="m-menu__link-text">
-					Borang
+					Standar Akreditasi
 				</span>
 			</span>
 		</span>
