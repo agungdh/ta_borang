@@ -2,7 +2,18 @@
 	-
 </li>
 <li class="m-nav__item">
-	<a href="<?php echo base_url('admin/pengajuan'); ?>" class="m-nav__link" data-toggle="m-tooltip" title="<?php echo $data['pengajuan']->tahun_borang . ' - ' . $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $data['pengajuan']->tipeversi_id])->row()->versi_id])->row()->nama . ' - ' . $this->db->get_where('tipeversi', ['id' => $data['pengajuan']->tipeversi_id])->row()->tipe; ?>">
+	<?php
+	$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('versi_id' => $data['pengajuan']->versi_id))->result());
+    $jumlah_dokumen = count($this->db->get_where('berkas', array('pengajuan_id' => $data['pengajuan']->id))->result());
+    $persentase = number_format((float)$jumlah_dokumen != 0 ? $jumlah_dokumen / $jumlah_total_dokumen * 100 : 0, 2, '.', '');
+
+	$prodi = $this->db->get_where('prodi', ['id' => $data['pengajuan']->prodi_id])->row();
+	$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
+	$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
+
+	$versi = $this->db->get_where('versi', ['id' => $data['pengajuan']->versi_id])->row();
+	?>
+	<a href="<?php echo base_url('admin/pengajuan'); ?>" class="m-nav__link" data-toggle="m-tooltip" title="<?php echo $this->pustaka->tanggal_indo($data['pengajuan']->tanggal_pengajuan) . ' - ' . $fakultas_prodi . ' - ' . $data['pengajuan']->tahun_usulan . ' - ' . $versi->nama . ' (' . $versi->tahun . ')' . ' - ' . $persentase . '%'; ?>">
 		<span class="m-nav__link-text">
 			Pengajuan
 		</span>
