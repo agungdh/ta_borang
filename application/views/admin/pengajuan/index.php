@@ -40,14 +40,11 @@
 						<th title="unit">
 							Unit
 						</th>
-						<th title="tahunborang">
-							Tahun Borang
+						<th title="tahunusulan">
+							Tahun Usulan
 						</th>
 						<th title="borang">
 							Borang
-						</th>
-						<th title="tipeborang">
-							Tipe Borang
 						</th>
 						<th title="persentase">
 							Persentase
@@ -60,27 +57,23 @@
 				<tbody>
 					<?php
 					foreach ($data['pengajuan'] as $item) {
-						$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('tipeversi_id' => $item->tipeversi_id))->result());
+						$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('versi_id' => $item->versi_id))->result());
 				        $jumlah_dokumen = count($this->db->get_where('berkas', array('pengajuan_id' => $item->id))->result());
 				        $persentase = number_format((float)$jumlah_dokumen != 0 ? $jumlah_dokumen / $jumlah_total_dokumen * 100 : 0, 2, '.', '');
 						?>
 						<tr>
 							<td><?php echo $this->pustaka->tanggal_indo($item->tanggal_pengajuan); ?></td>
 							<?php
-							$unit = $this->db->get_where('unit', ['id' => $item->unit_id])->row();
-							$unit_level = $unit->unit;
-							if ($unit_level == 1) {
-								$unit_string = "Universitas";
-							} else {
-								$unit_prodi = $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row();
-								$unit_fakultas = $this->db->get_where('fakultas', ['id' => $unit_prodi->fakultas_id])->row();
-								$unit_string = $unit_fakultas->nama . ' - ' . $unit_prodi->nama;
-							}
+								$prodi = $this->db->get_where('prodi', ['id' => $item->prodi_id])->row();
+								$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
+								$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
 							?>
-							<td><?php echo $unit_string; ?></td>
-							<td><?php echo $item->tahun_borang; ?></td>
-							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
-							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
+							<td><?php echo $fakultas_prodi; ?></td>
+							<td><?php echo $item->tahun_usulan; ?></td>
+							<?php
+							$versi = $this->db->get_where('versi', ['id' => $item->versi_id])->row();
+							?>
+							<td><?php echo $versi->nama . ' - ' . $versi->tahun; ?></td>
 							<td>
 								<div class="progress">
 									<div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $persentase; ?>%" aria-valuenow="<?php echo $persentase; ?>" aria-valuemin="0" aria-valuemax="100">
