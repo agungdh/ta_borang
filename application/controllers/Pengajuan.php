@@ -15,7 +15,12 @@ class Pengajuan extends CI_Controller {
 	function index() {
 		$data['nav'] = "pengajuan/nav";
 		$data['isi'] = "pengajuan/index";
-		$data['data']['pengajuan'] = $this->db->get($this->table)->result();
+
+		if ($this->session->level != 3) {
+			$data['data']['pengajuan'] = $this->db->get($this->table)->result();
+		} else {
+			$data['data']['pengajuan'] = $this->db->get_where($this->table, ['prodi_id' => $this->session->prodi_id])->result();
+		}
 		
 		$this->load->view("template/template", $data);
 	}

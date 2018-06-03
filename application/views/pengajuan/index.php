@@ -41,12 +41,18 @@ $flashdata = $this->session->flashdata('data');
 						<th title="tanggalpengajuan">
 							Tanggal Pengajuan
 						</th>
-						<th title="fakultas">
-							Fakultas
-						</th>
-						<th title="prodi">
-							Prodi
-						</th>
+						<?php
+						if ($this->session->level != 3) {
+							?>
+							<th title="fakultas">
+								Fakultas
+							</th>
+							<th title="prodi">
+								Prodi
+							</th>
+							<?php
+						}
+						?>
 						<th title="tahunusulan">
 							Tahun Usulan
 						</th>
@@ -75,8 +81,14 @@ $flashdata = $this->session->flashdata('data');
 								$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
 								$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
 							?>
-							<td><?php echo $fakultas->nama; ?></td>
-							<td><?php echo $prodi->nama; ?></td>
+							<?php
+							if ($this->session->level != 3) {
+								?>
+								<td><?php echo $fakultas->nama; ?></td>
+								<td><?php echo $prodi->nama; ?></td>
+								<?php
+							}
+							?>
 							<td><?php echo $item->tahun_usulan; ?></td>
 							<?php
 							$versi = $this->db->get_where('versi', ['id' => $item->versi_id])->row();
