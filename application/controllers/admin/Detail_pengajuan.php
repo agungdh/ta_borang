@@ -104,9 +104,18 @@ class Detail_pengajuan extends CI_Controller {
 		}
 
 		$zip->close();
-		// ob_clean();
 
-		// $this->_push_file($filename, "Borang " . $versi->nama . ' ' . $versi->tahun . ' ' . $tipeversi->tipe . ' ' . $nama_unit . ' ' . $pengajuan->tahun_borang . ' ' . $this->pustaka->tanggal_indo($pengajuan->tanggal_pengajuan) . '.zip');
+		$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('versi_id' => $pengajuan->versi_id))->result());
+	    $jumlah_dokumen = count($this->db->get_where('berkas', array('pengajuan_id' => $pengajuan->id))->result());
+	    $persentase = number_format((float)$jumlah_dokumen != 0 ? $jumlah_dokumen / $jumlah_total_dokumen * 100 : 0, 2, '.', '');
+
+		$prodi = $this->db->get_where('prodi', ['id' => $pengajuan->prodi_id])->row();
+		$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
+		$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
+
+		$versi = $this->db->get_where('versi', ['id' => $pengajuan->versi_id])->row();
+
+		$this->_push_file($filename, $this->pustaka->tanggal_indo($pengajuan->tanggal_pengajuan) . ' - ' . $fakultas_prodi . ' - ' . $pengajuan->tahun_usulan . ' - ' . $versi->nama . ' (' . $versi->tahun . ')' . ' - ' . $persentase . '%' . '.zip');
 
 	}
 
