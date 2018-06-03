@@ -13,11 +13,25 @@
 
 	$versi = $this->db->get_where('versi', ['id' => $data['pengajuan']->versi_id])->row();
 	?>
-	<a href="<?php echo base_url('pengajuan'); ?>" class="m-nav__link" data-toggle="m-tooltip" title="<?php echo $this->pustaka->tanggal_indo($data['pengajuan']->tanggal_pengajuan) . ' - ' . $fakultas_prodi . ' - ' . $data['pengajuan']->tahun_usulan . ' - ' . $versi->nama . ' (' . $versi->tahun . ')' . ' - ' . $persentase . '%'; ?>">
-		<span class="m-nav__link-text">
-			Pengajuan
-		</span>
-	</a>
+	<?php
+	if ($this->session->level != 3) {
+		?>
+		<a href="<?php echo base_url('pengajuan'); ?>" class="m-nav__link" data-toggle="m-tooltip" title="<?php echo $this->pustaka->tanggal_indo($data['pengajuan']->tanggal_pengajuan) . ' - ' . $fakultas_prodi . ' - ' . $data['pengajuan']->tahun_usulan . ' - ' . $versi->nama . ' (' . $versi->tahun . ')' . ' - ' . $persentase . '%'; ?>">
+			<span class="m-nav__link-text">
+				Pengajuan
+			</span>
+		</a>
+		<?php
+	} else {
+		?>
+		<a href="<?php echo base_url('pengajuan'); ?>" class="m-nav__link" data-toggle="m-tooltip" title="<?php echo $this->pustaka->tanggal_indo($data['pengajuan']->tanggal_pengajuan) . ' - ' . $data['pengajuan']->tahun_usulan . ' - ' . $versi->nama . ' (' . $versi->tahun . ')' . ' - ' . $persentase . '%'; ?>">
+			<span class="m-nav__link-text">
+				Pengajuan
+			</span>
+		</a>
+		<?php
+	}
+	?>
 </li>
 
 <li class="m-nav__separator">
