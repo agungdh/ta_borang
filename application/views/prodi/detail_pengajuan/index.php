@@ -17,7 +17,7 @@
 				<ul id="naver" class="nav nav-tabs" role="tablist">
 					<?php
 					$this->db->order_by('nomor');
-					$this->db->where(['tipeversi_id' => $data['pengajuan']->tipeversi_id]);
+					$this->db->where(['versi_id' => $data['pengajuan']->versi_id]);
 					foreach ($this->db->get('standar')->result() as $item) {
 						if ($item->nomor == 1) {
 				        	$status = "active show";
@@ -38,7 +38,7 @@
 					<input class="btn btn-success" type="submit" name="submit" value="Submit">
       				<input class="btn btn-success pull-right" type="submit" name="submit" value="Submit">
 					<?php
-					foreach ($this->db->get_where('standar', ['tipeversi_id' => $data['pengajuan']->tipeversi_id])->result() as $item) {
+					foreach ($this->db->get_where('standar', ['versi_id' => $data['pengajuan']->versi_id])->result() as $item) {
 						if ($item->nomor == 1) {
 			            	$status = "active show";
 			          	} else {
@@ -68,7 +68,7 @@
 
 								        $butir = $id_butir == $item2->butir_id ? null : $item2->nomor_butir . ' ' . $item2->nama_butir;
 
-								        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'listdokumen_id' => $item2->id])->row();
+								        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'listdokumen_id' => $item2->listdokumen_id])->row();
 
 								        if ($berkas != null) {
         								        if (!file_exists('uploads/' . $berkas->id)) {
@@ -81,16 +81,12 @@
 											<td><?php echo $standar; ?></td>
 											<td><?php echo $substandar; ?></td>
 											<td><?php echo $butir; ?></td>
-											<td><?php echo $item2->keterangan; ?></td>
+											<td><?php echo $item2->keterangan_listdokumen; ?></td>
 											<td><?php echo $this->db->get_where('tipe_listdokumen', ['id' => $item2->tipe_listdokumen_id])->row()->tipe; ?></td>
 											<td>
 												<?php 
 												if ($berkas != null) {
 													?>
-													<!-- <a class="btn btn-danger btn-xs" onclick="hapus('<?php echo $item->id; ?>')"><i class="la la-trash"></i> </a> -->
-													<a onclick="hapus('<?php echo $berkas->id; ?>')" href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Hapus" onclick="hapus('<?php echo $item->id; ?>')">
-														<i class="la la-trash"></i>
-													</a>
 													<a href="<?php echo base_url('prodi/detail_pengajuan/unduh/' . $berkas->id); ?>"><?php echo $berkas->nama; ?></a>
 													<?php
 												} else {
@@ -101,7 +97,7 @@
 												?>
 											</td>
 											<td>
-												<input type="file" name="dokumen[<?php echo $item2->id; ?>]">
+												<input type="file" name="dokumen[<?php echo $item2->listdokumen_id; ?>]">
 											</td>
 										</tr>
 										<?php
@@ -115,7 +111,7 @@
 					}
 					?>
 					<input class="btn btn-success" type="submit" name="submit" value="Submit">
-        			<input class="btn btn-success pull-right" type="submit" name="submit" value="Submit">
+      				<input class="btn btn-success pull-right" type="submit" name="submit" value="Submit">
 				</div>			
 			</div>
 		</form>

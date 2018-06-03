@@ -53,6 +53,7 @@
 										<th>List Dokumen</th>
 										<th>Tipe Dokumen</th>
 										<th>Dokumen</th>
+										<th>Upload</th>
 									</tr>
 								</thead>
 								<tbody>

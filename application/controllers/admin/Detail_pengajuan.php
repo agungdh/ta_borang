@@ -38,11 +38,11 @@ class Detail_pengajuan extends CI_Controller {
 	function upload() {
 		$pengajuan = $this->db->get_where('pengajuan', ['id' => $this->input->post('pengajuan_id')])->row();
 		
-		foreach ($this->db->get_where('v_listdokumen', ['tipeversi_id' => $pengajuan->tipeversi_id])->result() as $item) {
-			if ($_FILES['dokumen']['size'][$item->id] != 0){
+		foreach ($this->db->get_where('v_listdokumen', ['versi_id' => $pengajuan->versi_id])->result() as $item) {
+			if ($_FILES['dokumen']['size'][$item->listdokumen_id] != 0){
 
 				$berkas['pengajuan_id'] = $pengajuan->id;
-				$berkas['listdokumen_id'] = $item->id;
+				$berkas['listdokumen_id'] = $item->listdokumen_id;
 				
 				$berkas_lama = $this->db->get_where('berkas', $berkas)->row();
 				if ($berkas_lama != null) {
@@ -50,11 +50,11 @@ class Detail_pengajuan extends CI_Controller {
 					unlink('uploads/' . $berkas_lama->id);
 				}
 
-				$berkas['nama'] = $_FILES['dokumen']['name'][$item->id];
+				$berkas['nama'] = $_FILES['dokumen']['name'][$item->listdokumen_id];
 
 				$this->db->insert('berkas', $berkas);
 
-				move_uploaded_file($_FILES['dokumen']['tmp_name'][$item->id], 'uploads/' . $this->db->insert_id());
+				move_uploaded_file($_FILES['dokumen']['tmp_name'][$item->listdokumen_id], 'uploads/' . $this->db->insert_id());
 			}
 		}
 

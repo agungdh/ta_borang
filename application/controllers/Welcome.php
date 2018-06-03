@@ -40,7 +40,7 @@ class Welcome extends CI_Controller {
 				'nama'  => $data_user->nama,
 				'username'  => $data_user->username,
 				'level'  => $data_user->level,
-				'unit_id'  => $data_user->unit_id,
+				'prodi_id'  => $data_user->prodi_id,
 				'login'  => true
 			);
 

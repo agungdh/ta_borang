@@ -37,14 +37,17 @@
 						<th title="tanggalpengajuan">
 							Tanggal Pengajuan
 						</th>
-						<th title="unit">
-							Unit
+						<th title="fakultas">
+							Fakultas
+						</th>
+						<th title="prodi">
+							Prodi
 						</th>
 						<th title="tahunusulan">
 							Tahun Usulan
 						</th>
-						<th title="borang">
-							Borang
+						<th title="standarakreditasi">
+							Standar Akreditasi
 						</th>
 						<th title="persentase">
 							Persentase
@@ -68,7 +71,8 @@
 								$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
 								$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
 							?>
-							<td><?php echo $fakultas_prodi; ?></td>
+							<td><?php echo $fakultas->nama; ?></td>
+							<td><?php echo $prodi->nama; ?></td>
 							<td><?php echo $item->tahun_usulan; ?></td>
 							<?php
 							$versi = $this->db->get_where('versi', ['id' => $item->versi_id])->row();

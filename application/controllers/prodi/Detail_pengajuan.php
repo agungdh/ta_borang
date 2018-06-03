@@ -38,11 +38,11 @@ class Detail_pengajuan extends CI_Controller {
 	function upload() {
 		$pengajuan = $this->db->get_where('pengajuan', ['id' => $this->input->post('pengajuan_id')])->row();
 		
-		foreach ($this->db->get_where('v_listdokumen', ['tipeversi_id' => $pengajuan->tipeversi_id])->result() as $item) {
-			if ($_FILES['dokumen']['size'][$item->id] != 0){
+		foreach ($this->db->get_where('v_listdokumen', ['versi_id' => $pengajuan->versi_id])->result() as $item) {
+			if ($_FILES['dokumen']['size'][$item->listdokumen_id] != 0){
 
 				$berkas['pengajuan_id'] = $pengajuan->id;
-				$berkas['listdokumen_id'] = $item->id;
+				$berkas['listdokumen_id'] = $item->listdokumen_id;
 				
 				$berkas_lama = $this->db->get_where('berkas', $berkas)->row();
 				if ($berkas_lama != null) {
@@ -50,11 +50,11 @@ class Detail_pengajuan extends CI_Controller {
 					unlink('uploads/' . $berkas_lama->id);
 				}
 
-				$berkas['nama'] = $_FILES['dokumen']['name'][$item->id];
+				$berkas['nama'] = $_FILES['dokumen']['name'][$item->listdokumen_id];
 
 				$this->db->insert('berkas', $berkas);
 
-				move_uploaded_file($_FILES['dokumen']['tmp_name'][$item->id], 'uploads/' . $this->db->insert_id());
+				move_uploaded_file($_FILES['dokumen']['tmp_name'][$item->listdokumen_id], 'uploads/' . $this->db->insert_id());
 			}
 		}
 
@@ -70,31 +70,21 @@ class Detail_pengajuan extends CI_Controller {
 
 		$filename = "temps/" . $this->session->id;
 
-		unlink($filename);
+		file_exists($filename) ? unlink($filename) : null;
 
 		if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
 		    exit("cannot open <$filename>\n");
 		}
 
 		$pengajuan = $this->db->get_where('pengajuan', ['id' => $pengajuan_id])->row();
-		
-		$tipeversi = $this->db->get_where('tipeversi', ['id' => $pengajuan->tipeversi_id])->row();
 
-		$versi = $this->db->get_where('versi', ['id' => $tipeversi->versi_id])->row();
+		$versi = $this->db->get_where('versi', ['id' => $pengajuan->versi_id])->row();
 		
-		$unit = $this->db->get_where('unit', ['id' => $pengajuan->unit_id])->row();
-		// $nama_unit = $unit->unit == 1 ? "Universitas" : "Prodi";
-		if ($unit->unit == 1) {
-			$nama_unit = "Universitas";
-		} elseif ($unit->unit == 2) {
-			$nama_unit = "Prodi " . $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row()->nama;
-		} else {
-			redirect(base_url('logout'));
-		}
+		$prodi = $this->db->get_where('prodi', ['id' => $pengajuan->prodi_id])->row();
 
 		$berkas = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan_id])->result();
 		
-		foreach ($this->db->get_where('standar', ['tipeversi_id' => $pengajuan->tipeversi_id])->result() as $item) {
+		foreach ($this->db->get_where('standar', ['versi_id' => $pengajuan->versi_id])->result() as $item) {
 
 			$id_standar = 0; $id_substandar = 0; $id_butir = 0;
 			foreach ($this->db->get_where('v_listdokumen', ['standar_id' => $item->id])->result() as $item2) {
@@ -104,18 +94,19 @@ class Detail_pengajuan extends CI_Controller {
 
 		        $butir = $id_butir == $item2->butir_id ? null : $item2->nomor_butir . ' ' . $item2->nama_butir;
 
-		        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan->id, 'listdokumen_id' => $item2->id])->row();
+		        $berkas = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan->id, 'listdokumen_id' => $item2->listdokumen_id])->row();
 
 		        if ($berkas != null) {
-		        	$zip->addFile("uploads/" . $berkas->id, $standar . '/' . $substandar . '/' . $butir . '/' . $item2->keterangan . ' - ' . $berkas->nama);
+		        	$zip->addFile("uploads/" . $berkas->id, $standar . '/' . $substandar . '/' . $butir . '/' . $item2->keterangan_listdokumen . ' (' . $item2->tipe_tipe_listdokumen . ')' . ' - ' . $berkas->nama);
 		        }
 		    }
 
 		}
 
 		$zip->close();
+		// ob_clean();
 
-		$this->_push_file($filename, "Borang " . $versi->nama . ' ' . $versi->tahun . ' ' . $tipeversi->tipe . ' ' . $nama_unit . ' ' . $pengajuan->tahun_borang . ' ' . $this->pustaka->tanggal_indo($pengajuan->tanggal_pengajuan) . '.zip');
+		// $this->_push_file($filename, "Borang " . $versi->nama . ' ' . $versi->tahun . ' ' . $tipeversi->tipe . ' ' . $nama_unit . ' ' . $pengajuan->tahun_borang . ' ' . $this->pustaka->tanggal_indo($pengajuan->tanggal_pengajuan) . '.zip');
 
 	}
 

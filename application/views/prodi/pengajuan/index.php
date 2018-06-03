@@ -27,17 +27,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-						<a href="<?php echo base_url('prodi/pengajuan/tambah'); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-							<span>
-								<i class="la la-plus"></i>
-								<span>
-									Pengajuan
-								</span>
-							</span>
-						</a>
-						<div class="m-separator m-separator--dashed d-xl-none"></div>
-					</div>
 				</div>
 			</div>
 			<!--end: Search Form -->
@@ -48,14 +37,17 @@
 						<th title="tanggalpengajuan">
 							Tanggal Pengajuan
 						</th>
-						<th title="tahunborang">
-							Tahun Borang
+						<th title="fakultas">
+							Fakultas
 						</th>
-						<th title="borang">
-							Borang
+						<th title="prodi">
+							Prodi
 						</th>
-						<th title="tipeborang">
-							Tipe Borang
+						<th title="tahunusulan">
+							Tahun Usulan
+						</th>
+						<th title="standarakreditasi">
+							Standar Akreditasi
 						</th>
 						<th title="persentase">
 							Persentase
@@ -68,15 +60,24 @@
 				<tbody>
 					<?php
 					foreach ($data['pengajuan'] as $item) {
-						$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('tipeversi_id' => $item->tipeversi_id))->result());
+						$jumlah_total_dokumen = count($this->db->get_where('v_listdokumen', array('versi_id' => $item->versi_id))->result());
 				        $jumlah_dokumen = count($this->db->get_where('berkas', array('pengajuan_id' => $item->id))->result());
 				        $persentase = number_format((float)$jumlah_dokumen != 0 ? $jumlah_dokumen / $jumlah_total_dokumen * 100 : 0, 2, '.', '');
 						?>
 						<tr>
 							<td><?php echo $this->pustaka->tanggal_indo($item->tanggal_pengajuan); ?></td>
-							<td><?php echo $item->tahun_borang; ?></td>
-							<td><?php echo $this->db->get_where('versi', ['id' => $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->versi_id])->row()->nama; ?></td>
-							<td><?php echo $this->db->get_where('tipeversi', ['id' => $item->tipeversi_id])->row()->tipe; ?></td>
+							<?php
+								$prodi = $this->db->get_where('prodi', ['id' => $item->prodi_id])->row();
+								$fakultas = $this->db->get_where('fakultas', ['id' => $prodi->fakultas_id])->row();
+								$fakultas_prodi = $fakultas->nama . ' - ' . $prodi->nama;
+							?>
+							<td><?php echo $fakultas->nama; ?></td>
+							<td><?php echo $prodi->nama; ?></td>
+							<td><?php echo $item->tahun_usulan; ?></td>
+							<?php
+							$versi = $this->db->get_where('versi', ['id' => $item->versi_id])->row();
+							?>
+							<td><?php echo $versi->nama . ' - ' . $versi->tahun; ?></td>
 							<td>
 								<div class="progress">
 									<div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $persentase; ?>%" aria-valuenow="<?php echo $persentase; ?>" aria-valuemin="0" aria-valuemax="100">
@@ -120,7 +121,7 @@ function hapus(id) {
         confirmButtonText: 'Hapus!'
     }).then(function(result) {
         if (result.value) {
-            window.location = "<?php echo base_url('prodi/pengajuan/aksi_hapus/'); ?>" + id;
+            window.location = "<?php echo base_url('admin/pengajuan/aksi_hapus/'); ?>" + id;
         }
     });
 };
