@@ -58,25 +58,11 @@
 					<input required class="form-control m-input" type="text" value="<?php echo $level; ?>" id="level" name="cdata[level]" disabled>
 				</div>
 				<div class="form-group m-form__group">
-					<label for="unit">
-						Unit
+					<label for="prodi">
+						Prodi
 					</label>
-					<?php
-					$unit_raw = isset($data['user']) ? $data['user']->unit_id : null;
-					
-					if ($unit_raw != null) {
-						$unit = $this->db->get_where('unit', ['id' => $unit_raw])->row();
-
-						if ($unit->unit == 1) {
-							$unit = "Universitas";
-						} else {
-							$unit = $this->db->get_where('prodi', ['id' => $unit->prodi_id])->row()->nama;
-						}
-					} else {
-						$unit = null;
-					}
-					?>
-					<input required class="form-control m-input" type="text" value="<?php echo $unit; ?>" id="unit" name="cdata[unit]" disabled>
+					<?php $prodi = $this->db->get_where('prodi', ['id' => $data['user']->prodi_id])->row();?>
+					<input required class="form-control m-input" type="text" value="<?php echo $prodi != null ? $prodi->nama : null; ?>" id="prodi" name="cdata[prodi]" disabled>
 				</div>
 			</div>
 			<div class="m-portlet__foot m-portlet__foot--fit">

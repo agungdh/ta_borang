@@ -24,8 +24,8 @@ class Welcome extends CI_Controller {
 					redirect(base_url('logout'));
 					break;
 			}
-			$data['nav'] = $level . "/welcome/nav";
-			$data['isi'] = $level . "/welcome/index";
+			$data['nav'] = "welcome/nav_" . $level;
+			$data['isi'] = "welcome/index_" . $level;
 			
 			$this->load->view("template/template", $data);
 		}

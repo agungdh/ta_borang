@@ -7,9 +7,7 @@ class Profil extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		
-		if ($this->session->login != true) {
-			redirect(base_url('logout'));
-		}
+		$this->pustaka->auth($this->session->level, [1, 2, 3]);
 		
 		$this->table = "user";
 	}
