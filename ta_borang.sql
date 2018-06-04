@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2018 at 06:53 AM
+-- Generation Time: Jun 04, 2018 at 01:02 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -41,8 +41,9 @@ CREATE TABLE `berkas` (
 
 INSERT INTO `berkas` (`id`, `nama`, `listdokumen_id`, `pengajuan_id`) VALUES
 (43, 'installer_prefs.json', 8, 2),
-(44, 'pref_default_overrides', 1, 2),
-(45, 'installation_status.json', 3, 2);
+(45, 'installation_status.json', 3, 2),
+(46, 'ac_weapons_hostages.zip', 1, 2),
+(48, '1.zip', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,8 @@ CREATE TABLE `butir` (
 INSERT INTO `butir` (`id`, `nomor`, `nama`, `substandar_id`) VALUES
 (4, '1.1.4', 'satu satu satu jadi empat test', 2),
 (5, '1.1.2', 'satu satu dua', 2),
-(6, '12', '124wrsdf ', 3);
+(6, '12', '124wrsdf ', 3),
+(8, '44', '4444', 7);
 
 -- --------------------------------------------------------
 
@@ -121,19 +123,20 @@ INSERT INTO `listdokumen` (`id`, `keterangan`, `butir_id`, `tipe_listdokumen_id`
 CREATE TABLE `pengajuan` (
   `id` int(11) NOT NULL,
   `tanggal_pengajuan` date NOT NULL,
-  `tahun_borang` year(4) NOT NULL,
-  `unit_id` int(11) NOT NULL,
-  `tipeversi_id` int(11) NOT NULL
+  `tahun_usulan` year(4) NOT NULL,
+  `prodi_id` int(11) NOT NULL,
+  `versi_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengajuan`
 --
 
-INSERT INTO `pengajuan` (`id`, `tanggal_pengajuan`, `tahun_borang`, `unit_id`, `tipeversi_id`) VALUES
-(2, '2018-05-08', 2011, 7, 5),
-(3, '2018-05-21', 2019, 7, 5),
-(4, '2018-05-24', 2019, 1, 5);
+INSERT INTO `pengajuan` (`id`, `tanggal_pengajuan`, `tahun_usulan`, `prodi_id`, `versi_id`) VALUES
+(2, '2018-05-08', 2011, 13, 4),
+(3, '2018-05-21', 2019, 13, 4),
+(4, '2018-05-24', 2019, 14, 4),
+(7, '2018-06-04', 2018, 13, 7);
 
 -- --------------------------------------------------------
 
@@ -167,17 +170,19 @@ CREATE TABLE `standar` (
   `id` int(11) NOT NULL,
   `nomor` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `tipeversi_id` int(11) NOT NULL
+  `versi_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `standar`
 --
 
-INSERT INTO `standar` (`id`, `nomor`, `nama`, `tipeversi_id`) VALUES
-(2, '1', 'satu satu aja', 5),
-(4, '3', 'asf asfewf adsf dua jadi 3', 5),
-(5, '2', 'test', 5);
+INSERT INTO `standar` (`id`, `nomor`, `nama`, `versi_id`) VALUES
+(2, '1', 'satu satu aja', 4),
+(4, '3', 'asf asfewf adsf dua jadi 3', 4),
+(5, '2', 'test', 4),
+(7, '1', 'Visi, misi, tujuan dan sasaran, serta strategi pencapaian', 7),
+(8, '2', '22', 8);
 
 -- --------------------------------------------------------
 
@@ -198,27 +203,9 @@ CREATE TABLE `substandar` (
 
 INSERT INTO `substandar` (`id`, `nomor`, `nama`, `standar_id`) VALUES
 (2, '1.5', 'satu empat jadi lima', 4),
-(3, '12', 'qrw rw', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tipeversi`
---
-
-CREATE TABLE `tipeversi` (
-  `id` int(11) NOT NULL,
-  `tipe` varchar(255) NOT NULL,
-  `versi_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tipeversi`
---
-
-INSERT INTO `tipeversi` (`id`, `tipe`, `versi_id`) VALUES
-(3, 'test 1', 3),
-(5, 'qwe 1', 4);
+(3, '12', 'qrw rw', 2),
+(7, '3', '33', 8),
+(8, '1.1', 'Jelaskan dasar penyusunan dan mekanisme penyusunan visi, misi, tujuan dan sasaran institusi perguruan tinggi, serta pihak-pihak yang dilibatkan dalam penyusunannya', 7);
 
 -- --------------------------------------------------------
 
@@ -263,7 +250,7 @@ INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `prodi_id`) V
 (1, 'Administrator', 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 1, NULL),
 (2, 'Operator FTI 1', 'opfti1', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3, 13),
 (4, 'Test Admin', 'testadmin', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 1, NULL),
-(5, 'Test DPM', 'testdpm', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 2, 16),
+(5, 'Test DPM', 'testdpm', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 2, NULL),
 (6, 'Test Fe', 'testfe', '4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a', 3, 15),
 (12, 'cobafti1', 'cobafti1', '82652b6d108ee60bbfddccd3e220e1135a6aa793c8103430f64b0c1861ff5d37de92b8980b63b7af42115edd0168702317a88da72bf308d59b6524c156703a84', 3, 13);
 
@@ -285,7 +272,9 @@ CREATE TABLE `versi` (
 
 INSERT INTO `versi` (`id`, `nama`, `tahun`) VALUES
 (3, '9 standar', 2018),
-(4, '7 standar', 2009);
+(4, '7 standar', 2009),
+(7, '7 Standar', 2011),
+(8, '1 test', 2000);
 
 -- --------------------------------------------------------
 
@@ -294,19 +283,22 @@ INSERT INTO `versi` (`id`, `nama`, `tahun`) VALUES
 -- (See below for the actual view)
 --
 CREATE TABLE `v_listdokumen` (
-`id` int(11)
-,`keterangan` varchar(255)
-,`butir_id` int(11)
-,`tipe_listdokumen_id` int(11)
-,`nomor_butir` varchar(255)
-,`nama_butir` varchar(255)
-,`substandar_id` int(11)
-,`nomor_substandar` varchar(255)
-,`nama_substandar` varchar(255)
+`versi_id` int(11)
+,`nama_versi` varchar(255)
+,`tahun_versi` year(4)
 ,`standar_id` int(11)
 ,`nomor_standar` varchar(255)
 ,`nama_standar` varchar(255)
-,`tipeversi_id` int(11)
+,`substandar_id` int(11)
+,`nomor_substandar` varchar(255)
+,`nama_substandar` varchar(255)
+,`butir_id` int(11)
+,`nomor_butir` varchar(255)
+,`nama_butir` varchar(255)
+,`listdokumen_id` int(11)
+,`keterangan_listdokumen` varchar(255)
+,`tipe_listdokumen_id` int(11)
+,`tipe_tipe_listdokumen` varchar(255)
 );
 
 -- --------------------------------------------------------
@@ -316,7 +308,7 @@ CREATE TABLE `v_listdokumen` (
 --
 DROP TABLE IF EXISTS `v_listdokumen`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_listdokumen`  AS  select `l`.`id` AS `id`,`l`.`keterangan` AS `keterangan`,`l`.`butir_id` AS `butir_id`,`l`.`tipe_listdokumen_id` AS `tipe_listdokumen_id`,`b`.`nomor` AS `nomor_butir`,`b`.`nama` AS `nama_butir`,`b`.`substandar_id` AS `substandar_id`,`ss`.`nomor` AS `nomor_substandar`,`ss`.`nama` AS `nama_substandar`,`ss`.`standar_id` AS `standar_id`,`s`.`nomor` AS `nomor_standar`,`s`.`nama` AS `nama_standar`,`s`.`tipeversi_id` AS `tipeversi_id` from (((`standar` `s` join `substandar` `ss`) join `butir` `b`) join `listdokumen` `l`) where ((`l`.`butir_id` = `b`.`id`) and (`b`.`substandar_id` = `ss`.`id`) and (`ss`.`standar_id` = `s`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_listdokumen`  AS  select `v`.`id` AS `versi_id`,`v`.`nama` AS `nama_versi`,`v`.`tahun` AS `tahun_versi`,`s`.`id` AS `standar_id`,`s`.`nomor` AS `nomor_standar`,`s`.`nama` AS `nama_standar`,`ss`.`id` AS `substandar_id`,`ss`.`nomor` AS `nomor_substandar`,`ss`.`nama` AS `nama_substandar`,`b`.`id` AS `butir_id`,`b`.`nomor` AS `nomor_butir`,`b`.`nama` AS `nama_butir`,`l`.`id` AS `listdokumen_id`,`l`.`keterangan` AS `keterangan_listdokumen`,`tl`.`id` AS `tipe_listdokumen_id`,`tl`.`tipe` AS `tipe_tipe_listdokumen` from (((((`versi` `v` join `standar` `s`) join `substandar` `ss`) join `butir` `b`) join `listdokumen` `l`) join `tipe_listdokumen` `tl`) where ((`l`.`butir_id` = `b`.`id`) and (`b`.`substandar_id` = `ss`.`id`) and (`ss`.`standar_id` = `s`.`id`) and (`s`.`versi_id` = `v`.`id`) and (`l`.`tipe_listdokumen_id` = `tl`.`id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -356,8 +348,8 @@ ALTER TABLE `listdokumen`
 --
 ALTER TABLE `pengajuan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tipeversi_id` (`tipeversi_id`),
-  ADD KEY `unit_id` (`unit_id`);
+  ADD KEY `prodi_id` (`prodi_id`),
+  ADD KEY `versi_id` (`versi_id`);
 
 --
 -- Indexes for table `prodi`
@@ -371,7 +363,7 @@ ALTER TABLE `prodi`
 --
 ALTER TABLE `standar`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tipeversi_id` (`tipeversi_id`);
+  ADD KEY `versi_id` (`versi_id`);
 
 --
 -- Indexes for table `substandar`
@@ -379,13 +371,6 @@ ALTER TABLE `standar`
 ALTER TABLE `substandar`
   ADD PRIMARY KEY (`id`),
   ADD KEY `standar_id` (`standar_id`);
-
---
--- Indexes for table `tipeversi`
---
-ALTER TABLE `tipeversi`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `versi_id` (`versi_id`);
 
 --
 -- Indexes for table `tipe_listdokumen`
@@ -414,73 +399,67 @@ ALTER TABLE `versi`
 -- AUTO_INCREMENT for table `berkas`
 --
 ALTER TABLE `berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `butir`
 --
 ALTER TABLE `butir`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `fakultas`
 --
 ALTER TABLE `fakultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `listdokumen`
 --
 ALTER TABLE `listdokumen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `prodi`
 --
 ALTER TABLE `prodi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `standar`
 --
 ALTER TABLE `standar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `substandar`
 --
 ALTER TABLE `substandar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `tipeversi`
---
-ALTER TABLE `tipeversi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tipe_listdokumen`
 --
 ALTER TABLE `tipe_listdokumen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `versi`
 --
 ALTER TABLE `versi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -510,8 +489,8 @@ ALTER TABLE `listdokumen`
 -- Constraints for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  ADD CONSTRAINT `pengajuan_ibfk_1` FOREIGN KEY (`tipeversi_id`) REFERENCES `tipeversi` (`id`),
-  ADD CONSTRAINT `pengajuan_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`id`);
+  ADD CONSTRAINT `pengajuan_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`),
+  ADD CONSTRAINT `pengajuan_ibfk_2` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
 
 --
 -- Constraints for table `prodi`
@@ -523,19 +502,13 @@ ALTER TABLE `prodi`
 -- Constraints for table `standar`
 --
 ALTER TABLE `standar`
-  ADD CONSTRAINT `standar_ibfk_1` FOREIGN KEY (`tipeversi_id`) REFERENCES `tipeversi` (`id`);
+  ADD CONSTRAINT `standar_ibfk_1` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
 
 --
 -- Constraints for table `substandar`
 --
 ALTER TABLE `substandar`
   ADD CONSTRAINT `substandar_ibfk_1` FOREIGN KEY (`standar_id`) REFERENCES `standar` (`id`);
-
---
--- Constraints for table `tipeversi`
---
-ALTER TABLE `tipeversi`
-  ADD CONSTRAINT `tipeversi_ibfk_1` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
 
 --
 -- Constraints for table `user`
