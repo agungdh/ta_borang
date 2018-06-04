@@ -31,6 +31,17 @@ $flashdata = $this->session->flashdata('data');
 							</div>
 						</div>
 					</div>
+					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+						<a href="<?php echo base_url('pengajuan/tambah/'); ?>" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+							<span>
+								<i class="la la-plus"></i>
+								<span>
+									Pengajuan
+								</span>
+							</span>
+						</a>
+						<div class="m-separator m-separator--dashed d-xl-none"></div>
+					</div>
 				</div>
 			</div>
 			<!--end: Search Form -->
@@ -108,6 +119,18 @@ $flashdata = $this->session->flashdata('data');
 								<a href="<?php echo base_url('detail_pengajuan/unduh_semua/' .  $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Unduh Semua Berkas">
 									<i class="la la-download"></i>
 								</a>
+								<?php
+								if ($this->session->level == 3) {
+									?>
+									<a href="<?php echo base_url('pengajuan/ubah/' . $item->id); ?>" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Ubah">
+										<i class="la la-edit"></i>
+									</a>
+									<a onclick="hapus('<?php echo $item->id; ?>')" href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" title="Hapus">
+										<i class="la la-trash"></i>
+									</a>
+									<?php
+								}
+								?>
 							</td>
 						</tr>
 						<?php
