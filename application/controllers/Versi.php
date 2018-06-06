@@ -1,31 +1,31 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Fakultas extends CI_Controller {
+class Versi extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 
-		$this->pustaka->auth($this->session->level, [1, 2]);
+		$this->pustaka->auth($this->session->level, [1, 2, 3]);
 	}
 
 	function index() {
-		$data['isi'] = 'fakultas/index';
-		$data['js'] = 'fakultas/index_js';
+		$data['isi'] = 'versi/index';
+		$data['js'] = 'versi/index_js';
 
 		$this->load->view('template/template', $data);
 	}
 
 	function tambah() {
-		$data['isi'] = 'fakultas/tambah';
-		$data['js'] = 'fakultas/tambah_js';
+		$data['isi'] = 'versi/tambah';
+		$data['js'] = 'versi/tambah_js';
 
 		$this->load->view('template/template', $data);
 	}
 
 	function ubah($id) {
-		$data['isi'] = 'fakultas/ubah';
-		$data['js'] = 'fakultas/ubah_js';
-		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $id])->row();
+		$data['isi'] = 'versi/ubah';
+		$data['js'] = 'versi/ubah_js';
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $id])->row();
 
 		$this->load->view('template/template', $data);
 	}
@@ -39,9 +39,9 @@ class Fakultas extends CI_Controller {
 			}
 		}
 
-		$this->db->insert('fakultas', $data);
+		$this->db->insert('versi', $data);
 
-		redirect(base_url('fakultas'));
+		redirect(base_url('versi'));
 	}
 
 	function aksi_ubah() {
@@ -53,23 +53,23 @@ class Fakultas extends CI_Controller {
 			$where[$key] = $value;
 		}
 
-		$this->db->update('fakultas', $data, $where);
+		$this->db->update('versi', $data, $where);
 
-		redirect(base_url('fakultas'));
+		redirect(base_url('versi'));
 	}
 
 	function aksi_hapus($id) {
-		$this->db->delete('fakultas', ['id' => $id]);
+		$this->db->delete('versi', ['id' => $id]);
 
-		redirect(base_url('fakultas'));
+		redirect(base_url('versi'));
 	}
 
 	function ajax(){
 	    $requestData = $_REQUEST;
-	    $columns = ['nama'];
+	    $columns = ['tahun', 'nama'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM fakultas", [])->row();
+	        FROM versi", [])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -81,25 +81,25 @@ class Fakultas extends CI_Controller {
 
 		    $cari = [];
 
-	  	    for ($i=1; $i <= 1; $i++) { 
+	  	    for ($i=1; $i <= 2; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM fakultas
-	        WHERE nama LIKE ?", $cari)->row();
+	        FROM versi
+	        WHERE nama LIKE ? OR tahun like ?", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
-	        FROM fakultas
-	        WHERE nama LIKE ?
+	        FROM versi
+	        WHERE nama LIKE ? OR tahun like ?
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
-	        FROM fakultas
+	        FROM versi
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], []);
 	            
 	    }
@@ -108,10 +108,11 @@ class Fakultas extends CI_Controller {
 	      $nestedData=[]; 
 	      $id = $row->id;
 	      $nestedData[] = $row->nama;
+	      $nestedData[] = $row->tahun;
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('prodi/index/' . $row->id) . '" data-toggle="tooltip" title="Prodi"><i class="fa fa-share"></i></a>
-	            <a class="btn btn-primary" href="' . base_url('fakultas/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('standar/index/' . $row->id) . '" data-toggle="tooltip" title="Standar"><i class="fa fa-share"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('versi/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
 	          </div>';
 
