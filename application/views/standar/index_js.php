@@ -3,11 +3,11 @@ var table = $('.datatable').DataTable( {
     "processing": true,
     "serverSide": true,
     "ajax": {
-        "url": "<?php echo base_url('user/ajax'); ?>",
+        "url": "<?php echo base_url('standar/ajax/' . $data['versi']->id); ?>",
         "type": "POST"
     },
     columnDefs: [
-        { targets: [2], orderable: false}
+        { targets: [1], orderable: false}
     ],
     "scrollX": true,
     "autoWidth": false,
@@ -24,7 +24,7 @@ function hapus(id) {
         if (result.value) {
             $.ajax({
                 type: "get", 
-                url: "<?php echo base_url('user/aksi_hapus/') ?>" + id,
+                url: "<?php echo base_url('standar/aksi_hapus/') ?>" + id,
                 timeout: 5000,
                 success: function() {
                     table.ajax.reload();

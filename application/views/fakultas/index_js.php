@@ -22,8 +22,18 @@ function hapus(id) {
         confirmButtonText: 'Hapus!'
     }).then(function(result) {
         if (result.value) {
-            $.get("<?php echo base_url('fakultas/aksi_hapus/') ?>" + id, function(data, status){
-                table.ajax.reload();
+            $.ajax({
+                type: "get", 
+                url: "<?php echo base_url('fakultas/aksi_hapus/') ?>" + id,
+                timeout: 5000,
+                success: function() {
+                    table.ajax.reload();
+                },
+                error: function(data) {
+                    swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                    
+                    console.log(data)
+                }
             });
         }
     });

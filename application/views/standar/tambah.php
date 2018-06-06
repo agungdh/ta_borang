@@ -12,18 +12,16 @@
     <div class="tile">
       <h3 class="tile-title">Tambah Standar Akreditasi</h3>
       <div class="tile-body">
-        <form method="post" action="<?php echo base_url('versi/aksi_ubah'); ?>">
+        <form method="post" action="<?php echo base_url('versi/aksi_tambah'); ?>">
           
-          <input type="hidden" name="where[id]" value="<?php echo $data['versi']->id; ?>">
-
           <div class="form-group">
             <label class="control-label">Nama</label>
-            <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="<?php echo $data['versi']->nama; ?>">
+            <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]">
           </div>
 
           <div class="form-group">
             <label class="control-label">Tahun</label>
-            <input class="form-control" type="number" min="1900" max="2900" required placeholder="Masukan Tahun" name="data[tahun]" value="<?php echo $data['versi']->tahun; ?>">
+            <input class="form-control" type="number" min="1900" max="2900" required placeholder="Masukan Tahun" name="data[tahun]">
           </div>
           
           </div>

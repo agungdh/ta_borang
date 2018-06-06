@@ -12,7 +12,7 @@
     <div class="tile">
       <h3 class="tile-title">Tambah Standar Akreditasi</h3>
       <div class="tile-body">
-        <form method="post" action="<?php echo base_url('versi/aksi_ubah'); ?>">
+        <form method="post" action="<?php echo base_url('versi/aksi_tambah'); ?>">
           
           <input type="hidden" name="where[id]" value="<?php echo $data['versi']->id; ?>">
 
