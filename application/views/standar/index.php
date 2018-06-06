@@ -14,13 +14,13 @@
       <div class="tile-body">
         <div class="tile-title-w-btn">
           <h3 class="title">Data Standar</h3>
-          <p><a class="btn btn-primary icon-btn" href="<?php echo base_url('standar/tambah'); ?>"><i class="fa fa-plus"></i>Standar</a></p>
+          <p><a class="btn btn-primary icon-btn" href="<?php echo base_url('standar/tambah/' . $data['versi']->id); ?>"><i class="fa fa-plus"></i>Standar</a></p>
         </div>
         <table class="table table-hover table-bordered datatable">
           <thead>
             <tr>
+              <th>Nomor</th>
               <th>Nama</th>
-              <th>Tahun</th>
               <th>Proses</th>
             </tr>
           </thead>

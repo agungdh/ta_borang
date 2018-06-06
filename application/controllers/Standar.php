@@ -11,7 +11,6 @@ class Standar extends CI_Controller {
 	function index($versi_id) {
 		$data['isi'] = 'standar/index';
 		$data['js'] = 'standar/index_js';
-
 		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
 
 		$this->load->view('template/template', $data);
@@ -20,6 +19,7 @@ class Standar extends CI_Controller {
 	function tambah($versi_id) {
 		$data['isi'] = 'standar/tambah';
 		$data['js'] = 'standar/tambah_js';
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
 
 		$this->load->view('template/template', $data);
 	}
@@ -28,6 +28,7 @@ class Standar extends CI_Controller {
 		$data['isi'] = 'standar/ubah';
 		$data['js'] = 'standar/ubah_js';
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $id])->row();
+		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
 
 		$this->load->view('template/template', $data);
 	}
@@ -43,7 +44,7 @@ class Standar extends CI_Controller {
 
 		$this->db->insert('standar', $data);
 
-		redirect(base_url('standar'));
+		redirect(base_url('standar/index/' . $data['versi_id']));
 	}
 
 	function aksi_ubah() {
@@ -57,13 +58,11 @@ class Standar extends CI_Controller {
 
 		$this->db->update('standar', $data, $where);
 
-		redirect(base_url('standar'));
+		redirect(base_url('standar/index/' . $data['versi_id']));
 	}
 
 	function aksi_hapus($id) {
 		$this->db->delete('standar', ['id' => $id]);
-
-		redirect(base_url('standar'));
 	}
 
 	function ajax(){
