@@ -115,7 +115,7 @@ class Substandar extends CI_Controller {
 	      $nestedData[] = $row->nama;
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('butir/index/' . $row->id) . '" data-toggle="tooltip" title="Substandar"><i class="fa fa-share"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('butir/index/' . $row->id) . '" data-toggle="tooltip" title="Butir"><i class="fa fa-share"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('substandar/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
 	          </div>';
