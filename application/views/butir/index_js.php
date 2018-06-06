@@ -3,7 +3,7 @@ var table = $('.datatable').DataTable( {
     "processing": true,
     "serverSide": true,
     "ajax": {
-        "url": "<?php echo base_url('butir/ajax/' . $data['standar']->id); ?>",
+        "url": "<?php echo base_url('butir/ajax/' . $data['substandar']->id); ?>",
         "type": "POST"
     },
     columnDefs: [

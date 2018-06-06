@@ -68,12 +68,13 @@ class Substandar extends CI_Controller {
 		$this->db->delete('substandar', ['id' => $id]);
 	}
 
-	function ajax(){
+	function ajax($standar_id){
 	    $requestData = $_REQUEST;
 	    $columns = ['nomor', 'nama'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM substandar", [])->row();
+	        FROM substandar
+	        WHERE standar_id = ?", [$standar_id])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -85,26 +86,31 @@ class Substandar extends CI_Controller {
 
 		    $cari = [];
 
+		    $cari[] = $standar_id;
+
 	  	    for ($i=1; $i <= 2; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
 	        FROM substandar
-	        WHERE nama LIKE ? OR nomor like ?", $cari)->row();
+	        WHERE standar_id = ?
+	        AND (nama LIKE ? OR nomor like ?)", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
 	        FROM substandar
-	        WHERE nama LIKE ? OR nomor like ?
+	        WHERE standar_id = ?
+	        AND (nama LIKE ? OR nomor like ?)
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
 	        FROM substandar
-	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], []);
+	        WHERE standar_id = ?
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$standar_id]);
 	            
 	    }
 

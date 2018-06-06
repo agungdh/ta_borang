@@ -65,12 +65,13 @@ class Standar extends CI_Controller {
 		$this->db->delete('standar', ['id' => $id]);
 	}
 
-	function ajax(){
+	function ajax($versi_id){
 	    $requestData = $_REQUEST;
 	    $columns = ['nomor', 'nama'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM standar", [])->row();
+	        FROM standar
+	        WHERE versi_id = ?", [$versi_id])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -82,26 +83,31 @@ class Standar extends CI_Controller {
 
 		    $cari = [];
 
+		    $cari[] = $versi_id;
+
 	  	    for ($i=1; $i <= 2; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
 	        FROM standar
-	        WHERE nama LIKE ? OR nomor like ?", $cari)->row();
+	        WHERE versi_id = ?
+	        AND (nama LIKE ? OR nomor like ?)", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
 	        FROM standar
-	        WHERE nama LIKE ? OR nomor like ?
+	        WHERE versi_id = ?
+	        AND (nama LIKE ? OR nomor like ?)
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
 	        FROM standar
-	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], []);
+	        WHERE versi_id = ?
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$versi_id]);
 	            
 	    }
 

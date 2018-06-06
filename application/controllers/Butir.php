@@ -71,12 +71,13 @@ class butir extends CI_Controller {
 		$this->db->delete('butir', ['id' => $id]);
 	}
 
-	function ajax(){
+	function ajax($substandar_id){
 	    $requestData = $_REQUEST;
 	    $columns = ['nomor', 'nama'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM butir", [])->row();
+	        FROM butir
+	        WHERE substandar_id = ?", [$substandar_id])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -88,26 +89,31 @@ class butir extends CI_Controller {
 
 		    $cari = [];
 
+		    $cari[] = $substandar_id;
+
 	  	    for ($i=1; $i <= 2; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
 	        FROM butir
-	        WHERE nama LIKE ? OR nomor like ?", $cari)->row();
+	        WHERE substandar_id = ?
+	        AND (nama LIKE ? OR nomor like ?)", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
 	        FROM butir
-	        WHERE nama LIKE ? OR nomor like ?
+	        WHERE substandar_id = ?
+	        AND (nama LIKE ? OR nomor like ?)
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
 	        FROM butir
-	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], []);
+	        WHERE substandar_id = ?
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$substandar_id]);
 	            
 	    }
 
@@ -130,7 +136,7 @@ class butir extends CI_Controller {
 	          "draw"            => intval( $requestData['draw'] ),    
 	          "recordsTotal"    => intval( $totalData ), 
 	          "recordsFiltered" => intval( $totalFiltered ), 
-	          "data"            => $data   
+	          "data"            => $data 
 	          ];
 
 	    echo json_encode($json_data);  
