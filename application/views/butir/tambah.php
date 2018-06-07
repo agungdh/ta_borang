@@ -33,7 +33,7 @@
           <div class="tile-footer">
             <button id="simpan" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
             &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-secondary" href="<?php echo base_url('butir/index/' . $data['versi']->id); ?>"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
+            <a class="btn btn-secondary" href="<?php echo base_url('butir/index/' . $data['substandar']->id); ?>"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
           </div>
         </form>
     </div>
