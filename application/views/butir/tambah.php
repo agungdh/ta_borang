@@ -21,7 +21,7 @@
 
           <div class="form-group">
             <label class="control-label">Nomor</label>
-            <input class="form-control" type="text" required placeholder="Masukan Nomor" name="data[nomor]">
+            <input class="form-control" type="number" min="1" max="100" required placeholder="Masukan Nomor" name="data[nomor]">
           </div>
 
           <div class="form-group">
