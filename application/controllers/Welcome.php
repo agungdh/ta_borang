@@ -12,7 +12,7 @@ class Welcome extends CI_Controller {
 		} else {
 			$data['config'] = $this->db->get('config')->row();
 			
-			$this->twig->display("welcome/index", $data);
+			$this->twig->display("welcome/index.twig", $data);
 		}
 	}
 
