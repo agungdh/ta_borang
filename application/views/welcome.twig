@@ -1,10 +1,1 @@
-{{ "Halo" }}
-{{ "cinta" }}
-{{ base_url() }}
-{{ nama }}
-{{ npm }}
-{% for item in hobi %}
-{{ item }}
-{% endfor %}
-
-{{ dump(CI.db.get('user').result()) }}
+{{ var_dump(CI.db.get('user').result()) }}

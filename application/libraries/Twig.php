@@ -50,20 +50,20 @@ class Twig
 
 		$this->config = array_merge($this->config, $params);
 
-		if (isset($params['functions']))
-		{
-			$this->functions_asis = 
-				array_unique(
-					array_merge($this->functions_asis, $params['functions'])
-				);
-		}
-		if (isset($params['functions_safe']))
-		{
-			$this->functions_safe = 
-				array_unique(
-					array_merge($this->functions_safe, $params['functions_safe'])
-				);
-		}
+		// if (isset($params['functions']))
+		// {
+		// 	$this->functions_asis = 
+		// 		array_unique(
+		// 			array_merge($this->functions_asis, $params['functions'])
+		// 		);
+		// }
+		// if (isset($params['functions_safe']))
+		// {
+		// 	$this->functions_safe = 
+		// 		array_unique(
+		// 			array_merge($this->functions_safe, $params['functions_safe'])
+		// 		);
+		// }
 
 		$CI =& get_instance();
 		$this->addGlobal('CI', $CI);
@@ -166,8 +166,8 @@ class Twig
 			return;
 		}
 
-		// as is functions
-		foreach ($this->functions_asis as $function)
+		// Semua2 fungsi PHP
+		foreach (get_defined_functions()['internal'] as $function)
 		{
 			if (function_exists($function))
 			{
@@ -180,20 +180,34 @@ class Twig
 			}
 		}
 
+		// as is functions
+		// foreach ($this->functions_asis as $function)
+		// {
+		// 	if (function_exists($function))
+		// 	{
+		// 		$this->twig->addFunction(
+		// 			new \Twig_SimpleFunction(
+		// 				$function,
+		// 				$function
+		// 			)
+		// 		);
+		// 	}
+		// }
+
 		// safe functions
-		foreach ($this->functions_safe as $function)
-		{
-			if (function_exists($function))
-			{
-				$this->twig->addFunction(
-					new \Twig_SimpleFunction(
-						$function,
-						$function,
-						['is_safe' => ['html']]
-					)
-				);
-			}
-		}
+		// foreach ($this->functions_safe as $function)
+		// {
+		// 	if (function_exists($function))
+		// 	{
+		// 		$this->twig->addFunction(
+		// 			new \Twig_SimpleFunction(
+		// 				$function,
+		// 				$function,
+		// 				['is_safe' => ['html']]
+		// 			)
+		// 		);
+		// 	}
+		// }
 
 		// customized functions
 		if (function_exists('anchor'))
