@@ -179,6 +179,18 @@ class Twig
 				);
 			}
 		}
+		foreach (get_defined_functions()['user'] as $function)
+		{
+			if (function_exists($function))
+			{
+				$this->twig->addFunction(
+					new \Twig_SimpleFunction(
+						$function,
+						$function
+					)
+				);
+			}
+		}
 
 		// as is functions
 		// foreach ($this->functions_asis as $function)
