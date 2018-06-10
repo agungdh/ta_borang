@@ -9,31 +9,24 @@ class Prodi extends CI_Controller {
 	}
 
 	function index($fakultas_id) {
-		$data['nav'] = 'prodi/nav';
-		$data['isi'] = 'prodi/index';
-		$data['js'] = 'prodi/index_js';
-		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
+		$data['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('prodi/index.twig', $data);
 	}
 
 	function tambah($fakultas_id) {
-		$data['nav'] = 'prodi/nav';
-		$data['isi'] = 'prodi/tambah';
-		$data['js'] = 'prodi/tambah_js';
-		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
+		$data['aksi'] = 'tambah';
+		$data['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('prodi/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'prodi/nav';
-		$data['isi'] = 'prodi/ubah';
-		$data['js'] = 'prodi/ubah_js';
-		$data['data']['prodi'] = $this->db->get_where('prodi', ['id' => $id])->row();
-		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $data['data']['prodi']->fakultas_id])->row();
+		$data['aksi'] = 'ubah';
+		$data['prodi'] = $this->db->get_where('prodi', ['id' => $id])->row();
+		$data['fakultas'] = $this->db->get_where('fakultas', ['id' => $data['prodi']->fakultas_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('prodi/form.twig', $data);
 	}
 
 	function aksi_tambah() {

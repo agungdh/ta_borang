@@ -1,0 +1,42 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'prodi/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">{{ ucwords(aksi) }} Prodi</h3>
+        <div class="tile-body">
+          <form method="post" action="{{ base_url('prodi/aksi_' ~ aksi) }}">
+            
+            <input type="hidden" name="where[id]" value="{{ prodi != null ? prodi.id : null }}">
+            <input type="hidden" name="data[fakultas_id]" value="{{ prodi != null ? prodi.fakultas_id : fakultas.id }}">
+
+            <div class="form-group">
+              <label class="control-label">Nama</label>
+              <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="{{ prodi != null ? prodi.nama : null }}">
+            </div>
+            
+            </div>
+            <div class="tile-footer">
+              <button id="simpan" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+              &nbsp;&nbsp;&nbsp;
+              <a class="btn btn-secondary" href="{{ base_url('prodi/index/' ~ fakultas.id) }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  $('#simpan').click(function(){
+    $("input[type='submit']").click();
+  });
+
+  </script>
+{% endblock %}
