@@ -9,28 +9,20 @@ class Versi extends CI_Controller {
 	}
 
 	function index() {
-		$data['nav'] = 'versi/nav';
-		$data['isi'] = 'versi/index';
-		$data['js'] = 'versi/index_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('versi/index.twig');
 	}
 
 	function tambah() {
-		$data['nav'] = 'versi/nav';
-		$data['isi'] = 'versi/tambah';
-		$data['js'] = 'versi/tambah_js';
+		$data['aksi'] = 'tambah';
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('versi/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'versi/nav';
-		$data['isi'] = 'versi/ubah';
-		$data['js'] = 'versi/ubah_js';
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $id])->row();
+		$data['aksi'] = 'ubah';
+		$data['versi'] = $this->db->get_where('versi', ['id' => $id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('versi/form.twig', $data);
 	}
 
 	function aksi_tambah() {

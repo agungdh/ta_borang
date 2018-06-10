@@ -1,0 +1,46 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'versi/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">{{ ucwords(aksi) }} Standar Akreditasi</h3>
+        <div class="tile-body">
+          <form method="post" action="{{ base_url('versi/aksi_' ~ aksi) }}">
+            
+            <input type="hidden" name="where[id]" value="{{ versi.id }}">
+
+            <div class="form-group">
+              <label class="control-label">Nama</label>
+              <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="{{ versi.nama }}">
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Tahun</label>
+              <input class="form-control" type="number" min="1900" max="2900" required placeholder="Masukan Tahun" name="data[tahun]" value="{{ versi.tahun }}">
+            </div>
+            
+            </div>
+            <div class="tile-footer">
+              <button id="simpan" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+              &nbsp;&nbsp;&nbsp;
+              <a class="btn btn-secondary" href="{{ base_url('versi') }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  $('#simpan').click(function(){
+    $("input[type='submit']").click();
+  });
+
+  </script>
+{% endblock %}
