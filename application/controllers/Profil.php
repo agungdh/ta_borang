@@ -9,12 +9,9 @@ class Profil extends CI_Controller {
 	}
 
 	function index() {
-		$data['nav'] = 'profil/nav';
-		$data['isi'] = 'profil/index';
-		$data['js'] = 'profil/index_js';
-		$data['data']['user'] = $this->db->get_where('user', ['id' => $this->session->id])->row();
+		$data['user'] = $this->db->get_where('user', ['id' => $this->session->id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('profil/index.twig', $data);
 	}
 
 	function aksi_ubah() {
