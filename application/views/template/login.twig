@@ -1,4 +1,3 @@
-{% set flashdata = CI.session.flashdata('data') %}
 {% set now = date('YmdHis') %}
 <!DOCTYPE html>
 <html>
@@ -63,10 +62,6 @@
     </script>
   </body>
 </html>
-
-{% if flashdata != null %}
-  {{ CI.pustaka.swal3(flashdata['header'], flashdata['pesan'], flashdata['status']) }}
-{% endif %}
 
 <script type="text/javascript">
 $('form').submit(function(e) {
