@@ -9,31 +9,24 @@ class Standar extends CI_Controller {
 	}
 
 	function index($versi_id) {
-		$data['nav'] = 'standar/nav';
-		$data['isi'] = 'standar/index';
-		$data['js'] = 'standar/index_js';
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('standar/index.twig', $data);
 	}
 
 	function tambah($versi_id) {
-		$data['nav'] = 'standar/nav';
-		$data['isi'] = 'standar/tambah';
-		$data['js'] = 'standar/tambah_js';
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
+		$data['aksi'] = 'tambah';
+		$data['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('standar/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'standar/nav';
-		$data['isi'] = 'standar/ubah';
-		$data['js'] = 'standar/ubah_js';
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['aksi'] = 'ubah';
+		$data['standar'] = $this->db->get_where('standar', ['id' => $id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('standar/form.twig', $data);
 	}
 
 	function aksi_tambah() {

@@ -1,0 +1,77 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include('standar/nav.twig') %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="tile-title-w-btn">
+            <h3 class="title">Data Standar</h3>
+            <p><a class="btn btn-primary icon-btn" href="{{ base_url('standar/tambah/' ~ versi.id) }}"><i class="fa fa-plus"></i>Standar</a></p>
+          </div>
+          <table class="table table-hover table-bordered datatable">
+            <thead>
+              <tr>
+                <th>Nomor</th>
+                <th>Nama</th>
+                <th>Proses</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  var table = $('.datatable').DataTable( {
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+          "url": "{{ base_url('standar/ajax/' ~ versi.id) }}",
+          "type": "POST"
+      },
+      columnDefs: [
+          { targets: [2], orderable: false}
+      ],
+      "scrollX": true,
+      "autoWidth": false,
+  });
+
+  function hapus(id) {
+      swal({
+          title: 'Apakah anda yakin?',
+          text: "Data akan dihapus!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Hapus!'
+      }).then(function(result) {
+          if (result.value) {
+              $.ajax({
+                  type: "get", 
+                  url: "{{ base_url('standar/aksi_hapus/') }}" + id,
+                  timeout: 5000,
+                  success: function() {
+                      table.ajax.reload();
+                  },
+                  error: function(data) {
+                      swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                      
+                      console.log(data)
+                  }
+              });
+          }
+      });
+  };
+
+  $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+  </script>
+{% endblock %}
