@@ -9,34 +9,27 @@ class Substandar extends CI_Controller {
 	}
 
 	function index($standar_id) {
-		$data['nav'] = 'substandar/nav';
-		$data['isi'] = 'substandar/index';
-		$data['js'] = 'substandar/index_js';
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('substandar/index.twig', $data);
 	}
 
 	function tambah($standar_id) {
-		$data['nav'] = 'substandar/nav';
-		$data['isi'] = 'substandar/tambah';
-		$data['js'] = 'substandar/tambah_js';
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['aksi'] = 'tambah';
+		$data['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('substandar/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'substandar/nav';
-		$data['isi'] = 'substandar/ubah';
-		$data['js'] = 'substandar/ubah_js';
-		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $id])->row();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['aksi'] = 'ubah';
+		$data['substandar'] = $this->db->get_where('substandar', ['id' => $id])->row();
+		$data['standar'] = $this->db->get_where('standar', ['id' => $data['substandar']->standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('substandar/form.twig', $data);
 	}
 
 	function aksi_tambah() {
