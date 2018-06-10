@@ -57,23 +57,7 @@ class Pustaka {
 		return $bulan[ (int)$pecahkan[0] ] . ' ' . $pecahkan[1];
 	}
 	
-	function swal1($pesan) {
-		?>
-		<script type="text/javascript">
-			swal("<?php echo $pesan; ?>");
-		</script>
-		<?php
-	}
-
-	function swal2($header, $pesan) {
-		?>
-		<script type="text/javascript">
-			swal("<?php echo $header; ?>", "<?php echo $pesan; ?>");
-		</script>
-		<?php	
-	}
-
-	function swal3($header, $pesan, $status) {
+	function swal($header, $pesan = null, $status = null) {
 		?>
 		<script type="text/javascript">
 			swal("<?php echo $header; ?>", "<?php echo $pesan; ?>", "<?php echo $status; ?>");

@@ -6,6 +6,10 @@ class Test extends CI_Controller {
 		parent::__construct();
 	}
 
+	function test_html() {
+		$this->pustaka->swal('lel');
+	}
+
 	function template() {
 		$this->twig->display('template/login');
 	}
