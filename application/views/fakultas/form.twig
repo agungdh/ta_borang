@@ -12,11 +12,11 @@
         <div class="tile-body">
           <form method="post" action="{{ base_url('fakultas/aksi_' ~ aksi) }}">
             
-            <input type="hidden" name="where[id]" value="{{ fakultas != null ? fakultas.id : null }}">
+            <input type="hidden" name="where[id]" value="{{ fakultas.id }}">
 
             <div class="form-group">
               <label class="control-label">Nama</label>
-              <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="{{ fakultas != null ? fakultas.nama : null }}">
+              <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="{{ fakultas.nama }}">
             </div>
             
             </div>
