@@ -1,0 +1,50 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'butir/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="tile">
+      <h3 class="tile-title">{{ ucwords(aksi) }} Butir</h3>
+      <div class="tile-body">
+        <form method="post" action="{{ base_url('butir/aksi_' ~ aksi) }}">
+          
+          <input type="hidden" name="where[id]" value="{{ butir.id }}">
+          <input type="hidden" name="data[substandar_id]" value="{{ substandar.id }}">
+
+          <div class="form-group">
+            <label class="control-label">Nomor</label>
+            <div class="input-group">
+              <div class="input-group-prepend"><span class="input-group-text">{{ substandar.nomor }}.</span></div>
+              <input class="form-control" type="number" min="1" max="100" required placeholder="Masukan Nomor" name="data[nomor]" value="{{ explode('.', butir.nomor)[2] }}">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Nama</label>
+            <input class="form-control" type="text" required placeholder="Masukan Nama" name="data[nama]" value="{{ butir.nama }}">
+          </div>
+          
+          </div>
+          <div class="tile-footer">
+            <button id="simpan" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+            &nbsp;&nbsp;&nbsp;
+            <a class="btn btn-secondary" href="{{ base_url('butir/index/' ~ substandar.id) }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  $('#simpan').click(function(){
+    $("input[type='submit']").click();
+  });
+
+  </script>
+{% endblock %}

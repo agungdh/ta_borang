@@ -9,37 +9,30 @@ class butir extends CI_Controller {
 	}
 
 	function index($substandar_id) {
-		$data['nav'] = 'butir/nav';
-		$data['isi'] = 'butir/index';
-		$data['js'] = 'butir/index_js';
-		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
+		$data['standar'] = $this->db->get_where('standar', ['id' => $data['substandar']->standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('butir/index.twig', $data);
 	}
 
 	function tambah($substandar_id) {
-		$data['nav'] = 'butir/nav';
-		$data['isi'] = 'butir/tambah';
-		$data['js'] = 'butir/tambah_js';
-		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['aksi'] = 'tambah';
+		$data['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
+		$data['standar'] = $this->db->get_where('standar', ['id' => $data['substandar']->standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('butir/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'butir/nav';
-		$data['isi'] = 'butir/ubah';
-		$data['js'] = 'butir/ubah_js';
-		$data['data']['butir'] = $this->db->get_where('butir', ['id' => $id])->row();
-		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $data['data']['butir']->substandar_id])->row();
-		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $data['data']['substandar']->standar_id])->row();
-		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $data['data']['standar']->versi_id])->row();
+		$data['aksi'] = 'ubah';
+		$data['butir'] = $this->db->get_where('butir', ['id' => $id])->row();
+		$data['substandar'] = $this->db->get_where('substandar', ['id' => $data['butir']->substandar_id])->row();
+		$data['standar'] = $this->db->get_where('standar', ['id' => $data['substandar']->standar_id])->row();
+		$data['versi'] = $this->db->get_where('versi', ['id' => $data['standar']->versi_id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('butir/form.twig', $data);
 	}
 
 	function aksi_tambah() {
