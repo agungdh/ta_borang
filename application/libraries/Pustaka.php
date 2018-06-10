@@ -5,7 +5,7 @@ class Pustaka {
 	function auth($user_id, $accept)
 	{
 		if (!in_array($user_id, $accept)) {
-			redirect(base_url('logout'));
+			redirect(base_url());
 		}
 	}
 
