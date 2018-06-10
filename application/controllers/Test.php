@@ -17,7 +17,7 @@ class Test extends CI_Controller {
 		$data['hobi'][] = "Game";
 		$data['hobi'][] = "Ngemeng meng meng meng";
 
-		$this->twig->display('welcome', $data);
+		$this->twig->display('welcome.twig', $data);
 	}
 
 	function test_var() {
