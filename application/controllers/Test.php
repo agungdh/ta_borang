@@ -8,6 +8,10 @@ class Test extends CI_Controller {
 		$this->pustaka->auth($this->session->level, [1]);
 	}
 
+	function template() {
+		$this->twig->display('template/login');
+	}
+
 	function twig() {
 		// var_dump(get_defined_functions()); die;
 		$data['nama'] = "Agung Sapto Margono Dh";
