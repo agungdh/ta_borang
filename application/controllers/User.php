@@ -9,28 +9,17 @@ class User extends CI_Controller {
 	}
 
 	function index() {
-		$data['nav'] = 'user/nav';
-		$data['isi'] = 'user/index';
-		$data['js'] = 'user/index_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('user/index.twig');
 	}
 
 	function tambah() {
-		$data['nav'] = 'user/nav';
-		$data['isi'] = 'user/tambah';
-		$data['js'] = 'user/tambah_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('user/tambah.twig');
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'user/nav';
-		$data['isi'] = 'user/ubah';
-		$data['js'] = 'user/ubah_js';
-		$data['data']['user'] = $this->db->get_where('user', ['id' => $id])->row();
+		$data['user'] = $this->db->get_where('user', ['id' => $id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('user/ubah.twig', $data);
 	}
 
 	function aksi_tambah() {
