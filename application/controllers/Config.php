@@ -9,12 +9,9 @@ class Config extends CI_Controller {
 	}
 
 	function index() {
-		$data['nav'] = 'config/nav';
-		$data['isi'] = 'config/index';
-		$data['js'] = 'config/index_js';
-		$data['data']['config'] = $this->db->get('config')->row();
+		$data['config'] = $this->db->get('config')->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('config/index.twig', $data);
 	}
 
 	function aksi_ubah() {
