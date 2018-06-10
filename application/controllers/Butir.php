@@ -48,6 +48,9 @@ class butir extends CI_Controller {
 			}
 		}
 
+		$substandar = $this->db->get_where('substandar', ['id' => $data['substandar_id']])->row();
+		$data['nomor'] = $substandar->nomor . '.' . $data['nomor'];
+
 		$this->db->insert('butir', $data);
 
 		redirect(base_url('butir/index/' . $data['substandar_id']));
@@ -62,6 +65,9 @@ class butir extends CI_Controller {
 			$where[$key] = $value;
 		}
 
+		$substandar = $this->db->get_where('substandar', ['id' => $data['substandar_id']])->row();
+		$data['nomor'] = $substandar->nomor . '.' . $data['nomor'];
+		
 		$this->db->update('butir', $data, $where);
 
 		redirect(base_url('butir/index/' . $data['substandar_id']));

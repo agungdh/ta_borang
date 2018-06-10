@@ -21,7 +21,10 @@
 
           <div class="form-group">
             <label class="control-label">Nomor</label>
-            <input class="form-control" type="number" min="1" max="100" required placeholder="Masukan Nomor" name="data[nomor]">
+            <div class="input-group">
+              <div class="input-group-prepend"><span class="input-group-text"><?php echo $data['substandar']->nomor; ?>.</span></div>
+              <input class="form-control" type="number" min="1" max="100" required placeholder="Masukan Nomor" name="data[nomor]">
+            </div>
           </div>
 
           <div class="form-group">
