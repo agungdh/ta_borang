@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
 {
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
         'G' => 
         array (
             'Gumlet\\' => 7,
@@ -18,6 +22,10 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
         'Gumlet\\' => 
         array (
             0 => __DIR__ . '/..' . '/gumlet/php-image-resize/lib',
@@ -28,11 +36,22 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
