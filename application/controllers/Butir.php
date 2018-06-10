@@ -9,6 +9,7 @@ class butir extends CI_Controller {
 	}
 
 	function index($substandar_id) {
+		$data['nav'] = 'butir/nav';
 		$data['isi'] = 'butir/index';
 		$data['js'] = 'butir/index_js';
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
@@ -19,6 +20,7 @@ class butir extends CI_Controller {
 	}
 
 	function tambah($substandar_id) {
+		$data['nav'] = 'butir/nav';
 		$data['isi'] = 'butir/tambah';
 		$data['js'] = 'butir/tambah_js';
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $substandar_id])->row();
@@ -29,6 +31,7 @@ class butir extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'butir/nav';
 		$data['isi'] = 'butir/ubah';
 		$data['js'] = 'butir/ubah_js';
 		$data['data']['butir'] = $this->db->get_where('butir', ['id' => $id])->row();

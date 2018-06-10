@@ -9,6 +9,7 @@ class Config extends CI_Controller {
 	}
 
 	function index() {
+		$data['nav'] = 'config/nav';
 		$data['isi'] = 'config/index';
 		$data['js'] = 'config/index_js';
 		$data['data']['config'] = $this->db->get('config')->row();

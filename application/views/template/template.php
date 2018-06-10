@@ -79,6 +79,7 @@ $now = date('YmdHis');
       </ul>
     </aside>
     <main class="app-content">
+      <?php isset($data) ?  $this->load->view($nav,$data) : $this->load->view($nav); ?>
       <?php isset($data) ?  $this->load->view($isi,$data) : $this->load->view($isi); ?>
     </main>
     <!-- Start JS -->

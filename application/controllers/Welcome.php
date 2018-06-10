@@ -10,6 +10,7 @@ class Welcome extends CI_Controller {
 		if ($this->session->login != true) {
 			$this->load->view("template/login");
 		} else {
+			$data['nav'] = "welcome/nav";
 			$data['isi'] = "welcome/index";
 			$data['js'] = "welcome/index_js";
 			$data['data']['config'] = $this->db->get('config')->row();

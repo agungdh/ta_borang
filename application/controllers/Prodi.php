@@ -9,6 +9,7 @@ class Prodi extends CI_Controller {
 	}
 
 	function index($fakultas_id) {
+		$data['nav'] = 'prodi/nav';
 		$data['isi'] = 'prodi/index';
 		$data['js'] = 'prodi/index_js';
 		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
@@ -17,6 +18,7 @@ class Prodi extends CI_Controller {
 	}
 
 	function tambah($fakultas_id) {
+		$data['nav'] = 'prodi/nav';
 		$data['isi'] = 'prodi/tambah';
 		$data['js'] = 'prodi/tambah_js';
 		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $fakultas_id])->row();
@@ -25,6 +27,7 @@ class Prodi extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'prodi/nav';
 		$data['isi'] = 'prodi/ubah';
 		$data['js'] = 'prodi/ubah_js';
 		$data['data']['prodi'] = $this->db->get_where('prodi', ['id' => $id])->row();

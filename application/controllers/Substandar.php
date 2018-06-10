@@ -9,6 +9,7 @@ class Substandar extends CI_Controller {
 	}
 
 	function index($standar_id) {
+		$data['nav'] = 'substandar/nav';
 		$data['isi'] = 'substandar/index';
 		$data['js'] = 'substandar/index_js';
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
@@ -18,6 +19,7 @@ class Substandar extends CI_Controller {
 	}
 
 	function tambah($standar_id) {
+		$data['nav'] = 'substandar/nav';
 		$data['isi'] = 'substandar/tambah';
 		$data['js'] = 'substandar/tambah_js';
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $standar_id])->row();
@@ -27,6 +29,7 @@ class Substandar extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'substandar/nav';
 		$data['isi'] = 'substandar/ubah';
 		$data['js'] = 'substandar/ubah_js';
 		$data['data']['substandar'] = $this->db->get_where('substandar', ['id' => $id])->row();

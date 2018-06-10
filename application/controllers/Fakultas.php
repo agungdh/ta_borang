@@ -9,6 +9,7 @@ class Fakultas extends CI_Controller {
 	}
 
 	function index() {
+		$data['nav'] = 'fakultas/nav';
 		$data['isi'] = 'fakultas/index';
 		$data['js'] = 'fakultas/index_js';
 
@@ -16,6 +17,7 @@ class Fakultas extends CI_Controller {
 	}
 
 	function tambah() {
+		$data['nav'] = 'fakultas/nav';
 		$data['isi'] = 'fakultas/tambah';
 		$data['js'] = 'fakultas/tambah_js';
 
@@ -23,6 +25,7 @@ class Fakultas extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'fakultas/nav';
 		$data['isi'] = 'fakultas/ubah';
 		$data['js'] = 'fakultas/ubah_js';
 		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $id])->row();

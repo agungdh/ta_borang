@@ -1,12 +1,3 @@
-<div class="app-title">
-  <div>
-    <h1><i class="fa fa-gears"></i> Config</h1>
-  </div>
-  <ul class="app-breadcrumb breadcrumb">
-    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-    <li class="breadcrumb-item">Config</li>
-  </ul>
-</div>
 
 <form method="post" action="<?php echo base_url('config/aksi_ubah'); ?>" enctype="multipart/form-data">
 

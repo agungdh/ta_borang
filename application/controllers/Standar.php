@@ -9,6 +9,7 @@ class Standar extends CI_Controller {
 	}
 
 	function index($versi_id) {
+		$data['nav'] = 'standar/nav';
 		$data['isi'] = 'standar/index';
 		$data['js'] = 'standar/index_js';
 		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
@@ -17,6 +18,7 @@ class Standar extends CI_Controller {
 	}
 
 	function tambah($versi_id) {
+		$data['nav'] = 'standar/nav';
 		$data['isi'] = 'standar/tambah';
 		$data['js'] = 'standar/tambah_js';
 		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $versi_id])->row();
@@ -25,6 +27,7 @@ class Standar extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'standar/nav';
 		$data['isi'] = 'standar/ubah';
 		$data['js'] = 'standar/ubah_js';
 		$data['data']['standar'] = $this->db->get_where('standar', ['id' => $id])->row();

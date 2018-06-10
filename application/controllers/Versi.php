@@ -9,6 +9,7 @@ class Versi extends CI_Controller {
 	}
 
 	function index() {
+		$data['nav'] = 'versi/nav';
 		$data['isi'] = 'versi/index';
 		$data['js'] = 'versi/index_js';
 
@@ -16,6 +17,7 @@ class Versi extends CI_Controller {
 	}
 
 	function tambah() {
+		$data['nav'] = 'versi/nav';
 		$data['isi'] = 'versi/tambah';
 		$data['js'] = 'versi/tambah_js';
 
@@ -23,6 +25,7 @@ class Versi extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'versi/nav';
 		$data['isi'] = 'versi/ubah';
 		$data['js'] = 'versi/ubah_js';
 		$data['data']['versi'] = $this->db->get_where('versi', ['id' => $id])->row();

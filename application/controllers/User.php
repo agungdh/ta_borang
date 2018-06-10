@@ -9,6 +9,7 @@ class User extends CI_Controller {
 	}
 
 	function index() {
+		$data['nav'] = 'user/nav';
 		$data['isi'] = 'user/index';
 		$data['js'] = 'user/index_js';
 
@@ -16,6 +17,7 @@ class User extends CI_Controller {
 	}
 
 	function tambah() {
+		$data['nav'] = 'user/nav';
 		$data['isi'] = 'user/tambah';
 		$data['js'] = 'user/tambah_js';
 
@@ -23,6 +25,7 @@ class User extends CI_Controller {
 	}
 
 	function ubah($id) {
+		$data['nav'] = 'user/nav';
 		$data['isi'] = 'user/ubah';
 		$data['js'] = 'user/ubah_js';
 		$data['data']['user'] = $this->db->get_where('user', ['id' => $id])->row();
