@@ -9,28 +9,21 @@ class Fakultas extends CI_Controller {
 	}
 
 	function index() {
-		$data['nav'] = 'fakultas/nav';
-		$data['isi'] = 'fakultas/index';
-		$data['js'] = 'fakultas/index_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('fakultas/index.twig');
 	}
 
 	function tambah() {
-		$data['nav'] = 'fakultas/nav';
-		$data['isi'] = 'fakultas/tambah';
-		$data['js'] = 'fakultas/tambah_js';
+		$data['aksi'] = 'tambah';
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('fakultas/form.twig', $data);
 	}
 
 	function ubah($id) {
-		$data['nav'] = 'fakultas/nav';
-		$data['isi'] = 'fakultas/ubah';
-		$data['js'] = 'fakultas/ubah_js';
-		$data['data']['fakultas'] = $this->db->get_where('fakultas', ['id' => $id])->row();
+		$data['aksi'] = 'ubah';
 
-		$this->load->view('template/template', $data);
+		$data['fakultas'] = $this->db->get_where('fakultas', ['id' => $id])->row();
+
+		$this->twig->display('fakultas/form.twig', $data);
 	}
 
 	function aksi_tambah() {
