@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55abd0e045f76eb510b0620386fa05b8",
+    "content-hash": "374d78969348c7b96c4d6d3eac453e62",
     "packages": [
         {
             "name": "fzaninotto/faker",
@@ -109,6 +109,50 @@
                 "scale"
             ],
             "time": "2018-02-10T05:20:52+00:00"
+        },
+        {
+            "name": "kenjis/codeigniter-ss-twig",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kenjis/codeigniter-ss-twig.git",
+                "reference": "4dcef2fcf4e885e4e82cbafa9b6aec62db3fcb0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kenjis/codeigniter-ss-twig/zipball/4dcef2fcf4e885e4e82cbafa9b6aec62db3fcb0b",
+                "reference": "4dcef2fcf4e885e4e82cbafa9b6aec62db3fcb0b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "twig/twig": "~1.20"
+            },
+            "require-dev": {
+                "codeigniter/framework": "3.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kenji Suzuki",
+                    "homepage": "https://github.com/kenjis/codeigniter-ss-twig"
+                }
+            ],
+            "description": "A Simple and Secure Twig integration for CodeIgniter 3.0",
+            "keywords": [
+                "codeigniter",
+                "twig"
+            ],
+            "time": "2016-06-17T04:12:30+00:00"
         },
         {
             "name": "twig/twig",

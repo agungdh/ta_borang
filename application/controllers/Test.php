@@ -8,6 +8,19 @@ class Test extends CI_Controller {
 		$this->pustaka->auth($this->session->level, [1]);
 	}
 
+	function twig() {
+		$data['nama'] = "Agung Sapto Margono Dh";
+		$data['npm'] = "15753003";
+		$data['hobi'][] = "Game";
+		$data['hobi'][] = "Ngemeng meng meng meng";
+
+		$this->twig->display('welcome', $data);
+	}
+
+	function test_var() {
+		var_dump(VIEWPATH);
+	}
+
 	function index() {
 		?>
 		<!DOCTYPE html>
