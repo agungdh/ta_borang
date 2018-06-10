@@ -8,14 +8,11 @@ class Welcome extends CI_Controller {
 
 	function index() {
 		if ($this->session->login != true) {
-			$this->load->view("template/login");
+			$this->twig->display("template/login.twig");
 		} else {
-			$data['nav'] = "welcome/nav";
-			$data['isi'] = "welcome/index";
-			$data['js'] = "welcome/index_js";
-			$data['data']['config'] = $this->db->get('config')->row();
+			$data['config'] = $this->db->get('config')->row();
 			
-			$this->load->view("template/template", $data);
+			$this->twig->display("welcome/index", $data);
 		}
 	}
 
