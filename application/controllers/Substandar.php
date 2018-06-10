@@ -45,6 +45,9 @@ class Substandar extends CI_Controller {
 			}
 		}
 
+		$standar = $this->db->get_where('standar', ['id' => $data['standar_id']])->row();
+		$data['nomor'] = $standar->nomor . '.' . $data['nomor'];
+		
 		$this->db->insert('substandar', $data);
 
 		redirect(base_url('substandar/index/' . $data['standar_id']));
@@ -58,6 +61,9 @@ class Substandar extends CI_Controller {
 		foreach ($this->input->post('where') as $key => $value) {
 			$where[$key] = $value;
 		}
+
+		$standar = $this->db->get_where('standar', ['id' => $data['standar_id']])->row();
+		$data['nomor'] = $standar->nomor . '.' . $data['nomor'];
 
 		$this->db->update('substandar', $data, $where);
 
