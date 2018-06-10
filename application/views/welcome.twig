@@ -1,1 +1,10 @@
-{{ var_dump(CI.db.get('user').result()) }}
+{% set data = {'satu' : 1, 'dua' : 2} %}
+	{# {{data.dua}} #}
+	{# {{data['dua']}} #}
+	{% for key, item in data %}
+		{{ key ~ ' = ' ~ item }}
+	{% endfor %}
+{% set data = {1 : 'satu', 2 : 'dua'} %}
+	{% for item in data %}
+		{{ loop.index }}
+	{% endfor %}

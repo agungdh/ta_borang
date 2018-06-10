@@ -9,6 +9,7 @@ class Test extends CI_Controller {
 	}
 
 	function twig() {
+		// var_dump(get_defined_functions()); die;
 		$data['nama'] = "Agung Sapto Margono Dh";
 		$data['npm'] = "15753003";
 		$data['hobi'][] = "Game";

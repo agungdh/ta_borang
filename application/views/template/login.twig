@@ -1,7 +1,5 @@
-<?php $flashdata = $this->session->flashdata('data'); ?>
-<?php
-$now = date('YmdHis');
-?>
+{% set flashdata = CI.session.flashdata('data') %}
+{% set now = date('YmdHis') %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,17 +10,15 @@ $now = date('YmdHis');
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/main.css'); ?>">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></title>
+    <title>{{ CI.db.get('config').row().judul_aplikasi }}</title>
 
     <!-- Favicon -->
-    <?php
-    if (file_exists('uploads/favicon')) {
-      $favicon = 'uploads/favicon';
-    } else {
-      $favicon = 'assets/favicon.png';
-    }
-    ?>
-    <link rel="shortcut icon" href="<?php echo base_url($favicon) . '?time=' . $now; ?>"/>
+    {% if file_exists('uploads/favicon') %}
+      {% set favicon = 'uploads/favicon' %}
+    {% else %}
+      {% set favicon = 'assets/favicon.png' %}
+    {% endif %}
+    <link rel="shortcut icon" href="{{ base_url(favicon) ~ '?time=' ~ $now }}"/>
   </head>
   <body>
     <section class="material-half-bg">
@@ -30,14 +26,14 @@ $now = date('YmdHis');
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1><?php echo $this->db->get('config')->row()->judul_aplikasi; ?></h1>
+        <h1>{{ CI.db.get('config').row().judul_aplikasi }}</h1>
       </div>
       <div class="login-box">
-        <form class="login-form" method="post" action="<?php echo base_url('welcome/login'); ?>">
+        <form class="login-form" method="post" action="{{ base_url('welcome/login') }}">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label">USERNAME</label>
-            <input class="form-control" type="text" required name="username" value="<?php echo $flashdata['username']; ?>" placeholder="Username" autofocus>
+            <input class="form-control" type="text" required name="username" value="{{ flashdata['username'] }}" placeholder="Username" autofocus>
           </div>
           <div class="form-group">
             <label class="control-label">PASSWORD</label>
@@ -70,7 +66,7 @@ $now = date('YmdHis');
 
 <?php
 if ($flashdata != null) {
-  $this->pustaka->swal3($flashdata['header'], $flashdata['pesan'], $flashdata['status']);
+  CI->pustaka->swal3($flashdata['header'], $flashdata['pesan'], $flashdata['status']);
 }
 ?>
 
