@@ -4,50 +4,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pengajuan extends CI_Controller {
 	function __construct(){
 		parent::__construct();
+	}
 
-		$this->pustaka->auth($this->session->level, [1, 2, 3]);
+	function index() {
+		redirect(base_url());
 	}
 
 	function r() {
 		$this->pustaka->auth($this->session->level, [1, 2]);
 
-		$data['nav'] = 'pengajuan/nav';
-		$data['isi'] = 'pengajuan/r';
-		$data['js'] = 'pengajuan/r_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('pengajuan/r.twig');
 	}
 
 	function crud() {
 		$this->pustaka->auth($this->session->level, [3]);
 
-		$data['nav'] = 'pengajuan/nav';
-		$data['isi'] = 'pengajuan/crud';
-		$data['js'] = 'pengajuan/crud_js';
-
-		$this->load->view('template/template', $data);
+		$this->twig->display('pengajuan/crud.twig');
 	}
 
 
-	function tambah($versi_id) {
+	function tambah() {
 		$this->pustaka->auth($this->session->level, [3]);
 
-		$data['nav'] = 'pengajuan/nav';
-		$data['isi'] = 'pengajuan/tambah';
-		$data['js'] = 'pengajuan/tambah_js';
-
-		$this->load->view('template/template', $data);
+		$data['aksi'] = 'tambah';
+		$this->twig->display('pengajuan/form.twig', $data);
 	}
 
 	function ubah($id) {
 		$this->pustaka->auth($this->session->level, [3]);
 
-		$data['nav'] = 'pengajuan/nav';
-		$data['isi'] = 'pengajuan/ubah';
-		$data['js'] = 'pengajuan/ubah_js';
-		$data['data']['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+		$data['aksi'] = 'ubah';
+		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
 
-		$this->load->view('template/template', $data);
+		$this->twig->display('pengajuan/form.twig', $data);
 	}
 
 	function aksi_tambah() {
@@ -61,9 +50,12 @@ class Pengajuan extends CI_Controller {
 			}
 		}
 
+		$data['tanggal_pengajuan'] = date('Y-m-d');
+		$data['prodi_id'] = $this->session->prodi_id;
+
 		$this->db->insert('pengajuan', $data);
 
-		redirect(base_url('pengajuan/index/' . $data['versi_id']));
+		redirect(base_url('pengajuan/crud'));
 	}
 
 	function aksi_ubah() {
@@ -79,7 +71,7 @@ class Pengajuan extends CI_Controller {
 
 		$this->db->update('pengajuan', $data, $where);
 
-		redirect(base_url('pengajuan/index/' . $data['versi_id']));
+		redirect(base_url('pengajuan/crud'));
 	}
 
 	function aksi_hapus($id) {
@@ -88,7 +80,84 @@ class Pengajuan extends CI_Controller {
 		$this->db->delete('pengajuan', ['id' => $id]);
 	}
 
-	function ajax_crud($versi_id){
+	function ajax_crud(){
+		$this->pustaka->auth($this->session->level, [3]);
+
+	    $requestData = $_REQUEST;
+	    $columns = ['tanggal_pengajuan', 'tahun_usulan'];
+
+	      $row = $this->db->query("SELECT count(*) total_data 
+	        FROM pengajuan
+	        WHERE prodi_id = ?", [$this->session->prodi_id])->row();
+
+	        $totalData = $row->total_data;
+	        $totalFiltered = $totalData; 
+
+	    $data = [];
+
+	    if( !empty($requestData['search']['value']) ) {
+	      $search_value = "%" . $requestData['search']['value'] . "%";
+
+		    $cari = [];
+
+		    $cari[] = $this->session->prodi_id;
+
+	  	    for ($i=1; $i <= 2; $i++) { 
+		    	$cari[] = $search_value;
+		    }
+
+	      $row = $this->db->query("SELECT count(*) total_data 
+	        FROM pengajuan
+	        WHERE prodi_id = ?
+	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)", $cari)->row();
+
+	        $totalFiltered = $row->total_data; 
+
+	      $query = $this->db->query("SELECT *
+	        FROM pengajuan
+	        WHERE prodi_id = ?
+	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
+	            
+	    } else {  
+
+	      $query = $this->db->query("SELECT *
+	        FROM pengajuan
+	        WHERE prodi_id = ?
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$this->session->prodi_id]);
+	            
+	    }
+
+	    foreach ($query->result() as $row) { 
+	      $nestedData=[]; 
+	      $id = $row->id;
+	      $nestedData[] = $this->pustaka->tanggal_indo($row->tanggal_pengajuan);
+	      $nestedData[] = $row->tahun_usulan;
+	      $versi = $this->db->get_where('versi', ['id' => $row->versi_id])->row();
+	      $nestedData[] = $versi->nama . ' (' . $versi->tahun . ')';
+	      $nestedData[] = '60%';
+	      $nestedData[] = '
+	          <div class="btn-group">
+	            <a class="btn btn-primary" href="' . base_url('substandar/index/' . $row->id) . '" data-toggle="tooltip" title="Substandar"><i class="fa fa-share"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
+	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+	          </div>';
+
+	      $data[] = $nestedData;
+	        
+	    }
+
+	    $json_data = [
+	          "draw"            => intval( $requestData['draw'] ),    
+	          "recordsTotal"    => intval( $totalData ), 
+	          "recordsFiltered" => intval( $totalFiltered ), 
+	          "data"            => $data   
+	          ];
+
+	    echo json_encode($json_data);  
+	  }
+
+	function ajax_r(){
 		$this->pustaka->auth($this->session->level, [3]);
 
 	    $requestData = $_REQUEST;

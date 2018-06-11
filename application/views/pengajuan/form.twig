@@ -1,0 +1,55 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'pengajuan/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">{{ ucwords(aksi) }} Pengajuan</h3>
+        <div class="tile-body">
+          <form method="post" action="{{ base_url('pengajuan/aksi_' ~ aksi) }}">
+            
+            <input type="hidden" name="where[id]" value="{{ pengajuan.id }}">
+
+            <div class="form-group">
+              <label class="control-label">Tahun Usulan</label>
+              <input class="form-control" type="number" min="1900" max="2900" required placeholder="Masukan Tahun Usulan" name="data[tahun_usulan]" value="{{ pengajuan.tahun_usulan }}">
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label">Standar Akreditasi</label>
+              <select class="form-control select2" required name="data[versi_id]">
+                {% for item in CI.db.get('versi').result() %}
+                  {% if item.id == pengajuan.versi_id %}
+                    <option selected value="{{ item.id }}">{{ item.nama ~ ' (' ~ item.tahun ~ ')' }}</option>
+                  {% else %}
+                    <option value="{{ item.id }}">{{ item.nama ~ ' (' ~ item.tahun ~ ')' }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            
+            </div>
+            <div class="tile-footer">
+              <button id="simpan" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
+              &nbsp;&nbsp;&nbsp;
+              <a class="btn btn-secondary" href="{{ base_url('pengajuan/crud') }}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Batal</a> <input type="submit" style="visibility: hidden;">
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+  $('#simpan').click(function(){
+    $("input[type='submit']").click();
+  });
+
+  $('.select2').select2();
+  </script>
+{% endblock %}
