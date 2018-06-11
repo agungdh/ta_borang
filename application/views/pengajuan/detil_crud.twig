@@ -39,8 +39,20 @@
 							{% for item2 in detil[item.nomor] %}
 								<tr>
 									<td>{{ item2.standar }}</td>
-									<td>{{ item2.substandar }}</td>
-									<td>{{ item2.butir }}</td>
+									{% if item2.id_butir %}
+										<td>{{ item2.substandar }}</td>
+										<td>{{ item2.butir }}</td>
+									{% else %}
+										<td colspan="2">{{ item2.substandar }}</td>
+									{% endif %}
+									<td><a href="{{ base_url('pengajuan/berkas/') }}">file.ext</a></td>
+									<td>
+										{% if item2.id_butir %}
+											<input type="file" name="berkas_butir[{{ item2.id_butir }}]">
+										{% else %}
+											<input type="file" name="berkas_substandar[{{ item2.id_substandar }}]">
+										{% endif %}
+									</td>
 								</tr>
 							{% endfor %}
 						</tbody>

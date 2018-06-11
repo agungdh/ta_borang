@@ -30,8 +30,11 @@ class Pengajuan extends CI_Controller {
 						$standar_string = $id_standar == $item_standar->id ? null : $item_standar->nomor . ' ' . $item_standar->nama;
 						$substandar_string = $id_substandar == $item_substandar->id ? null : $item_substandar->nomor . ' ' . $item_substandar->nama;
 						$data['detil'][$item_standar->nomor][$i]['standar'] = $standar_string;
+						$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
 						$data['detil'][$item_standar->nomor][$i]['substandar'] = $substandar_string;
+						$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
 						$data['detil'][$item_standar->nomor][$i]['butir'] = $item_butir->nomor . ' ' . $item_butir->nama;
+						$data['detil'][$item_standar->nomor][$i]['id_butir'] = $item_butir->id;
 
 						$i++;
 
@@ -41,7 +44,9 @@ class Pengajuan extends CI_Controller {
 					$standar_string = $id_standar == $item_standar->id ? null : $item_standar->nomor . ' ' . $item_standar->nama;
 					$substandar_string = $id_substandar == $item_substandar->id ? null : $substandar_string;
 					$data['detil'][$item_standar->nomor][$i]['standar'] = $standar_string;
+					$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
 					$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
+					$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
 
 					$i++;
 
