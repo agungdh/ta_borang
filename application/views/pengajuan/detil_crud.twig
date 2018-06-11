@@ -1,0 +1,59 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'pengajuan/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">Detil Pengajuan</h3>
+        <div class="tile-body">
+          <form method="post" action="{{ base_url('pengajuan/aksi_detilpengajuan') }}">
+
+          	<!-- Nav tabs -->
+			<ul class="nav nav-tabs">
+				{% for item in nav %}
+				  <li class="nav-item">
+				    <a class="nav-link" data-toggle="tab" href="#standar_{{ item.nomor }}">Standar {{ item.nomor }}</a>
+				  </li>
+				{% endfor %}
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  {% for item in nav %}
+			  	<div class="tab-pane container fade" id="standar_{{ item.nomor }}">
+			  		<table border="1">
+			  			<thead>
+							<tr>
+								<th>Standar</th>
+								<th>Substandar</th>
+								<th>Butir</th>
+								<th>Berkas</th>
+								<th>Upload</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item2 in detil[item.nomor] %}
+								<tr>
+									<td>{{ item2.standar }}</td>
+									<td>{{ item2.substandar }}</td>
+									<td>{{ item2.butir }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+			  		</table>
+			  	</div>
+			  {% endfor %}
+			</div>
+
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

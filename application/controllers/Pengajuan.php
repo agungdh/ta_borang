@@ -10,6 +10,40 @@ class Pengajuan extends CI_Controller {
 		redirect(base_url());
 	}
 
+	function detil_crud($id) {
+		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+
+		$this->db->where(['versi_id' => $data['pengajuan']->versi_id]);
+		$this->db->order_by('nomor', 'asc');
+		$data['nav'] = $this->db->get('standar')->result();
+
+		$data['detil'] = [];
+		$i = 0;
+		$standar = $this->db->get_where('standar', ['versi_id' => $data['pengajuan']->versi_id])->result();
+		foreach ($standar as $item_standar) {
+			$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+			foreach ($substandar as $item_substandar) {
+				$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+				if ($butir != null) {
+					foreach ($butir as $item_butir) {
+						$data['detil'][$item_standar->nomor][$i]['standar'] = $item_standar->nomor . ' ' . $item_standar->nama;
+						$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
+						$data['detil'][$item_standar->nomor][$i]['butir'] = $item_butir->nomor . ' ' . $item_butir->nama;
+
+						$i++;
+					}
+				} else {
+					$data['detil'][$item_standar->nomor][$i]['standar'] = $item_standar->nomor . ' ' . $item_standar->nama;
+					$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
+
+					$i++;
+				}
+			}
+		}
+
+		$this->twig->display('pengajuan/detil_crud.twig', $data);		
+	}
+
 	function r() {
 		$this->pustaka->auth($this->session->level, [1, 2]);
 
@@ -55,7 +89,7 @@ class Pengajuan extends CI_Controller {
 
 		$this->db->insert('pengajuan', $data);
 
-		redirect(base_url('pengajuan/crud'));
+		redirect(base_url('pengajuan/detil_crud/' . $this->db->insert_id()));
 	}
 
 	function aksi_ubah() {
@@ -138,7 +172,7 @@ class Pengajuan extends CI_Controller {
 	      $nestedData[] = '60%';
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('substandar/index/' . $row->id) . '" data-toggle="tooltip" title="Substandar"><i class="fa fa-share"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
 	          </div>';
@@ -212,7 +246,7 @@ class Pengajuan extends CI_Controller {
 	      $nestedData[] = $row->nama;
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('substandar/index/' . $row->id) . '" data-toggle="tooltip" title="Substandar"><i class="fa fa-share"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
 	          </div>';
