@@ -12,11 +12,18 @@
         <div class="tile-body">
           <form method="post" action="{{ base_url('pengajuan/aksi_detilpengajuan') }}">
 
+          	<input type="hidden" name="last_tab" value="1">
+
           	<!-- Nav tabs -->
 			<ul class="nav nav-tabs">
 				{% for item in nav %}
+					{% if item.nomor == 1 %}
+						{% set status = 'active' %}
+					{% else %}
+						{% set status = null %}
+					{% endif %}
 				  <li class="nav-item">
-				    <a class="nav-link" data-toggle="tab" href="#standar_{{ item.nomor }}">Standar {{ item.nomor }}</a>
+				    <a class="nav-link {{ status }}" data-toggle="tab" onclick="pilih_tab({{ item.nomor }})" href="#standar_{{ item.nomor }}">Standar {{ item.nomor }}</a>
 				  </li>
 				{% endfor %}
 			</ul>
@@ -24,7 +31,12 @@
 			<!-- Tab panes -->
 			<div class="tab-content">
 			  {% for item in nav %}
-			  	<div class="tab-pane container fade" id="standar_{{ item.nomor }}">
+			  	{% if item.nomor == 1 %}
+					{% set status = 'active' %}
+				{% else %}
+					{% set status = 'fade' %}
+				{% endif %}
+			  	<div class="tab-pane container {{ status }}" id="standar_{{ item.nomor }}">
 			  		<table class="table">
 			  			<thead>
 							<tr>
@@ -68,4 +80,39 @@
 {% endblock %}
 
 {% block js %}
+	<script type="text/javascript">
+	// btn hapus
+	function hapus(id, standar) {
+	    swal({
+	        title: 'Apakah anda yakin?',
+	        text: "Data akan dihapus!",
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonText: 'Hapus!'
+	    }).then(function(result) {
+	        if (result.value) {
+	            window.location = "<?php echo base_url('prodi/detail_pengajuan/hapus/'); ?>" + id + '/' + $('input[name=last_tab]').val();
+	        }
+	    });
+	};
+
+	  $(document).ready(function() {
+		var dTable;
+	 	var var_last_tab = "{{ CI.input.get('tab') }}";
+
+	    if (var_last_tab != '') {
+	      $("ul.nav.nav-tabs li a").eq(0).attr('class','nav-link');
+	      $("ul.nav.nav-tabs li a").eq(var_last_tab-1).attr('class','nav-link active show');
+	      $("#standar_1").attr('class','tab-pane');
+	      $("#standar_"+var_last_tab).attr('class','tab-pane active');
+
+	      pilih_tab(var_last_tab);
+	    }
+
+	  });
+
+	  function pilih_tab(id) {
+	    $('input[name=last_tab]').val(id);
+	  }
+	</script>
 {% endblock %}

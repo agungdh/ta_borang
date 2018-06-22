@@ -10,6 +10,10 @@ class Pengajuan extends CI_Controller {
 		redirect(base_url());
 	}
 
+	function aksi_detilpengajuan() {
+		var_dump($this->input->post());
+	}
+
 	function detil_crud($id) {
 		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
 
