@@ -73,8 +73,21 @@ class Pengajuan extends CI_Controller {
 		$zipFile->saveAsFile($filename);
 		$zipFile->close();
 
+		// var_dump($data['pengajuan']);
+		// var_dump($this->db->get_where('prodi', ['id' => $data['pengajuan']->prodi_id])->row()); die;
+
+		$fileOutput = "";
+		$prodi = $this->db->get_where('prodi', ['id' => $data['pengajuan']->prodi_id])->row();
+		$fileOutput .= "Prodi " . $prodi->nama . ' - ';
+		$versi = $this->db->get_where('versi', ['id' => $data['pengajuan']->versi_id])->row();
+		// var_dump($versi); die;
+		$fileOutput .= "Standar Akreditasi " . $versi->nama . ' (' .  $versi->tahun . ')';
+		$fileOutput .= '.zip';
+
+		// var_dump($fileOutput); die;
+
 		$fileDownload = FileDownload::createFromFilePath($filename);
-		$fileDownload->sendDownload('test batch.zip');
+		$fileDownload->sendDownload($fileOutput);
 	}
 
 	function aksi_detilpengajuan() {
@@ -344,6 +357,7 @@ class Pengajuan extends CI_Controller {
   			</div>';
 	      $nestedData[] = '
 	          <div class="btn-group">
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/berkas_batch/' . $row->id) . '" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
