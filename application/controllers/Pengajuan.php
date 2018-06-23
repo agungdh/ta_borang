@@ -236,7 +236,52 @@ class Pengajuan extends CI_Controller {
 	      $nestedData[] = $row->tahun_usulan;
 	      $versi = $this->db->get_where('versi', ['id' => $row->versi_id])->row();
 	      $nestedData[] = $versi->nama . ' (' . $versi->tahun . ')';
-	      $nestedData[] = '60%';
+	      
+   		    $data_progress['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+
+			$data_progress['detil'] = [];
+			$i = 0;
+			$jumlah_berkas_terupload = 0;
+			$jumlah_berkas_harus_diupload = 0;
+			$standar = $this->db->get_where('standar', ['versi_id' => $data_progress['pengajuan']->versi_id])->result();
+			foreach ($standar as $item_standar) {
+				$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+				foreach ($substandar as $item_substandar) {
+					$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+					if ($butir != null) {
+						foreach ($butir as $item_butir) {							
+							$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+							if ($file != null) {
+								$jumlah_berkas_terupload++;
+							}
+							
+							$jumlah_berkas_harus_diupload++;
+
+							$i++;
+						}
+					} else {						
+						$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+							if ($file != null) {
+								$jumlah_berkas_terupload++;
+							}						
+							
+							$jumlah_berkas_harus_diupload++;
+
+						$i++;
+					}
+				}
+			}
+
+
+
+	      $jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+
+	      $nestedData[] = '
+  	        <div class="progress" data-toggle="tooltip" title="' . $jumlah_persentase . "%" . '">
+  			  <div class="progress-bar" role="progressbar" style="width: ' . $jumlah_persentase . '%;" aria-valuenow="' . $jumlah_persentase . '" aria-valuemin="0" aria-valuemax="100">' . $jumlah_persentase . '%</div>
+  			</div>';
 	      $nestedData[] = '
 	          <div class="btn-group">
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
