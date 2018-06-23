@@ -20,16 +20,8 @@ class Pengajuan extends CI_Controller {
 	}
 
 	function berkas_batch($pengajuan_id) {
-		$zip = new ZipArchive();
+		$zipFile = new \PhpZip\ZipFile();
 		
-		$filename = "temps/" . $this->session->id;
-
-		file_exists($filename) ? unlink($filename) : null;
-
-		if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
-		    exit("cannot open <$filename>\n");
-		}
-
 		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $pengajuan_id])->row();
 
 		$data['detil'] = [];
@@ -66,12 +58,20 @@ class Pengajuan extends CI_Controller {
 				// 		echo $value . "\n";
 				// 	}
 				// }
-				// var_dump($item2);
-				$zip->addFile('uploads/berkas/' . $item2['berkas_id'], $item2['filename']);
+				if ($item2['berkas_id'] != null) {
+					// var_dump($item2);
+					$zipFile->addFile('uploads/berkas/' . $item2['berkas_id'], $item2['filename']);
+				}
 			}
 		}
 
-		$zip->close();
+
+		$filename = "temps/" . $this->session->id;
+
+		file_exists($filename) ? unlink($filename) : null;
+
+		$zipFile->saveAsFile($filename);
+		$zipFile->close();
 
 		$fileDownload = FileDownload::createFromFilePath($filename);
 		$fileDownload->sendDownload('test batch.zip');
