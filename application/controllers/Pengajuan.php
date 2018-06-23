@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Apfelbox\FileDownload\FileDownload;
+
 class Pengajuan extends CI_Controller {
 	function __construct(){
 		parent::__construct();
@@ -8,6 +10,13 @@ class Pengajuan extends CI_Controller {
 
 	function index() {
 		redirect(base_url());
+	}
+
+	function berkas($berkas_id) {
+		$berkas = $this->db->get_where('berkas', ['id' => $berkas_id])->row();
+
+		$fileDownload = FileDownload::createFromFilePath('uploads/berkas/' . $berkas->id);
+		$fileDownload->sendDownload($berkas->nama);
 	}
 
 	function aksi_detilpengajuan() {
@@ -21,6 +30,7 @@ class Pengajuan extends CI_Controller {
 
 				// var_dump($data);
 				$this->db->insert('berkas', $data);
+				move_uploaded_file($_FILES['berkas_butir_' . $value]['tmp_name'], 'uploads/berkas/' . $this->db->insert_id());
 				unset($data);
 			}
 		}
@@ -35,6 +45,7 @@ class Pengajuan extends CI_Controller {
 
 				// var_dump($data);
 				$this->db->insert('berkas', $data);
+				move_uploaded_file($_FILES['berkas_substandar_' . $value]['tmp_name'], 'uploads/berkas/' . $this->db->insert_id());
 				unset($data);
 			}
 		}
