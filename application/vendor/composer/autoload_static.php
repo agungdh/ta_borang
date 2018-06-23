@@ -11,6 +11,11 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         array (
             'Twig\\' => 5,
         ),
+        'P' => 
+        array (
+            'Psr\\Http\\Message\\' => 17,
+            'PhpZip\\' => 7,
+        ),
         'G' => 
         array (
             'Gumlet\\' => 7,
@@ -29,6 +34,14 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'PhpZip\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nelexa/zip/src/PhpZip',
         ),
         'Gumlet\\' => 
         array (
