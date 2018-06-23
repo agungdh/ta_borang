@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Skyzyx\\Components\\Mimetypes' => array($vendorDir . '/skyzyx/mimetypes/src'),
 );

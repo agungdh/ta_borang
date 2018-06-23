@@ -9,4 +9,5 @@ return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Gumlet\\' => array($vendorDir . '/gumlet/php-image-resize/lib'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
+    'Apfelbox\\FileDownload\\' => array($vendorDir . '/apfelbox/php-file-download/src'),
 );
