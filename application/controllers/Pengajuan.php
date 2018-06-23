@@ -67,6 +67,11 @@ class Pengajuan extends CI_Controller {
 						$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
 						$data['detil'][$item_standar->nomor][$i]['butir'] = $item_butir->nomor . ' ' . $item_butir->nama;
 						$data['detil'][$item_standar->nomor][$i]['id_butir'] = $item_butir->id;
+						
+						$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+						$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? $file->nama : '-';
+						$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
 
 						$i++;
 
@@ -79,6 +84,11 @@ class Pengajuan extends CI_Controller {
 					$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
 					$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
 					$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
+
+					$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+					$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? $file->nama : '-';
+					$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
 
 					$i++;
 

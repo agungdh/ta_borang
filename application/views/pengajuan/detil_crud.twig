@@ -64,7 +64,13 @@
 									{% else %}
 										<td colspan="2">{{ item2.substandar }}</td>
 									{% endif %}
-									<td><a href="{{ base_url('pengajuan/berkas/') }}">file.ext</a></td>
+									<td>
+										{% if item2.berkas_id %}
+											<a href="{{ base_url('pengajuan/berkas/' ~ item2.berkas_id) }}">{{ item2.filename }}</a>
+										{% else %}
+											<a href="#">{{ item2.filename }}</a>
+										{% endif %}
+									</td>
 									<td>
 										{% if item2.id_butir %}
 											<input type="file" name="berkas_butir_{{ item2.id_butir }}">
