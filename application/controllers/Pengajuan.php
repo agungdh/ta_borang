@@ -19,6 +19,64 @@ class Pengajuan extends CI_Controller {
 		$fileDownload->sendDownload($berkas->nama);
 	}
 
+	function berkas_batch($pengajuan_id) {
+		$zip = new ZipArchive();
+		
+		$filename = "temps/" . $this->session->id;
+
+		file_exists($filename) ? unlink($filename) : null;
+
+		if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+		    exit("cannot open <$filename>\n");
+		}
+
+		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $pengajuan_id])->row();
+
+		$data['detil'] = [];
+		$i = 0;
+		$standar = $this->db->get_where('standar', ['versi_id' => $data['pengajuan']->versi_id])->result();
+		foreach ($standar as $item_standar) {
+			$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+			foreach ($substandar as $item_substandar) {
+				$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+				if ($butir != null) {
+					foreach ($butir as $item_butir) {						
+						$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+						$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? 'Standar ' . $item_standar->nomor . '/' . 'Substandar ' . $item_substandar->nomor . '/' . 'Butir ' . $item_butir->nomor . ' - ' . $file->nama : null;
+						$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
+
+						$i++;
+					}
+				} else {
+					$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+					$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? 'Standar ' . $item_standar->nomor . '/' . 'Substandar ' . $item_substandar->nomor . ' - ' . $file->nama : null;
+					$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
+
+					$i++;
+				}
+			}
+		}
+		
+		foreach ($data['detil'] as $item) {
+			foreach ($item as $item2) {
+				// foreach ($item2 as $value) {
+				// 	if ($value != null) {
+				// 		echo $value . "\n";
+				// 	}
+				// }
+				// var_dump($item2);
+				$zip->addFile('uploads/berkas/' . $item2['berkas_id'], $item2['filename']);
+			}
+		}
+
+		$zip->close();
+
+		$fileDownload = FileDownload::createFromFilePath($filename);
+		$fileDownload->sendDownload('test batch.zip');
+	}
+
 	function aksi_detilpengajuan() {
 		// echo "Butir\n";
 		foreach ($this->input->post('berkas_butir') as $value) {
