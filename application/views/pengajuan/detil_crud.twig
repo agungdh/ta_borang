@@ -10,7 +10,7 @@
       <div class="tile">
         <h3 class="tile-title">Detil Pengajuan</h3>
         <div class="tile-body">
-          <form method="post" action="{{ base_url('pengajuan/aksi_detilpengajuan') }}">
+          <form method="post" action="{{ base_url('pengajuan/aksi_detilpengajuan') }}" enctype="multipart/form-data">
 
           	<input type="hidden" name="last_tab" value="1">
           	<input type="hidden" name="pengajuan_id" value="{{ pengajuan.id }}">
@@ -67,9 +67,11 @@
 									<td><a href="{{ base_url('pengajuan/berkas/') }}">file.ext</a></td>
 									<td>
 										{% if item2.id_butir %}
-											<input type="file" name="berkas_butir[{{ item2.id_butir }}]">
+											<input type="file" name="berkas_butir_{{ item2.id_butir }}">
+											<input type="hidden" name="berkas_butir[]" value="{{ item2.id_butir }}">
 										{% else %}
-											<input type="file" name="berkas_substandar[{{ item2.id_substandar }}]">
+											<input type="file" name="berkas_substandar_{{ item2.id_substandar }}">
+											<input type="hidden" name="berkas_substandar[]" value="{{ item2.id_substandar }}">
 										{% endif %}
 									</td>
 								</tr>

@@ -11,6 +11,34 @@ class Pengajuan extends CI_Controller {
 	}
 
 	function aksi_detilpengajuan() {
+		// echo "Butir\n";
+		foreach ($this->input->post('berkas_butir') as $value) {
+			if ($_FILES['berkas_butir_' . $value]['name'] != '') {
+				// var_dump($_FILES['berkas_butir_' . $value]);
+				$data['nama'] = $_FILES['berkas_butir_' . $value]['name'];
+				$data['butir_id'] = $value;
+				$data['pengajuan_id'] = $this->input->post('pengajuan_id');
+
+				// var_dump($data);
+				$this->db->insert('berkas', $data);
+				unset($data);
+			}
+		}
+
+		// echo "Sub Standar\n";
+		foreach ($this->input->post('berkas_substandar') as $value) {
+			if ($_FILES['berkas_substandar_' . $value]['name'] != '') {
+				// var_dump($_FILES['berkas_substandar_' . $value]);
+				$data['nama'] = $_FILES['berkas_substandar_' . $value]['name'];
+				$data['substandar_id'] = $value;
+				$data['pengajuan_id'] = $this->input->post('pengajuan_id');
+
+				// var_dump($data);
+				$this->db->insert('berkas', $data);
+				unset($data);
+			}
+		}
+
 		redirect(base_url('pengajuan/detil_crud/' . $this->input->post('pengajuan_id') . '?tab=' . $this->input->post('last_tab')));
 	}
 
