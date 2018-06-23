@@ -11,7 +11,7 @@ class Pengajuan extends CI_Controller {
 	}
 
 	function aksi_detilpengajuan() {
-		var_dump($this->input->post());
+		redirect(base_url('pengajuan/detil_crud/' . $this->input->post('pengajuan_id') . '?tab=' . $this->input->post('last_tab')));
 	}
 
 	function detil_crud($id) {
