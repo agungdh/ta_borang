@@ -274,9 +274,11 @@ class Pengajuan extends CI_Controller {
 				}
 			}
 
-
-
-	      $jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+			if ($jumlah_berkas_harus_diupload == 0) {
+				$jumlah_persentase = 0;
+			} else {
+	      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+			}
 
 	      $nestedData[] = '
   	        <div class="progress" data-toggle="tooltip" title="' . $jumlah_persentase . "%" . '">
