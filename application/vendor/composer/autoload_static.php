@@ -13,8 +13,10 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         ),
         'P' => 
         array (
+            'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'PhpZip\\' => 7,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'G' => 
         array (
@@ -35,6 +37,10 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -42,6 +48,10 @@ class ComposerStaticInitbca262e1e93c4f2ca194525e8ba41a01
         'PhpZip\\' => 
         array (
             0 => __DIR__ . '/..' . '/nelexa/zip/src/PhpZip',
+        ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
         'Gumlet\\' => 
         array (
