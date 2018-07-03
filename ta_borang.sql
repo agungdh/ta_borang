@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2018 at 06:14 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Waktu pembuatan: 03 Jul 2018 pada 05.22
+-- Versi server: 10.1.32-MariaDB
+-- Versi PHP: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `butir`
+-- Struktur dari tabel `berkas`
+--
+
+CREATE TABLE `berkas` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `substandar_id` int(11) DEFAULT NULL,
+  `butir_id` int(11) DEFAULT NULL,
+  `pengajuan_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `berkas`
+--
+
+INSERT INTO `berkas` (`id`, `nama`, `substandar_id`, `butir_id`, `pengajuan_id`) VALUES
+(10, 'contributing.md', NULL, 3, 6),
+(11, 'data_penting.txt', NULL, 4, 6),
+(12, 'index.php', 4, NULL, 6),
+(13, '.editorconfig', 5, NULL, 6),
+(14, '.gitignore', 7, NULL, 6),
+(15, '.htaccess', 8, NULL, 6),
+(16, '.editorconfig', 6, NULL, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `butir`
 --
 
 CREATE TABLE `butir` (
@@ -36,19 +63,37 @@ CREATE TABLE `butir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `butir`
+-- Dumping data untuk tabel `butir`
 --
 
 INSERT INTO `butir` (`id`, `nomor`, `nama`, `substandar_id`) VALUES
-(4, '1.1.4', 'satu satu satu jadi empat test', 2),
-(5, '1.1.2', 'satu satu dua', 2),
-(6, '12', '124wrsdf ', 3),
-(8, '44', '4444', 7);
+(3, '1.1.1', 'Jelaskan mekanisme penyusunan visi, misi, tujuan dan sasaran program studi, serta pihak-pihak yang dilibatkan', 1),
+(4, '1.1.2', 'Sasaran dan strategi pencapaian', 1),
+(5, '5.1.1', 'a', 11),
+(6, '5.1.2', 'b', 11);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fakultas`
+-- Struktur dari tabel `config`
+--
+
+CREATE TABLE `config` (
+  `judul_aplikasi` varchar(255) NOT NULL,
+  `judul_menu` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `config`
+--
+
+INSERT INTO `config` (`judul_aplikasi`, `judul_menu`) VALUES
+('Aplikasi Pengumpulan Data Akreditasi Prodi', 'APDAP');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fakultas`
 --
 
 CREATE TABLE `fakultas` (
@@ -57,18 +102,17 @@ CREATE TABLE `fakultas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `fakultas`
+-- Dumping data untuk tabel `fakultas`
 --
 
 INSERT INTO `fakultas` (`id`, `nama`) VALUES
 (4, 'Fakultas Teknik Informatika'),
-(5, 'Fakultas Ekonomi'),
-(6, 'test');
+(5, 'Fakultas Ekonomi');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengajuan`
+-- Struktur dari tabel `pengajuan`
 --
 
 CREATE TABLE `pengajuan` (
@@ -79,10 +123,18 @@ CREATE TABLE `pengajuan` (
   `versi_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `pengajuan`
+--
+
+INSERT INTO `pengajuan` (`id`, `tanggal_pengajuan`, `tahun_usulan`, `prodi_id`, `versi_id`) VALUES
+(6, '2018-06-11', 2003, 13, 1),
+(7, '2018-06-23', 2003, 15, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prodi`
+-- Struktur dari tabel `prodi`
 --
 
 CREATE TABLE `prodi` (
@@ -92,7 +144,7 @@ CREATE TABLE `prodi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prodi`
+-- Dumping data untuk tabel `prodi`
 --
 
 INSERT INTO `prodi` (`id`, `nama`, `fakultas_id`) VALUES
@@ -104,7 +156,7 @@ INSERT INTO `prodi` (`id`, `nama`, `fakultas_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `standar`
+-- Struktur dari tabel `standar`
 --
 
 CREATE TABLE `standar` (
@@ -115,20 +167,22 @@ CREATE TABLE `standar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `standar`
+-- Dumping data untuk tabel `standar`
 --
 
 INSERT INTO `standar` (`id`, `nomor`, `nama`, `versi_id`) VALUES
-(2, '1', 'satu satu aja', 4),
-(4, '3', 'asf asfewf adsf dua jadi 3', 4),
-(5, '2', 'test', 4),
-(7, '1', 'Visi, misi, tujuan dan sasaran, serta strategi pencapaian', 7),
-(8, '2', '22', 8);
+(2, '1', 'Visi, misi, tujuan dan sasaran, serta strategi pencapaian', 1),
+(6, '2', 'Tata pamong, kepemimpinan, sistem pengelolaan, dan penjaminan mutu', 1),
+(7, '3', 'Mahasiswa dan lulusan', 1),
+(8, '4', 'Sumber daya manusia', 1),
+(9, '5', 'Kurikulum, pembelajaran, dan suasana akademik', 1),
+(10, '6', 'Pembiayaan, sarana dan prasarana, serta sistem informasi', 1),
+(11, '7', 'Penelitian, pelayanan/pengabdian kepada masyarakat, dan kerjasama', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `substandar`
+-- Struktur dari tabel `substandar`
 --
 
 CREATE TABLE `substandar` (
@@ -139,19 +193,24 @@ CREATE TABLE `substandar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `substandar`
+-- Dumping data untuk tabel `substandar`
 --
 
 INSERT INTO `substandar` (`id`, `nomor`, `nama`, `standar_id`) VALUES
-(2, '1.5', 'satu empat jadi lima', 4),
-(3, '12', 'qrw rw', 2),
-(7, '3', '33', 8),
-(8, '1.1', 'Jelaskan dasar penyusunan dan mekanisme penyusunan visi, misi, tujuan dan sasaran institusi perguruan tinggi, serta pihak-pihak yang dilibatkan dalam penyusunannya', 7);
+(1, '1.1', 'Visi, misi, tujuan dan sasaran, serta strategi pencapaian', 2),
+(4, '1.2', 'Sosialisasi', 2),
+(5, '2.1', 'Sistem Tata Pamong', 6),
+(6, '2.2', 'Kepemimpinan', 6),
+(7, '2.3', 'Sistem Pengelolaan', 6),
+(8, '2.4', 'Penjaminan Mutu', 6),
+(9, '2.5', 'Umpan Balik', 6),
+(10, '2.6', 'Keberlanjutan', 6),
+(11, '5.1', 'asadfs adfsadf ', 9);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -164,7 +223,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `prodi_id`) VALUES
@@ -172,13 +231,13 @@ INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `prodi_id`) V
 (2, 'Operator FTI 1', 'opfti1', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3, 13),
 (4, 'Test Admin', 'testadmin', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 1, NULL),
 (5, 'Test DPM', 'testdpm', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 2, NULL),
-(6, 'Test Fe', 'testfe', '4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a', 3, 15),
+(6, 'Test Fe', 'testfe', 'd404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db', 3, 15),
 (12, 'cobafti1', 'cobafti1', '82652b6d108ee60bbfddccd3e220e1135a6aa793c8103430f64b0c1861ff5d37de92b8980b63b7af42115edd0168702317a88da72bf308d59b6524c156703a84', 3, 13);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `versi`
+-- Struktur dari tabel `versi`
 --
 
 CREATE TABLE `versi` (
@@ -188,34 +247,42 @@ CREATE TABLE `versi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `versi`
+-- Dumping data untuk tabel `versi`
 --
 
 INSERT INTO `versi` (`id`, `nama`, `tahun`) VALUES
-(3, '9 standar', 2018),
-(4, '7 standar', 2009),
-(7, '7 Standar', 2011),
-(8, '1 test', 2000);
+(1, '7 Standar Diploma', 2009),
+(7, 'qwrqwrqw', 2003),
+(9, '9 Standar', 2017);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `butir`
+-- Indeks untuk tabel `berkas`
+--
+ALTER TABLE `berkas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `butir_id` (`butir_id`),
+  ADD KEY `pengajuan_id` (`pengajuan_id`),
+  ADD KEY `substandar_id` (`substandar_id`);
+
+--
+-- Indeks untuk tabel `butir`
 --
 ALTER TABLE `butir`
   ADD PRIMARY KEY (`id`),
   ADD KEY `substandar_id` (`substandar_id`);
 
 --
--- Indexes for table `fakultas`
+-- Indeks untuk tabel `fakultas`
 --
 ALTER TABLE `fakultas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pengajuan`
+-- Indeks untuk tabel `pengajuan`
 --
 ALTER TABLE `pengajuan`
   ADD PRIMARY KEY (`id`),
@@ -223,122 +290,142 @@ ALTER TABLE `pengajuan`
   ADD KEY `versi_id` (`versi_id`);
 
 --
--- Indexes for table `prodi`
+-- Indeks untuk tabel `prodi`
 --
 ALTER TABLE `prodi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fakultas_id` (`fakultas_id`);
 
 --
--- Indexes for table `standar`
+-- Indeks untuk tabel `standar`
 --
 ALTER TABLE `standar`
   ADD PRIMARY KEY (`id`),
   ADD KEY `versi_id` (`versi_id`);
 
 --
--- Indexes for table `substandar`
+-- Indeks untuk tabel `substandar`
 --
 ALTER TABLE `substandar`
   ADD PRIMARY KEY (`id`),
   ADD KEY `standar_id` (`standar_id`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD KEY `prodi_id` (`prodi_id`);
 
 --
--- Indexes for table `versi`
+-- Indeks untuk tabel `versi`
 --
 ALTER TABLE `versi`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `butir`
+-- AUTO_INCREMENT untuk tabel `berkas`
+--
+ALTER TABLE `berkas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT untuk tabel `butir`
 --
 ALTER TABLE `butir`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `fakultas`
+-- AUTO_INCREMENT untuk tabel `fakultas`
 --
 ALTER TABLE `fakultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `pengajuan`
+-- AUTO_INCREMENT untuk tabel `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `prodi`
+-- AUTO_INCREMENT untuk tabel `prodi`
 --
 ALTER TABLE `prodi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `standar`
+-- AUTO_INCREMENT untuk tabel `standar`
 --
 ALTER TABLE `standar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `substandar`
+-- AUTO_INCREMENT untuk tabel `substandar`
 --
 ALTER TABLE `substandar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `versi`
+-- AUTO_INCREMENT untuk tabel `versi`
 --
 ALTER TABLE `versi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `butir`
+-- Ketidakleluasaan untuk tabel `berkas`
+--
+ALTER TABLE `berkas`
+  ADD CONSTRAINT `berkas_ibfk_1` FOREIGN KEY (`butir_id`) REFERENCES `butir` (`id`),
+  ADD CONSTRAINT `berkas_ibfk_2` FOREIGN KEY (`pengajuan_id`) REFERENCES `pengajuan` (`id`),
+  ADD CONSTRAINT `berkas_ibfk_3` FOREIGN KEY (`substandar_id`) REFERENCES `substandar` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `butir`
 --
 ALTER TABLE `butir`
   ADD CONSTRAINT `butir_ibfk_1` FOREIGN KEY (`substandar_id`) REFERENCES `substandar` (`id`);
 
 --
--- Constraints for table `pengajuan`
+-- Ketidakleluasaan untuk tabel `pengajuan`
 --
 ALTER TABLE `pengajuan`
   ADD CONSTRAINT `pengajuan_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`),
   ADD CONSTRAINT `pengajuan_ibfk_2` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
 
 --
--- Constraints for table `prodi`
+-- Ketidakleluasaan untuk tabel `prodi`
 --
 ALTER TABLE `prodi`
   ADD CONSTRAINT `prodi_ibfk_1` FOREIGN KEY (`fakultas_id`) REFERENCES `fakultas` (`id`);
 
 --
--- Constraints for table `substandar`
+-- Ketidakleluasaan untuk tabel `standar`
+--
+ALTER TABLE `standar`
+  ADD CONSTRAINT `standar_ibfk_1` FOREIGN KEY (`versi_id`) REFERENCES `versi` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `substandar`
 --
 ALTER TABLE `substandar`
   ADD CONSTRAINT `substandar_ibfk_1` FOREIGN KEY (`standar_id`) REFERENCES `standar` (`id`);
 
 --
--- Constraints for table `user`
+-- Ketidakleluasaan untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`);
