@@ -181,6 +181,64 @@ class Pengajuan extends CI_Controller {
 
 		$this->twig->display('pengajuan/detil_crud.twig', $data);		
 	}
+	
+	function detil_r($id) {
+		$data['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+
+		$this->db->where(['versi_id' => $data['pengajuan']->versi_id]);
+		$this->db->order_by('nomor', 'asc');
+		$data['nav'] = $this->db->get('standar')->result();
+
+		$data['detil'] = [];
+		$i = 0;
+		$standar = $this->db->get_where('standar', ['versi_id' => $data['pengajuan']->versi_id])->result();
+		foreach ($standar as $item_standar) {
+			$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+			foreach ($substandar as $item_substandar) {
+				$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+				if ($butir != null) {
+					$id_standar = 0; $id_substandar = 0; $id_butir = 0;
+					foreach ($butir as $item_butir) {
+						$standar_string = $id_standar == $item_standar->id ? null : $item_standar->nomor . ' ' . $item_standar->nama;
+						$substandar_string = $id_substandar == $item_substandar->id ? null : $item_substandar->nomor . ' ' . $item_substandar->nama;
+						$data['detil'][$item_standar->nomor][$i]['standar'] = $standar_string;
+						$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
+						$data['detil'][$item_standar->nomor][$i]['substandar'] = $substandar_string;
+						$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
+						$data['detil'][$item_standar->nomor][$i]['butir'] = $item_butir->nomor . ' ' . $item_butir->nama;
+						$data['detil'][$item_standar->nomor][$i]['id_butir'] = $item_butir->id;
+						
+						$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+						$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? $file->nama : '-';
+						$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
+
+						$i++;
+
+						$id_standar = $item_standar->id; $id_substandar = $item_substandar->id;
+					}
+				} else {
+					$standar_string = $id_standar == $item_standar->id ? null : $item_standar->nomor . ' ' . $item_standar->nama;
+					$substandar_string = $id_substandar == $item_substandar->id ? null : $substandar_string;
+					$data['detil'][$item_standar->nomor][$i]['standar'] = $standar_string;
+					$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
+					$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
+					$data['detil'][$item_standar->nomor][$i]['id_substandar'] = $item_substandar->id;
+
+					$file = $this->db->get_where('berkas', ['pengajuan_id' => $data['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+					$data['detil'][$item_standar->nomor][$i]['filename'] = $file != null ? $file->nama : '-';
+					$data['detil'][$item_standar->nomor][$i]['berkas_id'] = $file != null ? $file->id : null;
+
+					$i++;
+
+					$id_standar = $item_standar->id; $id_substandar = $item_substandar->id;
+				}
+			}
+		}
+
+		$this->twig->display('pengajuan/detil_r.twig', $data);		
+	}
 
 	function r() {
 		$this->pustaka->auth($this->session->level, [1, 2]);
@@ -376,16 +434,15 @@ class Pengajuan extends CI_Controller {
 
 	    echo json_encode($json_data);  
 	  }
-
+	
 	function ajax_r(){
-		$this->pustaka->auth($this->session->level, [3]);
+		$this->pustaka->auth($this->session->level, [1, 2]);
 
 	    $requestData = $_REQUEST;
-	    $columns = ['tanggal_pengajuan', 'nama'];
+	    $columns = ['prodi_id', 'tanggal_pengajuan', 'tahun_usulan'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM pengajuan
-	        WHERE versi_id = ?", [$versi_id])->row();
+	        FROM pengajuan", [$this->session->prodi_id])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -397,44 +454,89 @@ class Pengajuan extends CI_Controller {
 
 		    $cari = [];
 
-		    $cari[] = $versi_id;
-
 	  	    for ($i=1; $i <= 2; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
 	        FROM pengajuan
-	        WHERE versi_id = ?
-	        AND (nama LIKE ? OR nomor like ?)", $cari)->row();
+	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
 	        FROM pengajuan
-	        WHERE versi_id = ?
-	        AND (nama LIKE ? OR nomor like ?)
+	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
 	        FROM pengajuan
-	        WHERE versi_id = ?
-	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$versi_id]);
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$this->session->prodi_id]);
 	            
 	    }
 
 	    foreach ($query->result() as $row) { 
 	      $nestedData=[]; 
 	      $id = $row->id;
-	      $nestedData[] = $row->nomor;
-	      $nestedData[] = $row->nama;
+	      $nestedData[] = $this->db->get_where('prodi', ['id' => $row->prodi_id])->row()->nama;
+	      $nestedData[] = $this->pustaka->tanggal_indo($row->tanggal_pengajuan);
+	      $nestedData[] = $row->tahun_usulan;
+	      $versi = $this->db->get_where('versi', ['id' => $row->versi_id])->row();
+	      $nestedData[] = $versi->nama . ' (' . $versi->tahun . ')';
+	      
+   		    $data_progress['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+
+			$data_progress['detil'] = [];
+			$i = 0;
+			$jumlah_berkas_terupload = 0;
+			$jumlah_berkas_harus_diupload = 0;
+			$standar = $this->db->get_where('standar', ['versi_id' => $data_progress['pengajuan']->versi_id])->result();
+			foreach ($standar as $item_standar) {
+				$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+				foreach ($substandar as $item_substandar) {
+					$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+					if ($butir != null) {
+						foreach ($butir as $item_butir) {							
+							$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+							if ($file != null) {
+								$jumlah_berkas_terupload++;
+							}
+							
+							$jumlah_berkas_harus_diupload++;
+
+							$i++;
+						}
+					} else {						
+						$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+							if ($file != null) {
+								$jumlah_berkas_terupload++;
+							}						
+							
+							$jumlah_berkas_harus_diupload++;
+
+						$i++;
+					}
+				}
+			}
+
+			if ($jumlah_berkas_harus_diupload == 0) {
+				$jumlah_persentase = 0;
+			} else {
+	      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+			}
+
+	      $nestedData[] = '
+  	        <div class="progress" data-toggle="tooltip" title="' . $jumlah_persentase . "%" . '">
+  			  <div class="progress-bar" role="progressbar" style="width: ' . $jumlah_persentase . '%;" aria-valuenow="' . $jumlah_persentase . '" aria-valuemin="0" aria-valuemax="100">' . $jumlah_persentase . '%</div>
+  			</div>';
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
-	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
-	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/berkas_batch/' . $row->id) . '" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
+	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_r/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	          </div>';
 
 	      $data[] = $nestedData;
@@ -451,4 +553,5 @@ class Pengajuan extends CI_Controller {
 	    echo json_encode($json_data);  
 	  }
 
+	
 }

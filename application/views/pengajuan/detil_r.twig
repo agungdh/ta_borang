@@ -1,0 +1,128 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+  {% include 'pengajuan/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">Detil Pengajuan</h3>
+        <div class="tile-body">
+          <form method="post" action="{{ base_url('pengajuan/aksi_detilpengajuan') }}" enctype="multipart/form-data">
+
+          	<input type="hidden" name="last_tab" value="1">
+          	<input type="hidden" name="pengajuan_id" value="{{ pengajuan.id }}">
+
+          	<!-- Nav tabs -->
+          	<a class="btn btn-primary" href="{{ base_url('pengajuan/r') }}">Kembali</a>
+			<ul class="nav nav-tabs">
+				{% for item in nav %}
+					{# {% if item.nomor == 1 %}
+						{% set status = 'active' %}
+					{% else %}
+						{% set status = null %}
+					{% endif %} #}
+				  <li class="nav-item">
+				    <a class="nav-link" data-toggle="tab" onclick="pilih_tab({{ item.nomor }})" href="#standar_{{ item.nomor }}">Standar {{ item.nomor }}</a>
+				  </li>
+				{% endfor %}
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  {% for item in nav %}
+			  	{# {% if item.nomor == 1 %}
+					{% set status = 'active' %}
+				{% else %}
+					{% set status = 'fade' %}
+				{% endif %} #}
+			  	<div class="tab-pane container fade" id="standar_{{ item.nomor }}">
+					
+			  		<table class="table">
+			  			<thead>
+							<tr>
+								<th>Standar</th>
+								<th>Substandar</th>
+								<th>Butir</th>
+								<th>Berkas</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							{% for item2 in detil[item.nomor] %}
+								<tr>
+									<td>{{ item2.standar }}</td>
+									{% if item2.id_butir %}
+										<td>{{ item2.substandar }}</td>
+										<td>{{ item2.butir }}</td>
+									{% else %}
+										<td colspan="2">{{ item2.substandar }}</td>
+									{% endif %}
+									<td>
+										{% if item2.berkas_id %}
+											<a href="{{ base_url('pengajuan/berkas/' ~ item2.berkas_id) }}">{{ item2.filename }}</a>
+										{% else %}
+											<a href="#">{{ item2.filename }}</a>
+										{% endif %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+			  		</table>
+
+			  	</div>
+			  {% endfor %}
+			</div>
+
+          </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+	// btn hapus
+	function hapus(id, standar) {
+	    swal({
+	        title: 'Apakah anda yakin?',
+	        text: "Data akan dihapus!",
+	        type: 'warning',
+	        showCancelButton: true,
+	        confirmButtonText: 'Hapus!'
+	    }).then(function(result) {
+	        if (result.value) {
+	            window.location = "<?php echo base_url('prodi/detail_pengajuan/hapus/'); ?>" + id + '/' + $('input[name=last_tab]').val();
+	        }
+	    });
+	};
+
+	  $(document).ready(function() {
+		var dTable;
+	 	var var_last_tab = "{{ CI.input.get('tab') }}";
+
+	    if (var_last_tab != '') {
+	      $("ul.nav.nav-tabs li a").eq(0).attr('class','nav-link');
+	      $("ul.nav.nav-tabs li a").eq(var_last_tab-1).attr('class','nav-link active');
+	      $("#standar_1").attr('class','tab-pane container');
+	      $("#standar_"+var_last_tab).attr('class','tab-pane container active');
+
+	      pilih_tab(var_last_tab);
+	    } else {
+	      // $("ul.nav.nav-tabs li a").eq(0).attr('class','nav-link');
+	      $("ul.nav.nav-tabs li a").eq(0).attr('class','nav-link active');
+	      // $("#standar_1").attr('class','tab-pane');
+	      $("#standar_1").attr('class','tab-pane container active');
+
+	      pilih_tab(1);
+	    }
+
+	  });
+
+	  function pilih_tab(id) {
+	    $('input[name=last_tab]').val(id);
+	  }
+	</script>
+{% endblock %}
