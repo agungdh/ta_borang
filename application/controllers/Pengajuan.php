@@ -453,10 +453,10 @@ class Pengajuan extends CI_Controller {
 		$this->pustaka->auth($this->session->level, [1, 2]);
 
 	    $requestData = $_REQUEST;
-	    $columns = ['prodi_id', 'tanggal_pengajuan', 'tahun_usulan'];
+	    $columns = ['prodi', 'tanggal_pengajuan', 'tahun_usulan'];
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM pengajuan", [$this->session->prodi_id])->row();
+	        FROM v_pengajuan", [])->row();
 
 	        $totalData = $row->total_data;
 	        $totalFiltered = $totalData; 
@@ -468,26 +468,26 @@ class Pengajuan extends CI_Controller {
 
 		    $cari = [];
 
-	  	    for ($i=1; $i <= 2; $i++) { 
+	  	    for ($i=1; $i <= 3; $i++) { 
 		    	$cari[] = $search_value;
 		    }
 
 	      $row = $this->db->query("SELECT count(*) total_data 
-	        FROM pengajuan
-	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)", $cari)->row();
+	        FROM v_pengajuan
+	        WHERE prodi LIKE ? OR tanggal_pengajuan LIKE ? OR tahun_usulan like ?", $cari)->row();
 
 	        $totalFiltered = $row->total_data; 
 
 	      $query = $this->db->query("SELECT *
-	        FROM pengajuan
-	        AND (tanggal_pengajuan LIKE ? OR tahun_usulan like ?)
+	        FROM v_pengajuan
+	        WHERE prodi LIKE ? OR tanggal_pengajuan LIKE ? OR tahun_usulan like ?
 	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], $cari);
 	            
 	    } else {  
 
 	      $query = $this->db->query("SELECT *
-	        FROM pengajuan
-	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], [$this->session->prodi_id]);
+	        FROM v_pengajuan
+	        ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."   LIMIT ".$requestData['start']." ,".$requestData['length'], []);
 	            
 	    }
 
