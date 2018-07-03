@@ -98,6 +98,13 @@ class Pengajuan extends CI_Controller {
 				$data['nama'] = $_FILES['berkas_butir_' . $value]['name'];
 				$data['butir_id'] = $value;
 				$data['pengajuan_id'] = $this->input->post('pengajuan_id');
+				
+				$last_berkas = $this->db->get_where('berkas', ['butir_id' => $data['butir_id'], 'pengajuan_id' => $data['pengajuan_id']])->row();
+
+				if ($last_berkas != null) {
+					$this->db->delete('berkas', ['id' => $last_berkas->id]);
+					unlink('uploads/berkas/' . $last_berkas->id);				
+				}
 
 				// var_dump($data);
 				$this->db->insert('berkas', $data);
@@ -113,6 +120,13 @@ class Pengajuan extends CI_Controller {
 				$data['nama'] = $_FILES['berkas_substandar_' . $value]['name'];
 				$data['substandar_id'] = $value;
 				$data['pengajuan_id'] = $this->input->post('pengajuan_id');
+				
+				$last_berkas = $this->db->get_where('berkas', ['substandar_id' => $data['substandar_id'], 'pengajuan_id' => $data['pengajuan_id']])->row();
+
+				if ($last_berkas != null) {
+					$this->db->delete('berkas', ['id' => $last_berkas->id]);
+					unlink('uploads/berkas/' . $last_berkas->id);
+				}
 
 				// var_dump($data);
 				$this->db->insert('berkas', $data);
