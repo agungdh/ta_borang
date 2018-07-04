@@ -567,5 +567,65 @@ class Pengajuan extends CI_Controller {
 	    echo json_encode($json_data);  
 	  }
 
+	function ajax_cek_blm_kelar($prodi_id) {
+		$ok = true;
+
+		$pengajuan = $this->db->get_where('pengajuan', ['prodi_id' => $prodi_id])->result();
+
+		if ($pengajuan != null) {
+			// var_dump($pengajuan);
+
+			foreach ($pengajuan as $row) { 
+		      $id = $row->id;
+		      $versi = $this->db->get_where('versi', ['id' => $row->versi_id])->row();
+		      
+	   		    $data_progress['pengajuan'] = $this->db->get_where('pengajuan', ['id' => $id])->row();
+
+				$data_progress['detil'] = [];
+				$i = 0;
+				$jumlah_berkas_terupload = 0;
+				$jumlah_berkas_harus_diupload = 0;
+				$standar = $this->db->get_where('standar', ['versi_id' => $data_progress['pengajuan']->versi_id])->result();
+				foreach ($standar as $item_standar) {
+					$substandar = $this->db->get_where('substandar', ['standar_id' => $item_standar->id])->result();
+					foreach ($substandar as $item_substandar) {
+						$butir = $this->db->get_where('butir', ['substandar_id' => $item_substandar->id])->result();
+						if ($butir != null) {
+							foreach ($butir as $item_butir) {							
+								$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'butir_id' => $item_butir->id])->row();
+
+								if ($file != null) {
+									$jumlah_berkas_terupload++;
+								}
+								
+								$jumlah_berkas_harus_diupload++;
+
+								$i++;
+							}
+						} else {						
+							$file = $this->db->get_where('berkas', ['pengajuan_id' => $data_progress['pengajuan']->id, 'substandar_id' => $item_substandar->id])->row();
+
+								if ($file != null) {
+									$jumlah_berkas_terupload++;
+								}						
+								
+								$jumlah_berkas_harus_diupload++;
+
+							$i++;
+						}
+					}
+				}
+
+				if ($jumlah_berkas_harus_diupload == 0) {
+					$jumlah_persentase = 0;
+				} else {
+		      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+				}
+
+				$jumlah_persentase < 100 ? $ok = false : $ok = true;
+		    }
+			echo $ok == true ? '1' : '0';
+		}
+	}
 	
 }

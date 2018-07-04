@@ -11,7 +11,7 @@
         <div class="tile-body">
           <div class="tile-title-w-btn">
             <h3 class="title">Data Pengajuan</h3>
-            <p><a class="btn btn-primary icon-btn" href="{{ base_url('pengajuan/tambah/') }}"><i class="fa fa-plus"></i>Pengajuan</a></p>
+            <p id="tambah_pengajuan"><a class="btn btn-primary icon-btn" href="#"><i class="fa fa-plus"></i>Pengajuan</a></p>
           </div>
           <table class="table table-hover table-bordered datatable">
             <thead>
@@ -75,5 +75,24 @@
   };
 
   $('body').tooltip({selector: '[data-toggle="tooltip"]'});
+
+  $("#tambah_pengajuan").click(function() {
+    $.ajax({
+      url: "{{ base_url('pengajuan/ajax_cek_blm_kelar/' ~ CI.session.prodi_id) }}",
+      success: function(data) {
+          // console.log(data);
+          if (data == '1') {
+            window.location = "{{ base_url('pengajuan/tambah/') }}";
+          } else {
+            swal('ERROR !!!', 'Ada pengajuan yang belum selesai !!!', 'error');
+          }
+      },
+      error: function(data) {
+          swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+          
+          console.log(data)
+      }
+    });
+  });
   </script>
 {% endblock %}
