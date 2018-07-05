@@ -127,6 +127,14 @@ class User extends CI_Controller {
 	      $id = $row->id;
 	      $nestedData[] = $row->nama;
 	      $nestedData[] = $row->username;
+	      if ($row->level == 1) {
+	      	$level = "Admin";
+	      } elseif ($row->level == 2) {
+	      	$level = "DPM";
+	      } else {
+	      	$level = "Prodi" . ' (' . $this->db->get_where('prodi', ['id' => $row->prodi_id])->row()->nama . ')';
+	      }
+	      $nestedData[] = $level;
 	      $nestedData[] = '
 	          <div class="btn-group">
 	            <a class="btn btn-primary" href="' . base_url('user/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
