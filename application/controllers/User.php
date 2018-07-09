@@ -155,4 +155,12 @@ class User extends CI_Controller {
 	    echo json_encode($json_data);  
 	  }
 
+	  function ajax_prodi() {
+	  	foreach ($this->db->get('prodi')->result() as $item) {
+	  		?>
+	  		<option value="<?php echo $item->id; ?>"><?php echo $item->nama; ?></option>
+	  		<?php
+	  	}
+	  }
+
 }

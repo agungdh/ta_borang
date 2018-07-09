@@ -10,7 +10,7 @@ class Profil extends CI_Controller {
 
 	function index() {
 		$data['user'] = $this->db->get_where('user', ['id' => $this->session->id])->row();
-
+		$data['addon']['prodi'] = $this->db->get_where('prodi', ['id' => $data['user']->prodi_id])->row()->nama;
 		$this->twig->display('profil/index.twig', $data);
 	}
 

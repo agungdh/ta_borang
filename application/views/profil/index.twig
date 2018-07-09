@@ -23,6 +23,18 @@
               <label class="control-label">Username</label>
               <input class="form-control" required readonly type="text" placeholder="Masukan Username" name="data[username]" value="{{ user.username }}">
             </div>
+            
+            <div class="form-group">
+              <label class="control-label">Level</label>
+              {% if user.level == 1 %}
+                {% set level = 'Administrator' %}
+              {% elseif user.level == 2 %}
+                {% set level = 'DPM' %}
+              {% else %}
+                {% set level = 'Prodi (' ~ addon.prodi ~ ')' %}
+              {% endif %}
+              <input class="form-control" value="{{ level }}" readonly>
+            </div>
 
             <div class="form-group">
               <label class="control-label">Foto</label>
