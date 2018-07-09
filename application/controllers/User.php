@@ -128,7 +128,7 @@ class User extends CI_Controller {
 	      $nestedData[] = $row->nama;
 	      $nestedData[] = $row->username;
 	      if ($row->level == 1) {
-	      	$level = "Admin";
+	      	$level = "Administrator";
 	      } elseif ($row->level == 2) {
 	      	$level = "DPM";
 	      } else {

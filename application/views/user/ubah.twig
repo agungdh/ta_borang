@@ -24,6 +24,21 @@
               <input class="form-control" required type="text" placeholder="Masukan Username" name="data[username]" value="{{ user.username }}">
             </div>
 
+            <div class="form-group">
+              <label class="control-label">Level</label>
+              <select id="level" class="form-control select2" required name="data[level]">
+                <option {{ user.level == '1' ? 'selected' : null }} value="1">Administrator</option>
+                <option {{ user.level == '2' ? 'selected' : null }} value="2">DPM</option>
+                <option {{ user.level == '3' ? 'selected' : null }} value="3">Prodi</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Prodi</label>
+              <select id="prodi" class="form-control select2" name="data[prodi_id]">
+              </select>
+            </div>            
+
             </div>
             <div class="tile-footer">
               <button id="simpan_ubah" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Simpan</button>
@@ -82,5 +97,48 @@
       $("#form_ubah_password").submit();      
     }
   });
+
+  $(function() {
+    $(".select2").select2();
+
+    $("#prodi").prop('disabled', true);
+
+    $("#level").change(function() {
+      ganti();
+    });
+
+    ganti('{{ user.prodi_id }}');
+  });
+
+  function ganti(isi) {
+      if ($("#level").val() == 3) {
+        $.ajax({
+            type: "get", 
+            url: "{{ base_url('user/ajax_prodi/') }}",
+            timeout: 5000,
+            success: function(data) {
+                $("#prodi").html(data);
+                $("#prodi").prop('disabled', false);
+                $("#prodi").prop('required', true);
+                
+                if (isi != '') {
+                  $("#prodi").val(isi);
+                }
+
+                $("#prodi").select2();
+            },
+            error: function(data) {
+                swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                
+                console.log(data)
+            }
+        });
+      } else {
+        $("#prodi").prop('disabled', true);
+        $("#prodi").prop('required', false);
+        $("#prodi").html("");
+        $("#prodi").select2();
+      }
+    }
   </script>
 {% endblock %}
