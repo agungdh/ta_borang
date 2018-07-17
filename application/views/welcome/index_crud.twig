@@ -1,0 +1,74 @@
+{% extends 'template/template.twig' %}
+
+{% block nav %}
+	{% include 'welcome/nav.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+	  <div class="col-md-12 col-lg-3">
+	    <div class="widget-small info coloured-icon"><i class="icon fa fa-table fa-3x"></i>
+	      <div class="info">
+	        <h4>Jumlah Pengajuan</h4>
+	        <p><b>{{ progress.jumlah_pengajuan }}</b></p>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-md-12 col-lg-3">
+	    <div class="widget-small primary coloured-icon"><i class="icon fa fa-check fa-3x"></i>
+	      <div class="info">
+	        <h4>Pengajuan Selesai</h4>
+	        <p><b>{{ progress.jumlah_pengajuan_selesai }}</b></p>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-md-12 col-lg-3">
+	    <div class="widget-small warning coloured-icon"><i class="icon fa fa-clock-o fa-3x"></i>
+	      <div class="info">
+	        <h4>Pengajuan Proses</h4>
+	        <p><b>{{ progress.jumlah_pengajuan_proses }}</b></p>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-md-12 col-lg-3">
+	    <div class="widget-small info coloured-icon"><i class="icon fa fa-calendar fa-3x"></i>
+	      <div class="info">
+	        <h4>Tanggal</h4>
+	        <p><b>{{ CI.pustaka.tanggal_indo_string(date('Y-m-d')) }}</b></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="tile">
+	      <h3 class="tile-title">Grafik Pengajuan Akreditasi</h3>
+	      <div class="embed-responsive embed-responsive-16by9">
+	        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+var pdata = [
+      	{
+      		value: {{ progress.jumlah_pengajuan_selesai }},
+      		color: "#46BFBD",
+      		highlight: "#5AD3D1",
+      		label: "Pengajuan Selesai"
+      	},
+      	{
+      		value: {{ progress.jumlah_pengajuan_proses }},
+      		color: "#FDB45C",
+      		highlight: "#FFC870",
+      		label: "Pengajuan Proses"
+      	}
+      ];
+
+var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+var pieChart = new Chart(ctxp).Pie(pdata);
+</script>
+{% endblock %}
