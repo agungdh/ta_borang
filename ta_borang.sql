@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2018 at 10:50 AM
+-- Generation Time: Jul 17, 2018 at 06:59 PM
 -- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- PHP Version: 5.6.36
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -63,12 +63,17 @@ INSERT INTO `berkas` (`id`, `nama`, `substandar_id`, `butir_id`, `pengajuan_id`)
 (60, 'jquery.chained.min.js', 8, NULL, 10),
 (61, 'belajar.sql', 9, NULL, 10),
 (62, 'jquery.min.js', 10, NULL, 10),
-(63, 'Leggimi.txt', 5, NULL, 11),
-(64, 'Lisezmoi.txt', 6, NULL, 11),
-(65, '??.txt', 8, NULL, 11),
-(66, 'Readme.txt', 10, NULL, 11),
-(67, 'Lisezmoi.txt', NULL, 3, 11),
-(68, 'Readme.txt', 4, NULL, 11);
+(69, 'command sshfs linux.txt', NULL, 3, 11),
+(70, 'command sshfs linux.txt', NULL, 4, 11),
+(71, 'command sshfs linux.txt', 4, NULL, 11),
+(72, 'Hotspot.bat', 5, NULL, 11),
+(73, 'Hotspot.bat', 6, NULL, 11),
+(74, 'desktop.ini', 8, NULL, 11),
+(75, 'command sshfs linux.txt', 10, NULL, 11),
+(76, 'command sshfs linux.txt', NULL, 5, 11),
+(77, 'command sshfs linux.txt', NULL, 6, 11),
+(78, 'command sshfs linux.txt', 7, NULL, 11),
+(79, 'command sshfs linux.txt', 9, NULL, 11);
 
 -- --------------------------------------------------------
 
@@ -109,7 +114,7 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`judul_aplikasi`, `judul_menu`) VALUES
-('Aplikasi Pengumpulan Data Pengajuan Akreditasi Berbasis Web di Universitas XYZ', 'APDPA');
+('Aplikasi Pengumpulan Data Pengajuan Akreditasi', 'APDPA');
 
 -- --------------------------------------------------------
 
@@ -152,7 +157,8 @@ INSERT INTO `pengajuan` (`id`, `tanggal_pengajuan`, `tahun_usulan`, `prodi_id`, 
 (6, '2018-06-11', 2003, 13, 1),
 (7, '2018-06-23', 2003, 15, 1),
 (10, '2018-07-04', 2003, 13, 1),
-(11, '2018-07-09', 2008, 13, 1);
+(11, '2018-07-09', 2008, 13, 1),
+(12, '2018-07-17', 2009, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -379,7 +385,7 @@ ALTER TABLE `versi`
 -- AUTO_INCREMENT for table `berkas`
 --
 ALTER TABLE `berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `butir`
@@ -397,7 +403,7 @@ ALTER TABLE `fakultas`
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `prodi`
