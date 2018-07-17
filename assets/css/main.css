@@ -14464,8 +14464,8 @@ be a descendant of the grid when it is being dragged.
 }
 
 .login-content .logo h1 {
-  font-size: 52px;
-  font-weight: 400;
+  font-size: 30px;
+  /*font-weight: 400;*/
 }
 
 .login-content .login-box {
