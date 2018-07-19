@@ -568,6 +568,7 @@ class Pengajuan extends CI_Controller {
 	  }
 
 	function ajax_cek_blm_kelar($prodi_id) {
+		$data['progress']['jumlah_pengajuan'] = $data['progress']['jumlah_pengajuan_selesai'] = $data['progress']['jumlah_pengajuan_proses'] = 0;
 		$ok = true;
 
 		$pengajuan = $this->db->get_where('pengajuan', ['prodi_id' => $prodi_id])->result();
@@ -617,12 +618,26 @@ class Pengajuan extends CI_Controller {
 				}
 
 				if ($jumlah_berkas_harus_diupload == 0) {
-					$jumlah_persentase = 0;
-				} else {
-		      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
-				}
+						$jumlah_persentase = 0;
+					} else {
+			      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 0);
+					}
 
-				$jumlah_persentase < 100 ? $ok = false : $ok = true;
+					if ($jumlah_persentase == 100) {
+						$data['progress']['jumlah_pengajuan_selesai']++;
+					} else {
+						$data['progress']['jumlah_pengajuan_proses']++;
+
+						if ($jumlah_berkas_harus_diupload == 0) {
+							$jumlah_persentase = 0;
+						} else {
+				      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+						}
+
+						$data['progress']['jumlah_persentase'] = $jumlah_persentase;
+					}
+
+				$data['progress']['jumlah_pengajuan_proses'] > 0 ? $ok = false : $ok = true;
 		    }
 			echo $ok == true ? '1' : '0';
 		}

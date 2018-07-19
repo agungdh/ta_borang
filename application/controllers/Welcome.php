@@ -121,6 +121,14 @@ class Welcome extends CI_Controller {
 						$data['progress']['jumlah_pengajuan_selesai']++;
 					} else {
 						$data['progress']['jumlah_pengajuan_proses']++;
+
+						if ($jumlah_berkas_harus_diupload == 0) {
+							$jumlah_persentase = 0;
+						} else {
+				      		$jumlah_persentase = number_format(($jumlah_berkas_terupload / $jumlah_berkas_harus_diupload) * 100, 2);
+						}
+
+						$data['progress']['jumlah_persentase'] = $jumlah_persentase;
 					}
 
 					$data['progress']['jumlah_pengajuan']++;

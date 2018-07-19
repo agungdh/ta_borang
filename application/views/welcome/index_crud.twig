@@ -26,7 +26,12 @@
 	    <div class="widget-small warning coloured-icon"><i class="icon fa fa-clock-o fa-3x"></i>
 	      <div class="info">
 	        <h4>Pengajuan Proses</h4>
-	        <p><b>{{ progress.jumlah_pengajuan_proses }}</b></p>
+	        <p><b>
+	        	{{ progress.jumlah_pengajuan_proses }}
+	        	{% if progress.jumlah_persentase %}
+	        		({{ progress.jumlah_persentase }}%)
+	        	{% endif %}
+	        </b></p>
 	      </div>
 	    </div>
 	  </div>
