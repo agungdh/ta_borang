@@ -643,4 +643,10 @@ class Pengajuan extends CI_Controller {
 		}
 	}
 	
+	function hapus_berkas($id, $pengajuan_id, $last_tab) {
+		$this->db->delete('berkas', ['id' => $id]);
+
+		redirect(base_url('pengajuan/detil_crud/' . $pengajuan_id . '?tab=' . $last_tab));
+	}
+
 }

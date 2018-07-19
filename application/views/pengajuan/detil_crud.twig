@@ -67,7 +67,9 @@
 									{% endif %}
 									<td>
 										{% if item2.berkas_id %}
-											<a href="{{ base_url('pengajuan/berkas/' ~ item2.berkas_id) }}">{{ item2.filename }}</a>
+											<div>
+											<a href="#" onclick="hapus('{{ item2.berkas_id }}')" class="fa fa-trash"></a><a href="{{ base_url('pengajuan/berkas/' ~ item2.berkas_id) }}">{{ item2.filename }}</a>
+											</div>
 										{% else %}
 											<a href="#">{{ item2.filename }}</a>
 										{% endif %}
@@ -143,5 +145,19 @@
 	  function pilih_tab(id) {
 	    $('input[name=last_tab]').val(id);
 	  }
+
+    	function hapus(id) {
+	      swal({
+	          title: 'Apakah anda yakin?',
+	          text: "Data akan dihapus!",
+	          type: 'warning',
+	          showCancelButton: true,
+	          confirmButtonText: 'Hapus!'
+	      }).then(function(result) {
+	          if (result.value) {
+	              window.location = "{{ base_url('pengajuan/hapus_berkas/') }}" + id + "/" + $("input[name=pengajuan_id]").val() + "/" + $("input[name=last_tab]").val();
+	          }
+	      });
+	  };
 	</script>
 {% endblock %}
