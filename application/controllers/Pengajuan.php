@@ -321,6 +321,8 @@ class Pengajuan extends CI_Controller {
 	function aksi_hapus($id) {
 		$this->pustaka->auth($this->session->level, [3]);
 
+		$this->db->delete('berkas', ['pengajuan_id' => $id]);
+
 		$this->db->delete('pengajuan', ['id' => $id]);
 	}
 
