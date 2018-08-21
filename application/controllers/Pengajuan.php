@@ -642,6 +642,8 @@ class Pengajuan extends CI_Controller {
 				$data['progress']['jumlah_pengajuan_proses'] > 0 ? $ok = false : $ok = true;
 		    }
 			echo $ok == true ? '1' : '0';
+		} else {
+			echo '1';
 		}
 	}
 	
