@@ -74,6 +74,27 @@
       });
   };
 
+  function unduh(id) {
+      $.ajax({
+          type: "get", 
+          url: "{{ base_url('pengajuan/ajax_cek_berkas/') }}" + id,
+          timeout: 5000,
+          success: function(data) {
+              if (data == '0') {
+                swal('ERROR !!!', 'Belum ada berkas !!!', 'error');
+              } else {
+                // swal('gak error', 'gak error', 'gak error');
+                window.location = "{{ base_url('pengajuan/berkas_batch/') }}" + id;
+              }
+          },
+          error: function(data) {
+              swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+              
+              console.log(data)
+          }
+      });
+  };
+
   $('body').tooltip({selector: '[data-toggle="tooltip"]'});
   </script>
 {% endblock %}

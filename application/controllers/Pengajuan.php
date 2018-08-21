@@ -12,6 +12,12 @@ class Pengajuan extends CI_Controller {
 		redirect(base_url());
 	}
 
+	function ajax_cek_berkas($pengajuan_id) {
+		$pengajuan = $this->db->get_where('berkas', ['pengajuan_id' => $pengajuan_id])->result();
+
+		echo count($pengajuan);
+	}
+
 	function berkas($berkas_id) {
 		$berkas = $this->db->get_where('berkas', ['id' => $berkas_id])->row();
 
@@ -437,7 +443,7 @@ class Pengajuan extends CI_Controller {
   			</div>';
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('pengajuan/berkas_batch/' . $row->id) . '" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
+	            <a class="btn btn-primary" href="#" onclick="unduh(' . "'$row->id'" . ')" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_crud/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/ubah/' . $row->id) . '" data-toggle="tooltip" title="Ubah"><i class="fa fa-edit"></i></a>
 	            <a class="btn btn-primary" href="#" onclick="hapus(' . "'$row->id'" . ')" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
@@ -557,7 +563,7 @@ class Pengajuan extends CI_Controller {
   			</div>';
 	      $nestedData[] = '
 	          <div class="btn-group">
-	            <a class="btn btn-primary" href="' . base_url('pengajuan/berkas_batch/' . $row->id) . '" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
+	            <a class="btn btn-primary" href="#" onclick="unduh(' . "'$row->id'" . ')" data-toggle="tooltip" title="Download Berkas"><i class="fa fa-download"></i></a>
 	            <a class="btn btn-primary" href="' . base_url('pengajuan/detil_r/' . $row->id) . '" data-toggle="tooltip" title="Detil Pengajuan"><i class="fa fa-share"></i></a>
 	          </div>';
 
