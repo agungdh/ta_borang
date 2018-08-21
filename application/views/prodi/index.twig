@@ -62,7 +62,7 @@
                       table.ajax.reload();
                   },
                   error: function(data) {
-                      swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                      swal('ERROR !!!', 'Tidak dapat menghapus Prodi. Masih ada User yang terkait dengan Prodi ini.', 'error');
                       
                       console.log(data)
                   }

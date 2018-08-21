@@ -62,7 +62,7 @@
                       table.ajax.reload();
                   },
                   error: function(data) {
-                      swal('ERROR !!!', 'Terjadi Kesalahan !!!', 'error');
+                      swal('ERROR !!!', 'Tidak dapat menghapus Fakultas. Masih ada Prodi yang terkait dengan Fakultas ini.', 'error');
                       
                       console.log(data)
                   }
