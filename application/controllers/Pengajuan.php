@@ -174,8 +174,11 @@ class Pengajuan extends CI_Controller {
 						$id_standar = $item_standar->id; $id_substandar = $item_substandar->id;
 					}
 				} else {
+					$id_standar = 0; $id_substandar = 0; $id_butir = 0;
+					
 					$standar_string = $id_standar == $item_standar->id ? null : $item_standar->nomor . ' ' . $item_standar->nama;
-					$substandar_string = $id_substandar == $item_substandar->id ? null : $substandar_string;
+					$substandar_string = $id_substandar == $item_substandar->id ? null : $item_substandar->nomor . ' ' . $item_substandar->nama;
+					// $substandar_string = $id_substandar == $item_substandar->id ? null : $substandar_string;
 					$data['detil'][$item_standar->nomor][$i]['standar'] = $standar_string;
 					$data['detil'][$item_standar->nomor][$i]['id_standar'] = $item_standar->id;
 					$data['detil'][$item_standar->nomor][$i]['substandar'] = $item_substandar->nomor . ' ' . $item_substandar->nama;
